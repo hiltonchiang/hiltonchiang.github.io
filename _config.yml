@@ -58,9 +58,9 @@ plugins:
   - jekyll-include-cache
 
 author:
-  name   : "First Lastname"
+  name   : "Hilton 蔣玉明"
   avatar : "/assets/images/bio-photo.jpg"
-  bio    : "My awesome biography constrained to a sentence or two goes here."
+  bio    : "一生剛克 一世潛沉"
   links:
     - label: "Website"
       icon: "fas fa-fw fa-link"

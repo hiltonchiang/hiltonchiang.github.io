@@ -1,0 +1,3 @@
+[submodule "hugo"]
+	path = hugo
+	url = https://github.com/hiltonchiang/hugo.git

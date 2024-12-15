@@ -24,6 +24,10 @@ github_username: username
 minimal_mistakes_skin: default
 search: true
 
+#github repository
+repository: hiltonchiang/hiltonchiang.github.io
+author: Hilton Chiang
+
 # Build settings
 markdown: kramdown
 remote_theme: mmistakes/minimal-mistakes

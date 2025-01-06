@@ -15,12 +15,10 @@ const projectsData: Project[] = [
     href: 'https://www.google.com',
   },
   {
-    title: 'The Time Machine',
-    description: `Imagine being able to travel back in time or to the future. Simple turn the knob
-    to the desired date and press "Go". No more worrying about lost keys or
-    forgotten headphones with this simple yet affordable solution.`,
+    title: `Hilton's Blogs`,
+    description: `This is my first personal web page using nextjs to show my blogs previously posted on WordPress.`,
     imgSrc: '/static/images/github-io-blog.png',
-    href: '/blog/the-time-machine',
+    href: '/blog/',
   },
 ]
 

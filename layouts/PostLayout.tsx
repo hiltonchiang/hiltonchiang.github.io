@@ -119,7 +119,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     </h2>
                     <div className="flex flex-wrap">
                       {refs.map((ref) => (
-                        <Ref key={ref} mdx = {slug} text={ref} />
+                        <Ref key={ref} mdx={slug} text={ref} />
                       ))}
                     </div>
                   </div>

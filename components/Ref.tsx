@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { slug } from 'github-slugger'
 interface Props {
-  text: string,
+  text: string
   mdx: string
 }
 

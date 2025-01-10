@@ -6,8 +6,10 @@ interface Props {
 
 export default function WVert({ children }: Props) {
   return (
-    <div className="text-center text-2xl [text-orientation:upright] [writing-mode:vertical-rl] hover:skew-x-12">
-      {children}
+    <div className="pl-32">
+      <div className="prose max-w-none text-2xl [text-orientation:upright] [writing-mode:vertical-rl] dark:prose-invert xl:col-span-2">
+        {children}
+      </div>
     </div>
   )
 }

@@ -13,8 +13,7 @@ import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import WVert from '@/components/WVert'
 
 const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
-const discussUrl = (path) =>
-  `https://mobile.twitter.com/search?q=${encodeURIComponent(`${siteMetadata.siteUrl}/${path}`)}`
+const discussUrl = (path) => `https://github.com/hiltonchiang/hiltonchiang.github.io/discussions/`
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {
   weekday: 'long',
@@ -97,6 +96,21 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             </dl>
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
               <div className="prose-xl max-w-none pb-8 pt-10 dark:prose-invert">{children}</div>
+              <div className="pb-6 pt-6 text-sm text-gray-700 dark:text-gray-300">
+                <Link href={discussUrl(path)} rel="nofollow">
+                  Discuss on Github
+                </Link>
+                {` • `}
+                <Link href={editUrl(filePath)}>View on GitHub</Link>
+              </div>
+              {siteMetadata.comments && (
+                <div
+                  className="pb-6 pt-6 text-center text-gray-700 dark:text-gray-300"
+                  id="comment"
+                >
+                  <Comments slug={slug} />
+                </div>
+              )}
             </div>
             <footer>
               <div className="divide-gray-200 text-sm font-medium leading-5 dark:divide-gray-700 xl:col-start-1 xl:row-start-2 xl:divide-y">

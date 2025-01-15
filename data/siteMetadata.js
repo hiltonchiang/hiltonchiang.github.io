@@ -1,15 +1,15 @@
 /** @type {import("pliny/config").PlinyConfig } */
 const siteMetadata = {
-  title: 'Hilton`s Blog',
+  title: "Hilton's Blog",
   author: 'Hilton Chiang',
   headerTitle: 'HiltonChiang 蔣玉明',
-  description: 'Hi, I am Hilton Chiang. I use nextjs and tailwind css to build this personal web site. I write Chinese poems to present my views and thoughts, enjoy it.',
+  description: "Hi, I'm Hilton Chiang. I use nextjs and tailwind css to build this personal web site. I write Chinese poems to present my views and thoughts, enjoy it.",
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://hiltonchiang.github.io',
   siteRepo: 'https://github.com/hiltonchiang/hiltonchiang.github.io',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/myLogo.jpg`,
-  socialBanner: `${process.env.BASE_PATH || ''}/static/images/avatar.png`,
+  socialBanner: `${process.env.BASE_PATH || ''}/static/images/socialbanner.png`,
   mastodon: 'https://mastodon.social/@mastodonuser',
   email: 'hiltonchiang@gmail.com',
   github: 'https://github.com/hiltonchiang',

@@ -9,7 +9,7 @@ const siteMetadata = {
   siteUrl: 'https://hiltonchiang.github.io',
   siteRepo: 'https://github.com/hiltonchiang/hiltonchiang.github.io',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/myLogo.jpg`,
-  socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
+  socialBanner: `${process.env.BASE_PATH || ''}/static/images/avatar.png`,
   mastodon: 'https://mastodon.social/@mastodonuser',
   email: 'hiltonchiang@gmail.com',
   github: 'https://github.com/hiltonchiang',

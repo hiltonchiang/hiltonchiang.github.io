@@ -7,12 +7,10 @@ interface Project {
 
 const projectsData: Project[] = [
   {
-    title: 'A Search Engine',
-    description: `What if you could look up any information in the world? Webpages, images, videos
-    and more. Google has many features to help you find exactly what you're looking
-    for.`,
-    imgSrc: '/static/images/google.png',
-    href: 'https://www.google.com',
+    title: 'Peer-to-Peer VoIP',
+    description: `I co-funded a start-up doing VoIP business. The key tech is to find a way to traverse NAT so that it can establish a so called peer-to-peer VoIP communication path`,
+    imgSrc: '/static/images/sequence-port-forwarding.png',
+    href: '/blog/voip',
   },
   {
     title: `Hilton's Blogs`,

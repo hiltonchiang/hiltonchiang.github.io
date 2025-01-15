@@ -77,9 +77,7 @@ export default function ListLayoutWithTags({
   const refKeys = Object.keys(refCounts)
   const sortedRefs = refKeys.sort((a, b) => refCounts[b] - refCounts[a])
   const sortedTags = tagKeys.sort((a, b) => tagCounts[b] - tagCounts[a])
-
-  const displayPosts = initialDisplayPosts.length > 0 ? initialDisplayPosts : posts ? posts : refs
-
+  const displayPosts = initialDisplayPosts.length > 0 ? initialDisplayPosts : posts.length > 0 ? posts : refs
   return (
     <>
       <div>

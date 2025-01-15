@@ -61,8 +61,9 @@ const computedFields: ComputedFields = {
 /**
  * Count the occurrences of all tags across blog posts and write to json file
  */
-function createTagCount(allBlogs) {
+function createTagCount(allBlogs, allChronicles) {
   const tagCount: Record<string, number> = {}
+  const refCount: Record<string, number> = {}
   allBlogs.forEach((file) => {
     if (file.tags && (!isProduction || file.draft !== true)) {
       file.tags.forEach((tag) => {
@@ -76,16 +77,29 @@ function createTagCount(allBlogs) {
     }
   })
   writeFileSync('./app/tag-data.json', JSON.stringify(tagCount))
+  allChronicles.forEach((file) => {
+    if (file.tags && (!isProduction || file.draft !== true)) {
+      file.tags.forEach((tag) => {
+        const formattedTag = slug(tag)
+        if (formattedTag in refCount) {
+          refCount[formattedTag] += 1
+        } else {
+          refCount[formattedTag] = 1
+        }
+      })
+    }
+  })
+  writeFileSync('./app/ref-data.json', JSON.stringify(refCount))
 }
 
-function createSearchIndex(allBlogs) {
+function createSearchIndex(allBlogs, allChronicles) {
   if (
     siteMetadata?.search?.provider === 'kbar' &&
     siteMetadata.search.kbarConfig.searchDocumentsPath
   ) {
     writeFileSync(
       `public/${path.basename(siteMetadata.search.kbarConfig.searchDocumentsPath)}`,
-      JSON.stringify(allCoreContent(sortPosts(allBlogs)))
+      JSON.stringify(allCoreContent(sortPosts(allBlogs.concat(allChronicles))))
     )
     console.log('Local search index generated...')
   }
@@ -101,6 +115,7 @@ export const Blog = defineDocumentType(() => ({
     tags: { type: 'list', of: { type: 'string' }, default: [] },
     refs: { type: 'list', of: { type: 'string' }, default: [] },
     lastmod: { type: 'date' },
+    duration: { type: 'string'},
     draft: { type: 'boolean' },
     summary: { type: 'string' },
     images: { type: 'json' },
@@ -158,6 +173,7 @@ export const Chronicle = defineDocumentType(() => ({
     summary:{ type: 'string' },
     images: { type: 'json' },
     tags: { type: 'list', of: { type: 'string' }, default: [] },
+    refs: { type: 'list', of: { type: 'string' }, default: [] },
   },
   computedFields: {
     ...computedFields,
@@ -206,8 +222,9 @@ export default makeSource({
     ],
   },
   onSuccess: async (importData) => {
-    const { allBlogs } = await importData()
-    createTagCount(allBlogs)
-    createSearchIndex(allBlogs)
+    const { allBlogs, allChronicles } = await importData()
+    createTagCount(allBlogs, allChronicles)
+    createSearchIndex(allBlogs, allChronicles
+    )
   },
 })

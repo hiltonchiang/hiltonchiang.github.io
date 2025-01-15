@@ -2,8 +2,9 @@ import { slug } from 'github-slugger'
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer'
 import siteMetadata from '@/data/siteMetadata'
 import ListLayout from '@/layouts/ListLayoutWithTags'
-import { allBlogs } from 'contentlayer/generated'
+import { allBlogs, allChronicles } from 'contentlayer/generated'
 import tagData from 'app/tag-data.json'
+import refData from 'app/ref-data.json'
 import { genPageMetadata } from 'app/seo'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -31,7 +32,12 @@ export const generateStaticParams = async () => {
   const paths = tagKeys.map((tag) => ({
     tag: encodeURI(tag),
   }))
-  return paths
+  const refCounts = refData as Record<string, number>
+  const refKeys = Object.keys(refCounts)
+  const refPaths = refKeys.map((tag) => ({
+    tag: encodeURI(tag),
+  }))
+  return paths.concat(refPaths)
 }
 
 export default async function TagPage(props: { params: Promise<{ tag: string }> }) {
@@ -42,8 +48,19 @@ export default async function TagPage(props: { params: Promise<{ tag: string }> 
   const filteredPosts = allCoreContent(
     sortPosts(allBlogs.filter((post) => post.tags && post.tags.map((t) => slug(t)).includes(tag)))
   )
-  if (filteredPosts.length === 0) {
-    return notFound()
+  const filteredRefs = allCoreContent(
+    sortPosts(
+      allChronicles.filter((post) => post.tags && post.tags.map((t) => slug(t)).includes(tag))
+    )
+  )
+
+  if (filteredPosts.length > 0) {
+    const refs = allCoreContent(sortPosts([]))
+    return <ListLayout posts={filteredPosts} refs={refs} title={title} />
   }
-  return <ListLayout posts={filteredPosts} title={title} />
+  if (filteredRefs.length > 0) {
+    const posts = allCoreContent(sortPosts([]))
+    return <ListLayout posts={posts} refs={filteredRefs} title={title} />
+  }
+  return notFound()
 }

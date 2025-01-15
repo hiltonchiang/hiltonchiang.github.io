@@ -4,11 +4,12 @@ import { usePathname } from 'next/navigation'
 import { slug } from 'github-slugger'
 import { formatDate } from 'pliny/utils/formatDate'
 import { CoreContent } from 'pliny/utils/contentlayer'
-import type { Blog } from 'contentlayer/generated'
+import type { Blog, Chronicle } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import tagData from 'app/tag-data.json'
+import refData from 'app/ref-data.json'
 
 interface PaginationProps {
   totalPages: number
@@ -16,6 +17,7 @@ interface PaginationProps {
 }
 interface ListLayoutProps {
   posts: CoreContent<Blog>[]
+  refs: CoreContent<Chronicle>[]
   title: string
   initialDisplayPosts?: CoreContent<Blog>[]
   pagination?: PaginationProps
@@ -63,6 +65,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
 
 export default function ListLayoutWithTags({
   posts,
+  refs,
   title,
   initialDisplayPosts = [],
   pagination,
@@ -70,9 +73,12 @@ export default function ListLayoutWithTags({
   const pathname = usePathname()
   const tagCounts = tagData as Record<string, number>
   const tagKeys = Object.keys(tagCounts)
+  const refCounts = refData as Record<string, number>
+  const refKeys = Object.keys(refCounts)
+  const sortedRefs = refKeys.sort((a, b) => refCounts[b] - refCounts[a])
   const sortedTags = tagKeys.sort((a, b) => tagCounts[b] - tagCounts[a])
 
-  const displayPosts = initialDisplayPosts.length > 0 ? initialDisplayPosts : posts
+  const displayPosts = initialDisplayPosts.length > 0 ? initialDisplayPosts : posts ? posts : refs
 
   return (
     <>
@@ -117,20 +123,59 @@ export default function ListLayoutWithTags({
                 })}
               </ul>
             </div>
+            <div className="px-6 py-4">
+              {pathname.startsWith('/blog') ? (
+                <h3 className="font-bold uppercase text-primary-500">All Timelines</h3>
+              ) : (
+                <Link
+                  href={`/profile`}
+                  className="font-bold uppercase text-gray-700 hover:text-primary-500 dark:text-gray-300 dark:hover:text-primary-500"
+                >
+                  All Timelines
+                </Link>
+              )}
+              <ul>
+                {sortedRefs.map((t) => {
+                  return (
+                    <li key={t} className="my-3">
+                      {decodeURI(pathname.split('/tags/')[1]) === slug(t) ? (
+                        <h3 className="inline px-3 py-2 text-sm font-bold uppercase text-primary-500">
+                          {`${t} (${refCounts[t]})`}
+                        </h3>
+                      ) : (
+                        <Link
+                          href={`/tags/${slug(t)}`}
+                          className="px-3 py-2 text-sm font-medium uppercase text-gray-500 hover:text-primary-500 dark:text-gray-300 dark:hover:text-primary-500"
+                          aria-label={`View posts tagged ${t}`}
+                        >
+                          {`${t} (${refCounts[t]})`}
+                        </Link>
+                      )}
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
           </div>
           <div>
             <ul>
               {displayPosts.map((post) => {
-                const { path, date, title, summary, tags } = post
+                const { path, date, duration, title, summary, tags } = post
                 return (
                   <li key={path} className="py-5">
                     <article className="flex flex-col space-y-2 xl:space-y-0">
                       <dl>
                         <dt className="sr-only">Published on</dt>
                         <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                          <time dateTime={date} suppressHydrationWarning>
-                            {formatDate(date, siteMetadata.locale)}
-                          </time>
+                          {!duration ? (
+                            <time dateTime={date} suppressHydrationWarning>
+                              {formatDate(date, siteMetadata.locale)}
+                            </time>
+                          ) : (
+                            <time dateTime={date} suppressHydrationWarning>
+                              {duration}
+                            </time>
+                          )}
                         </dd>
                       </dl>
                       <div className="space-y-3">

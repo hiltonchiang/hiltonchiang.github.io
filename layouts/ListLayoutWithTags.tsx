@@ -123,11 +123,11 @@ export default function ListLayoutWithTags({
               </ul>
             </div>
             <div className="px-6 py-4">
-              {pathname.startsWith('/blog') ? (
+              {pathname.startsWith('/chronicle') ? (
                 <h3 className="font-bold uppercase text-primary-500">All Timelines</h3>
               ) : (
                 <Link
-                  href={`/profile`}
+                  href={`/chronicle`}
                   className="font-bold uppercase text-gray-700 hover:text-primary-500 dark:text-gray-300 dark:hover:text-primary-500"
                 >
                   All Timelines

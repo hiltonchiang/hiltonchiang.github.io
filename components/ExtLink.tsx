@@ -1,7 +1,7 @@
 export default function ExtLink() {
   return (
     <>
-      <span className="inline-flex max-sm:hidden">
+      <span className="inline-flex">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           height="16"
@@ -17,7 +17,6 @@ export default function ExtLink() {
           />
         </svg>
       </span>
-      <span className="hidden space-x-4 sm:space-x-6">↗</span>
     </>
   )
 }

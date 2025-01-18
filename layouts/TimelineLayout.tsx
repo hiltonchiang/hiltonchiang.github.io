@@ -2,12 +2,14 @@
 
 import { useState } from 'react'
 import { usePathname } from 'next/navigation'
+import { slug } from 'github-slugger'
 import { formatDate } from 'pliny/utils/formatDate'
 import { CoreContent } from 'pliny/utils/contentlayer'
 import type { Chronicle } from 'contentlayer/generated'
 import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
+import refData from 'app/ref-data.json'
 
 interface PaginationProps {
   totalPages: number
@@ -16,6 +18,7 @@ interface PaginationProps {
 interface ListLayoutProps {
   posts: CoreContent<Chronicle>[]
   title: string
+  summary: string
   initialDisplayPosts?: CoreContent<Chronicle>[]
   pagination?: PaginationProps
 }
@@ -63,9 +66,14 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
 export default function ListLayout({
   posts,
   title,
+  summary,
   initialDisplayPosts = [],
   pagination,
 }: ListLayoutProps) {
+  const pathname = usePathname()
+  const refCounts = refData as Record<string, number>
+  const refKeys = Object.keys(refCounts)
+  const sortedRefs = refKeys.sort((a, b) => refCounts[b] - refCounts[a])
   const [searchValue, setSearchValue] = useState('')
   const filteredBlogPosts = posts.filter((post) => {
     const searchContent = post.title + post.summary + post.tags?.join(' ')
@@ -83,8 +91,28 @@ export default function ListLayout({
           <h1 className="text-3xl font-extrabold leading-9 tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl sm:leading-10 md:text-6xl md:leading-14">
             {title}
           </h1>
+          <p className="text-lg leading-7 text-gray-500 dark:text-gray-400"> {summary} </p>
           <p className="text-lg leading-7 text-gray-500 dark:text-gray-400">
-            Chronically showcase where I studied, where I worked and what I did.
+            Timeline Groups:
+            {sortedRefs.map((t) => {
+              return (
+                <span key={t} className="my-3">
+                  {decodeURI(pathname.split('/tags/')[1]) === slug(t) ? (
+                    <h3 className="inline px-3 py-2 text-sm font-bold uppercase text-primary-500">
+                      {`${t} (${refCounts[t]})`}
+                    </h3>
+                  ) : (
+                    <Link
+                      href={`/tags/${slug(t)}`}
+                      className="px-3 py-2 text-sm font-medium uppercase text-gray-500 hover:text-primary-500 dark:text-gray-300 dark:hover:text-primary-500"
+                      aria-label={`View posts tagged ${t}`}
+                    >
+                      {`${t} (${refCounts[t]})`}
+                    </Link>
+                  )}
+                </span>
+              )
+            })}
           </p>
           <div className="relative max-w-lg">
             <label>

@@ -1,6 +1,6 @@
 import Image from './Image'
 import Link from './Link'
-
+import { SymbolArrow, Symbol1f517 } from './ExtLink'
 const Card = ({ title, description, imgSrc, href }) => (
   <div className="md max-w-[544px] p-4 md:w-1/2">
     <div
@@ -32,7 +32,12 @@ const Card = ({ title, description, imgSrc, href }) => (
         <h2 className="mb-3 text-2xl font-bold leading-8 tracking-tight">
           {href ? (
             <Link href={href} aria-label={`Link to ${title}`}>
-              {title}
+              <div className="inline-flex items-center justify-between">
+                {title}
+                <div className="ms-3 mt-1">
+                  <Symbol1f517 />
+                </div>
+              </div>
             </Link>
           ) : (
             title

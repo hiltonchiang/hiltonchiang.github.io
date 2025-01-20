@@ -39,6 +39,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
         )}
         {prevPage && (
           <Link
+            className="hover:text-primary-500"
             href={currentPage - 1 === 1 ? `/${basePath}/` : `/${basePath}/page/${currentPage - 1}`}
             rel="prev"
           >
@@ -54,7 +55,11 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
           </button>
         )}
         {nextPage && (
-          <Link href={`/${basePath}/page/${currentPage + 1}`} rel="next">
+          <Link
+            className="hover:text-primary-500"
+            href={`/${basePath}/page/${currentPage + 1}`}
+            rel="next"
+          >
             Next
           </Link>
         )}

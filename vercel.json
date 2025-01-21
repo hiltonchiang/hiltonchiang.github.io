@@ -1,5 +1,5 @@
 {
   "buildCommand": "pnpm build",
-  "installCommand": "dnf install -y libnss3",
+  "installCommand": "dnf install libnss3",
   "framework": "nextjs"
 }

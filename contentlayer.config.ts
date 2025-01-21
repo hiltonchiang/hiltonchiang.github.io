@@ -24,6 +24,16 @@ import rehypePrismPlus from 'rehype-prism-plus'
 import rehypePresetMinify from 'rehype-preset-minify'
 import siteMetadata from './data/siteMetadata'
 import { allCoreContent, sortPosts } from 'pliny/utils/contentlayer.js'
+import rehypeMermaid from './rehypeMermaid'
+import rehypePrettyCode, { type Options } from "rehype-pretty-code";
+
+const prettyCodeOptions: Partial<Options> = {
+   theme: {
+     light: "catppuccin-latte",
+     dark: "github-dark",
+   },
+   bypassInlineCode: true,
+ };
 
 const root = process.cwd()
 const isProduction = process.env.NODE_ENV === 'production'
@@ -203,9 +213,15 @@ export default makeSource({
       remarkAlert,
     ],
     rehypePlugins: [
-      rehypeSlug,
+      [rehypeMermaid, { 
+        background: "transparent", 
+        className: "mermaid-diagram",
+       }
+      ],
+      [rehypePrettyCode, prettyCodeOptions],
+        rehypeSlug,
       [
-        rehypeAutolinkHeadings,
+      rehypeAutolinkHeadings,
         {
           behavior: 'prepend',
           headingProperties: {
@@ -219,6 +235,7 @@ export default makeSource({
       [rehypeCitation, { path: path.join(root, 'data') }],
       [rehypePrismPlus, { defaultLanguage: 'js', ignoreMissing: true }],
       rehypePresetMinify,
+     
     ],
   },
   onSuccess: async (importData) => {

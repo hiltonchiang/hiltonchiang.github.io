@@ -33,7 +33,7 @@
     "next-themes": "^0.3.0",
     "pliny": "0.4.0",
     "postcss": "^8.4.24",
-    "puppeteer": "^24.1.0",
+    "puppeteer": "^23.1.0",
     "react": "rc",
     "react-dom": "rc",
     "reading-time": "1.5.0",

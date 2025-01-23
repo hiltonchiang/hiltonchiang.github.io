@@ -3576,7 +3576,25 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@puppeteer/browsers@npm:2.7.0, @puppeteer/browsers@npm:^2.7.0":
+"@puppeteer/browsers@npm:2.6.1":
+  version: 2.6.1
+  resolution: "@puppeteer/browsers@npm:2.6.1"
+  dependencies:
+    debug: ^4.4.0
+    extract-zip: ^2.0.1
+    progress: ^2.0.3
+    proxy-agent: ^6.5.0
+    semver: ^7.6.3
+    tar-fs: ^3.0.6
+    unbzip2-stream: ^1.4.3
+    yargs: ^17.7.2
+  bin:
+    browsers: lib/cjs/main-cli.js
+  checksum: e5952385a38f2595c29aa5bf4b67b506038ff5862f282aab1d82845bd814aba24b82029628bda5060d8f87f66e50c46a783d44bed2ba56eb819852652e7ab3ad
+  languageName: node
+  linkType: hard
+
+"@puppeteer/browsers@npm:^2.7.0":
   version: 2.7.0
   resolution: "@puppeteer/browsers@npm:2.7.0"
   dependencies:
@@ -6520,18 +6538,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chromium-bidi@npm:0.12.0":
-  version: 0.12.0
-  resolution: "chromium-bidi@npm:0.12.0"
-  dependencies:
-    mitt: 3.0.1
-    zod: 3.24.1
-  peerDependencies:
-    devtools-protocol: "*"
-  checksum: 352434c82042defb62ca3c559762a9ce368ef0b25afe1fddeda3689833102adf1606b6f3f5657405f621f9fbdb2eb81b509164f1235585f438ec89f01b28b7b9
-  languageName: node
-  linkType: hard
-
 "citeproc@npm:^2.4.6, citeproc@npm:^2.4.63":
   version: 2.4.63
   resolution: "citeproc@npm:2.4.63"
@@ -7598,10 +7604,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"devtools-protocol@npm:0.0.1380148":
-  version: 0.0.1380148
-  resolution: "devtools-protocol@npm:0.0.1380148"
-  checksum: 2d9e86bc3699ba634410a385ebaede8ce51ddc2290f985ebf527e151369a990f955e192c334fef05af1031eb083cddb20d642cd56ea59ff442e3b0234ba6aca8
+"devtools-protocol@npm:0.0.1367902":
+  version: 0.0.1367902
+  resolution: "devtools-protocol@npm:0.0.1367902"
+  checksum: ef1115f4b287ab033c5342f7ba7fbf45314c3b46db2195978db0096b368ffbb79157a69dc361fa539874a37fea87101267049957285b1ecbaa1a96f6df6cf344
   languageName: node
   linkType: hard
 
@@ -9645,7 +9651,7 @@ __metadata:
     postcss: ^8.4.24
     prettier: ^3.0.0
     prettier-plugin-tailwindcss: ^0.5.11
-    puppeteer: ^24.1.0
+    puppeteer: ^23.1.0
     react: rc
     react-dom: rc
     reading-time: 1.5.0
@@ -13053,33 +13059,33 @@ __metadata:
   languageName: node
   linkType: hard
 
-"puppeteer-core@npm:24.1.0":
-  version: 24.1.0
-  resolution: "puppeteer-core@npm:24.1.0"
+"puppeteer-core@npm:23.11.1":
+  version: 23.11.1
+  resolution: "puppeteer-core@npm:23.11.1"
   dependencies:
-    "@puppeteer/browsers": 2.7.0
+    "@puppeteer/browsers": 2.6.1
     chromium-bidi: 0.11.0
     debug: ^4.4.0
-    devtools-protocol: 0.0.1380148
+    devtools-protocol: 0.0.1367902
     typed-query-selector: ^2.12.0
     ws: ^8.18.0
-  checksum: a700a8e8da9fb8b12a327f82b4481f4a9ceac1430b9e470191a18ab5655401adfe6b257a28327552fc92f3955725f6105382e1f72f32a2a117265bbb2b5cb516
+  checksum: f4573b87d8c963b11695fbda14ec05042c3f0b0979f561730d44c5bfc69cdd9fadc75319d2b49c3ce804f3c7d917d63edd9d0c5d2873a29c26ce59ba8624302b
   languageName: node
   linkType: hard
 
-"puppeteer@npm:^24.1.0":
-  version: 24.1.0
-  resolution: "puppeteer@npm:24.1.0"
+"puppeteer@npm:^23.1.0":
+  version: 23.11.1
+  resolution: "puppeteer@npm:23.11.1"
   dependencies:
-    "@puppeteer/browsers": 2.7.0
-    chromium-bidi: 0.12.0
+    "@puppeteer/browsers": 2.6.1
+    chromium-bidi: 0.11.0
     cosmiconfig: ^9.0.0
-    devtools-protocol: 0.0.1380148
-    puppeteer-core: 24.1.0
+    devtools-protocol: 0.0.1367902
+    puppeteer-core: 23.11.1
     typed-query-selector: ^2.12.0
   bin:
     puppeteer: lib/cjs/puppeteer/node/cli.js
-  checksum: a675fed921f97e52688d0f0296ae9ebc453d10a7c744fe34ef90a1b47c5840a2a7fb1a81f368f49816fdfae934175e588fa48b7a6baf9eef76f1da351455c48a
+  checksum: 5844c1deef77e0fa578950eff680f521ecb3509923ea9e63a17309c0d4235a1cf326e6fb280ab7b3b47d95296e4a74c6e680278c8bf8a793f0ecdbc288efdae2
   languageName: node
   linkType: hard
 
@@ -16036,13 +16042,6 @@ react@rc:
   version: 3.23.8
   resolution: "zod@npm:3.23.8"
   checksum: 15949ff82118f59c893dacd9d3c766d02b6fa2e71cf474d5aa888570c469dbf5446ac5ad562bb035bf7ac9650da94f290655c194f4a6de3e766f43febd432c5c
-  languageName: node
-  linkType: hard
-
-"zod@npm:3.24.1":
-  version: 3.24.1
-  resolution: "zod@npm:3.24.1"
-  checksum: dcd5334725b29555593c186fd6505878bb7ccb4f5954f728d2de24bf71f9397492d83bdb69d5b8a376eb500a02273ae0691b57deb1eb8718df3f64c77cc5534a
   languageName: node
   linkType: hard
 

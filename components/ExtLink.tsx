@@ -63,7 +63,7 @@ interface Props {
 const ExtLink = ({ text }: Props) => {
   return (
     <span className="inline-flex items-center justify-between">
-      {text} <Symbol1f517 />
+      {text} <SymbolArrow />
     </span>
   )
 }

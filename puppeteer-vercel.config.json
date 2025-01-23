@@ -1,6 +1,4 @@
 {
-  "cacheDirectory": "/vercel/.cache/puppeteer",
-  "executablePath": "/vercel/.cache/puppeteer/chrome/132.0.6834.83/chrome-linux64/chrome",
   "args": [
     "--no-sandbox",
     "--disable-setuid-sandbox",

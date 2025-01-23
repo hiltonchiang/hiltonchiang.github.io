@@ -57,6 +57,7 @@ const rehypeMermaid: Plugin<[MermaidOptions?], Root> = (options = {}) => {
                 try {
                     // Generate light mode SVG
                     const backgroundArg = options.background ? `-b "${options.background}"` : "-b transparent";
+                    // add ENV_NAME in vercel's project setting
                     const configArg = process.env.ENV_NAME === 'vercel' ? '-p puppeteer-vercel.config.json' : '';
                     // const configArg = '';
                     //execSync(

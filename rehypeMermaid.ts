@@ -48,7 +48,7 @@ const rehypeMermaid: Plugin<[MermaidOptions?], Root> = (options = {}) => {
                 // 
                 const tempDir = tmpdir();
                 const inputFile = join(tempDir, `diagram-${Date.now()}.mmd`);
-                const outputLightFile = join(tempDir, `diagram-light-${Date.now()}.svg`);
+                // const outputLightFile = join(tempDir, `diagram-light-${Date.now()}.svg`);
                 const outputDarkFile = join(tempDir, `diagram-dark-${Date.now()}.svg`);
 
                 // Write mermaid content to temp file
@@ -59,10 +59,10 @@ const rehypeMermaid: Plugin<[MermaidOptions?], Root> = (options = {}) => {
                     const backgroundArg = options.background ? `-b "${options.background}"` : "-b transparent";
                     // const configArg = process.env.ENV_NAME === 'localhost' ? '' : '-p puppeteer-vercel.config.json';
                     const configArg = '';
-                    execSync(
-                        `npx -p @mermaid-js/mermaid-cli mmdc -i "${inputFile}" -o "${outputLightFile}" ${backgroundArg} ${configArg}`,
-                        { stdio: "pipe" }
-                    );
+                    //execSync(
+                    //    `npx -p @mermaid-js/mermaid-cli mmdc -i "${inputFile}" -o "${outputLightFile}" ${backgroundArg} ${configArg}`,
+                    //    { stdio: "pipe" }
+                    //);
 
                     // Generate dark mode SVG
                     execSync(
@@ -71,11 +71,11 @@ const rehypeMermaid: Plugin<[MermaidOptions?], Root> = (options = {}) => {
                     );
 
                     // Read generated SVGs
-                    const lightSvgContent = readFileSync(outputLightFile, "utf-8");
+                    //const lightSvgContent = readFileSync(outputLightFile, "utf-8");
                     const darkSvgContent = readFileSync(outputDarkFile, "utf-8");
 
                     // Create data URLs
-                    const lightDataUrl = `data:image/svg+xml;base64,${Buffer.from(lightSvgContent).toString('base64')}`;
+                    //const lightDataUrl = `data:image/svg+xml;base64,${Buffer.from(lightSvgContent).toString('base64')}`;
                     const darkDataUrl = `data:image/svg+xml;base64,${Buffer.from(darkSvgContent).toString('base64')}`;
 
                     // Now that we have the SVG sources, let's inject them into the nodes
@@ -88,15 +88,15 @@ const rehypeMermaid: Plugin<[MermaidOptions?], Root> = (options = {}) => {
 
                     // Add both light and dark mode images
                     node.children = [
-                        {
-                            type: "element",
-                            tagName: "img",
-                            properties: {
-                                src: lightDataUrl,
-                                className: "mermaid-light"
-                            },
-                            children: []
-                        },
+                        //{
+                        //    type: "element",
+                        //    tagName: "img",
+                        //    properties: {
+                        //        src: lightDataUrl,
+                        //        className: "mermaid-light"
+                        //    },
+                        //    children: []
+                        //},
                         {
                             type: "element",
                             tagName: "img",
@@ -112,7 +112,7 @@ const rehypeMermaid: Plugin<[MermaidOptions?], Root> = (options = {}) => {
                     // Clean up temp files
                     try {
                         unlinkSync(inputFile);
-                        unlinkSync(outputLightFile);
+                        // unlinkSync(outputLightFile);
                         unlinkSync(outputDarkFile);
                     } catch (e) {
                         // Ignore cleanup errors

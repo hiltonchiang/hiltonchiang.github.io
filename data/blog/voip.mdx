@@ -9,38 +9,99 @@ summary: 'NAT Traversal, Peer-to-Peer VoIP'
 images: ['/static/images/twitter-card.png']
 ---
 
-I started a VoIP business in year 2000. It went find until a free Skype came out. Our small start-up was defeated comletely. However, the technical I used is pretty advanced in the early 2000.
+I started a VoIP business in year 2000. It went find until a free Skype came out. Our small start-up was affected comletely. However, the technique of P2P NAT traverse we used was quite new in the early 2000. I will try to explain a little about UDP/IP packets transactions for entities sitting behind their installed NATs.
+
+
+### What is NAT?
+
+NAT (Network Address Transaltion) is needed for sending/receiving packets to/from outside. An IP packet has four tupples (Source Address, Source Port, Destination Address, Destination Port) for identifing the address and application for the packet. It's better to see a sequence diagram as depcited in the Figure 1 below.
+
+<div className="md max-w-[1088px] p-4 md:w-full hover:scale-150 transform-gpu">
 
 ```mermaid
 
-flowchart LR
-     subgraph Sources
-         api[("🌩️  APIs")]
-         db[("💽 DBs")]
-         files[("📂 Files")]
-     end
- 
-     subgraph "Airbyte Platform"
-         note("Orchestrator:<br/>- Schedules jobs<br/>- Manages and stores state<br/>- Validates data integrity<br/>- Uses Airbyte protocol")
-         src["docker run source read"]
-         dst["docker run destination write"]
- 
-         src --> dst
-     end
- 
-     subgraph Destinations
-         warehouse[("🏢 Warehouses / Lakes")]
-         lake[("💽 DBs")]
-         vectors[("🧮 Vector Stores")]
-         destapi[("☁️ API Destinations")]
-     end
- 
-     api --> src
-     db --> src
-     files --> src
-     dst --> warehouse
-     dst --> lake
-     dst --> vectors
-     dst --> destapi
+sequenceDiagram
+    title Fig. 1 - Port Forwarding
+    participant A as Alice <br/> 192.168.0.100
+    participant B as NAT-1 <br/> 1.1.1.1
+    participant C as NAT-2 <br/> 2.2.2.2
+    participant D as Bob <br/> 192.168.0.99
+    A-->D: Hello!
+    A->>B: (192.168.0.100,SP,2.2.2.2,DP)
+    B->>C: (1.1.1.1,SPx,2.2.2.2,DP)
+    Note right of C: Port Forwarding
+    C->>D: (1.1.1.1,SPx,192.168.0.99,DP)
 
 ```
+
+</div>
+As can be seen in the Figure 1, Alice has a private local IP address, 192.168.0.100; NAT-1 changes two tupples (Source Address, Source Port) of the packet before sending out, the packet reaches NAT-2, and NAT-2 can check (Desitnation Port) to see if is is a well-know port number and forwards the packet to its pre-assigned destination. This scenario is called [port forwarding](https://en.wikipedia.org/wiki/Port_forwarding).
+
+Let's see another scenario, two clients sending different packets to the same server with a public IP address.
+
+<div className="md max-w-[1088px] p-4 md:w-full hover:scale-150 transform-gpu ">
+
+```mermaid
+
+sequenceDiagram
+    title Fig. 2 - private-to-public
+    participant A as Alice <br/> 192.168.0.100
+    participant B as Bob <br/> 192.168.0.101
+    participant C as NAT-1 <br/> 1.1.1.1
+    participant D as Charles <br/> 2.2.2.2
+    A->>C: (192.168.0.100,SP,2.2.2.2,DP)
+    C->>D: (1.1.1.1,SPx,2.2.2.2,DP)
+    activate D
+    D->>C: (2.2.2.2,DP,1.1.1.1, SPx)
+    deactivate D
+    C->>A: (2.2.2.2,DP,192.168.0.100,SP)
+    B->>C: (192.168.0.101,SP,2.2.2.2,DP)
+    C->>D: (1.1.1.1,SPy,2.2.2.2,DP)
+    activate D
+    D->>C: (2.2.2.2,DP, 1.1.1.1, SPy)
+    deactivate D
+    C->>B: (2.2.2.2,DP,192.168.0.101,SP)
+
+```
+
+</div>
+
+As can be seen in the Figure 2, NAT assignes two different Source Port, SPx and SPy for each packets. The reason is simple, NAT needs to send replied packets back to the source. NAT needs to keep track of the session, translated source port is the key.
+
+### NAT Traversal
+
+The method I used in my P2P VoIP network can be explaned by this lengthy article [NAT Traversal Techniques](https://github.com/P2PSP/core/blob/master/doc/NTS/NAT_traversal.md). I try to use a simplified figure to depict it.
+
+<div className="md max-w-[1088px] p-4 md:w-full hover:scale-150 transform-gpu">
+
+```mermaid
+
+sequenceDiagram
+    title Fig. 3 - Port Predicition & Hole Punching
+    participant A as Alice <br/> 192.168.0.100
+    participant B as NAT-1 <br/> 1.1.1.1
+    participant E as Server <br/> 3.3.3.3
+    participant C as NAT-2 <br/> 2.2.2.2
+    participant D as Bob <br/> 192.168.0.99
+    Note over A, E:Call to Bob#1 
+    A->>B: (192.168.0.100,SPa,3.3.3.3,DPa)
+    B->>E: (1.1.1.1,SP1,3.3.3.3,DPa)
+    Note over A,D: Call Bob
+    A->>B: (192.168.0.100,SPb,2.2.2.2,DPb)
+    B--xC: (1.1.1.1,SP2,2.2.2.2,DPb)
+    Note over A, E: Call to Bob#2
+    A->>B: (192.168.0.100,SPc,3.3.3.3,DPc)
+    B->>E: (1.1.1.1,SP3,3.3.3.3,DPc)
+    Note over D, E: A Call from Alice with port range (SP1, SP3)
+    Note over A, D: sending with port number within (SP1, SP3)
+    D--xB: (2.2.2.2,DPb,1.1.1.1,SP1+1)
+    D--xB: (2.2.2.2,DPb,1.1.1.1,SP1+2)
+    D-->B: (2.2.2.2,DPb,1.1.1.1,SP1+3)
+    D->>B: (2.2.2.2,DPb,1.1.1.1,SP1+x)
+    B->>A: pass through with SP2
+    D--xB: (2.2.2.2,DPb,1.1.1.1,SP3-1)
+```
+
+</div>
+
+

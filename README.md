@@ -27,8 +27,10 @@ This project is forked from [Timothy Lin](https://www.timlrx.com)
 
 ```
     This is a [ExtLink< text="reftext" />](refurl)
+
+    And it will look like [reftext](refurl) ![icon](/public/static/images/extlink.png)
 ```
-   And it will look like [reftext](refurl) ![icon](/public/static/images/extlink.png)
+
 
 3. Added profile catagories
 

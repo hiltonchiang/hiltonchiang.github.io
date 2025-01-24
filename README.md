@@ -8,6 +8,16 @@ This is a [Next.js](https://nextjs.org/), [Tailwind CSS](https://tailwindcss.com
 
 This project is forked from [Timothy Lin](https://www.timlrx.com)
 
+## ChangeLogs
+
+1. Added [rehypeMermaid](https://github.com/natikgadzhi/respawn-io/blob/main/lib/rehypeMermaid.ts) from [respawn](https://github.com/natikgadzhi/respawn-io) to add a new feature that converts [mermaid](https://mermaid.js.org/) diagram into a svg element in mdx file. See [voip](https://hiltonchiang.github.io/blog/voip).
+
+2. Added a component `ExtLink` to append an icon to anchor reference. Its usage like this 
+
+```
+    This is a EXtLink< text="reftext" />](refurl)
+```
+
 ## Licence
 
 [MIT](https://github.com/timlrx/tailwind-nextjs-starter-blog/blob/main/LICENSE) 

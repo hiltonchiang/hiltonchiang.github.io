@@ -18,7 +18,7 @@ This project is forked from [Timothy Lin](https://www.timlrx.com)
     This is a [EXtLink< text="reftext" />](refurl)
 ```
 
-And it will look like [reftext ![](/static/images/extlink.svg)](refurl)
+And it will look like [reftext ](refurl)![](/static/images/extlink.svg)
 
 ## Licence
 

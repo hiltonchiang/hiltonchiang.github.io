@@ -11,7 +11,7 @@ This project is forked from [Timothy Lin](https://www.timlrx.com)
 ## ChangeLogs
 
 1. Added [rehypeMermaid](https://github.com/natikgadzhi/respawn-io/blob/main/lib/rehypeMermaid.ts) from [respawn](https://github.com/natikgadzhi/respawn-io) to add a new feature that converts [mermaid](https://mermaid.js.org/) diagram into a svg element in mdx file. See [voip](https://hiltonchiang.github.io/blog/voip).
-   Its usage is like this:
+    Its usage is like this:
 
 ```
 ```mermaid
@@ -21,12 +21,12 @@ This project is forked from [Timothy Lin](https://www.timlrx.com)
 ```
 
 2. Added a component `ExtLink` to append an ![icon](/public/static/images/extlink.png) to anchor reference.
-   Its usage is like this:
+    Its usage is like this:
 
 ```
     This is a [ExtLink< text="reftext" />](refurl)
 ```
-   And it will look like [reftext](refurl) ![icon](/public/static/images/extlink.png)
+    And it will look like [reftext](refurl) ![icon](/public/static/images/extlink.png)
 
 3. Added profile catagories
 

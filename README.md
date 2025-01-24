@@ -21,6 +21,9 @@ This project is forked from [Timothy Lin](https://www.timlrx.com)
 
 And it will look like [reftext](refurl) ![icon](/public/static/images/extlink.png)
 
+3. Added profile cataories
+
+
 ## Licence
 
 [MIT](https://github.com/timlrx/tailwind-nextjs-starter-blog/blob/main/LICENSE) 

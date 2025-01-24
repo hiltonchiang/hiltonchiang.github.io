@@ -15,10 +15,10 @@ This project is forked from [Timothy Lin](https://www.timlrx.com)
 Its usage is like this:
 
 ```
-\`\`\`mermaid
+```mermaid
    sequenceDiagram
      ...
-\`\`\`
+```
 
 ```
 

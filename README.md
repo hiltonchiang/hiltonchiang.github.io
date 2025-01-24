@@ -18,7 +18,7 @@ Its usage is like this:
 ```mermaid
    sequenceDiagram
      balabala
-```
+\`\`\`
 ```
 
 2. Added a component `ExtLink` to append an ![icon](/public/static/images/extlink.png) to anchor reference. Its usage is like this 

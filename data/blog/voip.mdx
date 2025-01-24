@@ -16,10 +16,11 @@ I started a VoIP business in year 2000. It went find until a free Skype came out
 
 ### What is NAT?
 
-NAT (Network Address Translation) is needed for sending/receiving packets to/from outside. An IP packet has four tuples (Source Address, Source Port, Destination Address, Destination Port) for identifying the address and application for the packet. It's better to see a sequence diagram as depicted in the Figure 1 below.
+NAT (Network Address Translation) is needed for sending/receiving packets to/from outside. An IP packet has four tuples (Source Address, Source Port, Destination Address, Destination Port) for identifying the address and application for the packet. It's better to see a sequence diagram as depicted in the Figure below.
 
 <div className="md max-w-[1088px] p-4 md:w-full hover:scale-150 transform-gpu">
 
+<span id ="figure1" />
 ```mermaid
 
 sequenceDiagram
@@ -37,12 +38,13 @@ sequenceDiagram
 ```
 
 </div>
-As can be seen in the Figure 1, Alice has a private local IP address, 192.168.0.100; NAT-1 changes two tuples (Source Address, Source Port) of the packet before sending out, the packet reaches NAT-2, and NAT-2 can check (Destination Port) to see if is is a well-know port number and forwards the packet to its pre-assigned destination. This scenario is called [<ExtLink text="port forwarding" />](https://en.wikipedia.org/wiki/Port_forwarding).
+As can be seen in the [Figure 1](#figure1), Alice has a private local IP address, 192.168.0.100; NAT-1 changes two tuples (Source Address, Source Port) of the packet before sending out, the packet reaches NAT-2, and NAT-2 can check (Destination Port) to see if is is a well-know port number and forwards the packet to its pre-assigned destination. This scenario is called [<ExtLink text="port forwarding" />](https://en.wikipedia.org/wiki/Port_forwarding).
 
 Let's see another scenario, two clients sending different packets to the same server with a public IP address.
 
 <div className="md max-w-[1088px] p-4 md:w-full hover:scale-150 transform-gpu ">
 
+<span id ="figure2" />
 ```mermaid
 
 sequenceDiagram
@@ -68,14 +70,14 @@ sequenceDiagram
 
 </div>
 
-As can be seen in the Figure 2, NAT assigns two different Source Port, SPx and SPy for each packets. The reason is simple, NAT needs to send replied packets back to the source. NAT needs to keep track of the session, translated source port is the key.
+As can be seen in the [Figure 2](#figure2), NAT assigns two different Source Port, SPx and SPy for each packets. The reason is simple, NAT needs to send replied packets back to the source. NAT needs to keep track of the session, translated source port is the key.
 
 ### NAT Traversal
 
 The method I used in my P2P VoIP network can be explained by this lengthy article [<ExtLink text="NAT Traversal Techniques" />](https://github.com/P2PSP/core/blob/master/doc/NTS/NAT_traversal.md). I try to use a simplified figure to depict it.
 
 <div className="md max-w-[1088px] p-4 md:w-full hover:scale-150 transform-gpu">
-
+<span id ="figure3" />
 ```mermaid
 
 sequenceDiagram
@@ -106,6 +108,6 @@ sequenceDiagram
 
 </div>
 
-The key is to have a server with public address to help Alice and Bob who are sitting behind NATs with strict port checking rules. Alice sends three packets out to 'punch a hole'. Its sending order is important; first to server, second to Bob and third to server. So Server collects two packets with assigned source port number. This info is forwarded to Bob. Bob can use it to predict second packet's source port number by sending number of packets to Alice. Most of the time, it works. 
+The key is to have a server with a public IP address to help Alice and Bob who are sitting behind NATs with strict port checking rules. Alice sends three packets out to 'punch a hole'. Its sending order is important; first to server, second to Bob and third to server. So Server collects two packets with assigned source port number. This info is forwarded to Bob. Bob can use it to predict second packet's source port number by sending number of packets to Alice. Most of the time, it works. 
 
-As seen in the Figure 3, Bob guess SP2 by using info (SP1, SP3).
+As seen in the [Figure 3](#figure3), Bob guess SP2 by using info (SP1, SP3).

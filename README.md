@@ -12,14 +12,14 @@ This project is forked from [Timothy Lin](https://www.timlrx.com)
 
 1. Added [rehypeMermaid](https://github.com/natikgadzhi/respawn-io/blob/main/lib/rehypeMermaid.ts) from [respawn](https://github.com/natikgadzhi/respawn-io) to add a new feature that converts [mermaid](https://mermaid.js.org/) diagram into a svg element in mdx file. See [voip](https://hiltonchiang.github.io/blog/voip).
 
-2. Added a component `ExtLink` to append an ![icon](/public/static/images/extlink.svg)
+2. Added a component `ExtLink` to append an ![icon](/public/static/images/extlink.png)
  to anchor reference. Its usage like this 
 
 ```
     This is a [ExtLink< text="reftext" />](refurl)
 ```
 
-And it will look like [![reftext](/public/static/images/extlink.svg)](refurl)
+And it will look like [![reftext](/public/static/images/extlink.png)](refurl)
 
 ## Licence
 

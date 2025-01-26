@@ -9,6 +9,11 @@ summary: 'NAT Traversal, Peer-to-Peer VoIP'
 images: ['/static/images/twitter-card.png']
 ---
 
+import EOF from '@/components/EOF'
+import ENTER from '@/components/ENTER'
+
+<ENTER />
+
 import ExtLink from "@/components/ExtLink"
 
 I started a VoIP business in year 2000. It went find until a free Skype came out. Our small start-up was affected completely. However, the technique of P2P NAT traverse we used was quite new in the early 2000. I will try to explain a little about UDP/IP packets transactions for entities sitting behind their installed NATs.
@@ -110,4 +115,6 @@ sequenceDiagram
 
 The key is to have a server with a public IP address to help Alice and Bob who are sitting behind NATs with strict port checking rules. Alice sends three packets out to 'punch a hole'. Its sending order is important; first to server, second to Bob and third to server. So Server collects two packets with assigned source port number. This info is forwarded to Bob. Bob can use it to predict second packet's source port number by sending number of packets to Alice. Most of the time, it works. 
 
-As seen in the [Figure 3](#figure3), Bob guess SP2 by using info (SP1, SP3).
+As seen in the [Figure 3](#figure3), Bob predicts SP2 by sending out many packets within the reang of (SP1, SP3).
+
+<EOF />

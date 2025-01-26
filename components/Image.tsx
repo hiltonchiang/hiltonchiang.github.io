@@ -1,3 +1,4 @@
+'use client'
 import NextImage, { ImageProps } from 'next/image'
 
 const basePath = process.env.BASE_PATH

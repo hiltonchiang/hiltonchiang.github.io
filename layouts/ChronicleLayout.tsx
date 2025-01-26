@@ -52,7 +52,7 @@ export default function ChronicleLayout({ content, next, prev, children }: Layou
                       className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                       aria-label={`Previous post: ${prev.title}`}
                     >
-                      &larr; {prev.title}
+                      &#8630;&nbsp; {prev.title}
                     </Link>
                   </div>
                 )}
@@ -63,7 +63,7 @@ export default function ChronicleLayout({ content, next, prev, children }: Layou
                       className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
                       aria-label={`Next post: ${next.title}`}
                     >
-                      {next.title} &rarr;
+                      {next.title} &nbsp;&#8631;
                     </Link>
                   </div>
                 )}

@@ -1,4 +1,5 @@
 'use client'
+import { EnterIcon, ExitIcon, QuoteIcon } from '@radix-ui/react-icons'
 
 interface Props {
   texts: string[]

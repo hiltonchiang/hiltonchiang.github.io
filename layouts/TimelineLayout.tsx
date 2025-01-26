@@ -160,9 +160,9 @@ export default function ListLayout({
                   </dl>
                   <div className="space-y-3 xl:col-span-3">
                     <div>
-                      <h3 className="text-2xl font-bold leading-8 tracking-tight">
+                      <h3 className="transform-gpu text-2xl font-bold leading-8 tracking-tight hover:animate-pulse">
                         <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
-                          {title}
+                          <span className="hover:text-amber-300">{title}</span>
                         </Link>
                       </h3>
                       <div className="flex flex-wrap">

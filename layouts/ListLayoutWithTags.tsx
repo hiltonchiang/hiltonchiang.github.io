@@ -190,7 +190,9 @@ export default function ListLayoutWithTags({
                         <div>
                           <h2 className="text-2xl font-bold leading-8 tracking-tight">
                             <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
-                              {title}
+                              <span className="transofrm-gpu hover:animate-pulse hover:text-amber-300">
+                                {title}
+                              </span>
                             </Link>
                           </h2>
                           <div className="flex flex-wrap">

@@ -59,7 +59,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
           <div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 dark:divide-gray-700 xl:grid xl:grid-cols-4 xl:gap-x-6 xl:divide-y-0">
             <dl className="pb-10 pt-6 xl:border-b xl:border-gray-200 xl:pt-11 xl:dark:border-gray-700">
               <dt className="sr-only">Authors</dt>
-              <dd>
+              <dd className="group inline-flex">
                 <ul className="flex flex-wrap justify-center gap-4 sm:space-x-12 xl:block xl:space-x-0 xl:space-y-8">
                   {authorDetails.map((author) => (
                     <li className="flex items-center space-x-2" key={author.name}>
@@ -74,24 +74,16 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                       )}
                       <dl className="whitespace-nowrap text-sm font-medium leading-5">
                         <dt className="sr-only">Name</dt>
-                        <dd className="text-gray-900 dark:text-gray-100">{author.name}</dd>
-                        <dt className="sr-only">Twitter</dt>
-                        <dd>
-                          {author.twitter && (
-                            <Link
-                              href={author.twitter}
-                              className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
-                            >
-                              {author.twitter
-                                .replace('https://twitter.com/', '@')
-                                .replace('https://x.com/', '@')}
-                            </Link>
-                          )}
+                        <dd className="text-gray-900 group-hover:text-lime-300 dark:text-gray-100">
+                          {author.name}
                         </dd>
                       </dl>
                     </li>
                   ))}
                 </ul>
+                <span className="pl-6 text-sm text-amber-300 opacity-0 [text-orientation:upright] [writing-mode:vertical-rl] group-hover:opacity-100">
+                  剛克沉潛
+                </span>
               </dd>
             </dl>
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">

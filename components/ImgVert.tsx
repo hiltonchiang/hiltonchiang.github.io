@@ -17,7 +17,7 @@ const ImgVert = ({ texts, imgSrc, imgAlt, height = '60' }: Props) => {
         <img alt={imgAlt} src={imgSrc} className={clsString} />
       </div>
       <div className="pl-16">
-        <div className="prose mt-3 max-w-none text-2xl text-amber-300 [text-orientation:upright] [writing-mode:vertical-rl] dark:prose-invert xl:col-span-2">
+        <div className="prose mt-3 max-w-none text-2xl text-stone-800 [text-orientation:upright] [writing-mode:vertical-rl] dark:prose-invert dark:text-amber-300 xl:col-span-2">
           {texts.map((t) => (
             <p key={t}> {t} </p>
           ))}

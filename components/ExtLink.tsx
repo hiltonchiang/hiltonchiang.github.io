@@ -1,3 +1,24 @@
+'use client'
+
+import { ReactNode } from 'react'
+interface Props {
+  children: ReactNode
+}
+
+export default function ExtLink({ children }: Props) {
+  return (
+    <span className="group inline-flex justify-between">
+      {children}
+      <span className="group-hover:translate-y-2">
+        <SymbolExtLink />
+      </span>
+    </span>
+  )
+}
+
+export function ContentColor({ children }: Props) {
+  return <span className="text-stone-500 dark:text-red-400">{children}</span>
+}
 export function SymbolArrow() {
   return (
     <>
@@ -60,14 +81,3 @@ export function SymbolExtLink() {
     </>
   )
 }
-interface Props {
-  text: string
-}
-const ExtLink = ({ text }: Props) => {
-  return (
-    <span className="inline-flex justify-between">
-      {text} <SymbolExtLink />
-    </span>
-  )
-}
-export default ExtLink

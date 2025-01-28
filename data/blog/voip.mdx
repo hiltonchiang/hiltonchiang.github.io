@@ -9,11 +9,6 @@ summary: 'NAT Traversal, Peer-to-Peer VoIP'
 images: ['/static/images/twitter-card.png']
 ---
 
-import EOF from '@/components/EOF'
-import ENTER from '@/components/ENTER'
-
-<ENTER />
-
 import ExtLink from "@/components/ExtLink"
 
 I started a VoIP business in year 2000. It went find until a free Skype came out. Our small start-up was affected completely. However, the technique of P2P NAT traverse we used was quite new in the early 2000. I will try to explain a little about UDP/IP packets transactions for entities sitting behind their installed NATs.
@@ -43,7 +38,7 @@ sequenceDiagram
 ```
 
 </div>
-As can be seen in the [Figure 1](#figure1), Alice has a private local IP address, 192.168.0.100; NAT-1 changes two tuples (Source Address, Source Port) of the packet before sending out, the packet reaches NAT-2, and NAT-2 can check (Destination Port) to see if is is a well-know port number and forwards the packet to its pre-assigned destination. This scenario is called [<ExtLink text="port forwarding" />](https://en.wikipedia.org/wiki/Port_forwarding).
+As can be seen in the [Figure 1](#figure1), Alice has a private local IP address, 192.168.0.100; NAT-1 changes two tuples (Source Address, Source Port) of the packet before sending out, the packet reaches NAT-2, and NAT-2 can check (Destination Port) to see if is is a well-know port number and forwards the packet to its pre-assigned destination. This scenario is called [<ExtLink>port forwarding</ExtLink>](https://en.wikipedia.org/wiki/Port_forwarding).
 
 Let's see another scenario, two clients sending different packets to the same server with a public IP address.
 
@@ -79,7 +74,7 @@ As can be seen in the [Figure 2](#figure2), NAT assigns two different Source Por
 
 ### NAT Traversal
 
-The method I used in my P2P VoIP network can be explained by this lengthy article [<ExtLink text="NAT Traversal Techniques" />](https://github.com/P2PSP/core/blob/master/doc/NTS/NAT_traversal.md). I try to use a simplified figure to depict it.
+The method I used in my P2P VoIP network can be explained by this lengthy article [<ExtLink>NAT Traversal Techniques</ExtLink>](https://github.com/P2PSP/core/blob/master/doc/NTS/NAT_traversal.md). I try to use a simplified figure to depict it.
 
 <div className="md max-w-[1088px] p-4 md:w-full hover:scale-150 transform-gpu">
 <span id ="figure3" />
@@ -117,4 +112,3 @@ The key is to have a server with a public IP address to help Alice and Bob who a
 
 As seen in the [Figure 3](#figure3), Bob predicts SP2 by sending out many packets within the reang of (SP1, SP3).
 
-<EOF />

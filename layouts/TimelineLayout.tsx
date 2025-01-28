@@ -10,6 +10,7 @@ import Link from '@/components/Link'
 import Tag from '@/components/Tag'
 import siteMetadata from '@/data/siteMetadata'
 import refData from 'app/ref-data.json'
+import HOVER from '@/components/HOVER'
 
 interface PaginationProps {
   totalPages: number
@@ -162,7 +163,7 @@ export default function ListLayout({
                     <div>
                       <h3 className="transform-gpu text-2xl font-bold leading-8 tracking-tight hover:animate-pulse">
                         <Link href={`/${path}`} className="text-gray-900 dark:text-gray-100">
-                          <span className="hover:text-amber-300">{title}</span>
+                          <HOVER>{title}</HOVER>
                         </Link>
                       </h3>
                       <div className="flex flex-wrap">

@@ -2,6 +2,8 @@ import { ReactNode } from 'react'
 import type { Authors } from 'contentlayer/generated'
 import SocialIcon from '@/components/social-icons'
 import Image from '@/components/Image'
+import ENTER from '@/components/ENTER'
+import EOF from '@/components/EOF'
 
 interface Props {
   children: ReactNode
@@ -42,7 +44,9 @@ export default function AuthorLayout({ children, content }: Props) {
             </div>
           </div>
           <div className="prose-xl max-w-none pb-8 pt-8 dark:prose-invert xl:col-span-2">
+            <ENTER />
             {children}
+            <EOF />
           </div>
         </div>
       </div>

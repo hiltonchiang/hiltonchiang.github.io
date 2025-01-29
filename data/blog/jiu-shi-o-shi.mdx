@@ -9,6 +9,9 @@ summary: '偶然找到一本2018年四月阿里巴巴發的筆記簿，那是給
 images: ['/static/images/twitter-card.png']
 ---
 
+import ImgVert from '@/components/ImgVert'
+import BlockQuotes from '@/components/BlockQuotes'
+
 <div className="-mx-2 flex flex-wrap overflow-hidden xl:-mx-2">
     <div className="my-1 w-full overflow-hidden px-2 xl:my-1 xl:w-1/2 xl:px-2">
      ![wp-1](/static/images/wordpress/PSX_20220719_093619.jpg)
@@ -106,19 +109,10 @@ images: ['/static/images/twitter-card.png']
 ---
 
 <div className="-mx-2 flex flex-wrap overflow-hidden xl:-mx-2">
-    <div className="my-1 w-full overflow-hidden px-2 xl:my-1 xl:w-1/2 xl:px-2">
-        ![wp-18](/static/images/wordpress/1000000782.jpg)
-    </div>
-    <div className="text-2xl my-1 w-full overflow-hidden px-2 xl:my-1 xl:w-1/2 xl:px-2">
->他鄉依舊碧藍天 
->
->拍岸浪濤不似前
->
->昔日春風年少客 
->
->如今只識醬油鹽
-
-這是因為友人去南加州聖地亞哥La Jolla海邊發了張照片給我。那是我1986年念UCSD研究所的地方。有感而發，寫這詩。
-    </div>
+  <ImgVert texts={['他鄉依舊碧藍天','拍岸浪濤不似前','昔日春風年少客','如今只識醬油鹽']}
+    imgSrc='/static/images/wordpress/1000000782.jpg'
+    imgAlt='wp-19'
+  />
+  <BlockQuotes texts={['這是因為友人去南加州聖地亞哥LaJolla海邊發了張照片給我。那是我1986年念UCSD研究所的地方。有感而發，寫這詩。']} />
 </div>
 

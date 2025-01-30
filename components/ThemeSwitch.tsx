@@ -129,5 +129,5 @@ const ThemeSwitch = () => {
     </div>
   )
 }
-
+ThemeSwitch.displayName = 'ThemeSwitch'
 export default ThemeSwitch

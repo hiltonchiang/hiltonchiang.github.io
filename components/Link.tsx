@@ -19,5 +19,5 @@ const CustomLink = ({ href, ...rest }: LinkProps & AnchorHTMLAttributes<HTMLAnch
     <a className="break-words" target="_blank" rel="noopener noreferrer" href={href} {...rest} />
   )
 }
-
+CustomLink.displayName = 'CustomLink'
 export default CustomLink

@@ -5,5 +5,5 @@ const TableWrapper = ({ children }) => {
     </div>
   )
 }
-
+TableWrapper.displayName = 'TableWrapper'
 export default TableWrapper

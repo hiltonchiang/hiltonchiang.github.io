@@ -17,4 +17,5 @@ const BlockQuotes = ({ texts }: Props) => {
     </>
   )
 }
+BlockQuotes.displayName = 'BlockQuotes'
 export default BlockQuotes

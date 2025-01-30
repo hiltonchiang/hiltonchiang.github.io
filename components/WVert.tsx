@@ -13,3 +13,4 @@ export default function WVert({ children }: Props) {
     </div>
   )
 }
+WVert.displayName = 'WVert'

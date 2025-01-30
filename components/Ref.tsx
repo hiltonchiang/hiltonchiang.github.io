@@ -15,5 +15,5 @@ const Ref = ({ text, mdx }: Props) => {
     </Link>
   )
 }
-
+Ref.displayName = 'Ref'
 export default Ref

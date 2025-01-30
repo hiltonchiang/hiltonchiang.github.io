@@ -104,5 +104,5 @@ const MobileNav = () => {
     </>
   )
 }
-
+MobileNav.displayName = 'MobileNav'
 export default MobileNav

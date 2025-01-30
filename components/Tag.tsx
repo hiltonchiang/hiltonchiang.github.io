@@ -14,5 +14,5 @@ const Tag = ({ text }: Props) => {
     </Link>
   )
 }
-
+Tag.displayName = 'Tag'
 export default Tag

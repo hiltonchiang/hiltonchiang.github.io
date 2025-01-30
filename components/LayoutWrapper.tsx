@@ -23,5 +23,5 @@ const LayoutWrapper = ({ children }: Props) => {
     </SectionContainer>
   )
 }
-
+LayoutWrapper.displayName = 'LayoutWrapper'
 export default LayoutWrapper

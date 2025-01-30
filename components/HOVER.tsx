@@ -24,3 +24,4 @@ export default function HOVER({ children }: Props) {
     </>
   )
 }
+HOVER.displayName = 'HOVER'

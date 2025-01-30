@@ -20,5 +20,5 @@ const ENTER = () => {
     </div>
   )
 }
-
+ENTER.displayName = 'ENTER'
 export default ENTER

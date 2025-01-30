@@ -12,3 +12,4 @@ export default function PageTitle({ children }: Props) {
     </h1>
   )
 }
+PageTitle.displayName = 'PageTitle'

@@ -57,5 +57,5 @@ const Card = ({ title, description, imgSrc, href }) => (
     </div>
   </div>
 )
-
+Card.displayName = 'Card'
 export default Card

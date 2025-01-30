@@ -29,5 +29,5 @@ const HeroLogo = () => {
     </>
   )
 }
-
+HeroLogo.displayName = 'HeroLogo'
 export default HeroLogo

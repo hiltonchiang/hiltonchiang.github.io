@@ -11,7 +11,7 @@ export function Facebook(svgProps: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
-
+Facebook.displayName = 'Facebook'
 export function Github(svgProps: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...svgProps}>
@@ -20,7 +20,7 @@ export function Github(svgProps: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
-
+Github.displayName = 'Github'
 export function Linkedin(svgProps: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...svgProps}>
@@ -29,7 +29,7 @@ export function Linkedin(svgProps: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
-
+Linkedin.displayName = 'Linkedin'
 export function Mail(svgProps: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" {...svgProps}>
@@ -39,7 +39,7 @@ export function Mail(svgProps: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
-
+Mail.displayName = 'Mail'
 export function Twitter(svgProps: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...svgProps}>
@@ -48,7 +48,7 @@ export function Twitter(svgProps: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
-
+Twitter.displayName = 'Twitter'
 export function X(svgProps: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...svgProps}>
@@ -57,7 +57,7 @@ export function X(svgProps: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
-
+X.displayName = 'X'
 export function Youtube(svgProps: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...svgProps}>
@@ -66,7 +66,7 @@ export function Youtube(svgProps: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
-
+Youtube.displayName = 'Youtube'
 export function Mastodon(svgProps: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...svgProps}>
@@ -75,7 +75,7 @@ export function Mastodon(svgProps: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
-
+Mastodon.displayName = 'Mastodon'
 export function Threads(svgProps: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...svgProps}>
@@ -84,7 +84,7 @@ export function Threads(svgProps: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
-
+Threads.displayName = 'Threads'
 export function Instagram(svgProps: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...svgProps}>
@@ -93,7 +93,7 @@ export function Instagram(svgProps: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
-
+Instagram.displayName = 'Instagram'
 export function Medium(svgProps: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...svgProps}>
@@ -102,6 +102,7 @@ export function Medium(svgProps: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
+Medium.displayName = 'Medium'
 export function Bluesky(svgProps: SVGProps<SVGSVGElement>) {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" {...svgProps}>
@@ -110,3 +111,4 @@ export function Bluesky(svgProps: SVGProps<SVGSVGElement>) {
     </svg>
   )
 }
+Bluesky.displayName = 'BLuesky'

@@ -31,5 +31,5 @@ const SearchButton = () => {
     )
   }
 }
-
+SearchButton.displayName = 'SearchButton'
 export default SearchButton

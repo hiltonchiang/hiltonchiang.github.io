@@ -57,5 +57,5 @@ const SocialIcon = ({ kind, href, size = 8 }: SocialIconProps) => {
     </a>
   )
 }
-
+SocialIcon.displayName = 'SocialIcon'
 export default SocialIcon

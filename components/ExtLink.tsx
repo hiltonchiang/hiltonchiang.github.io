@@ -15,10 +15,13 @@ export default function ExtLink({ children }: Props) {
     </span>
   )
 }
+ExtLink.displayName = 'ExtLink'
 
 export function ContentColor({ children }: Props) {
   return <span className="text-stone-500 dark:text-red-400">{children}</span>
 }
+ContentColor.displayName = 'ContentColor'
+
 export function SymbolArrow() {
   return (
     <>
@@ -41,6 +44,7 @@ export function SymbolArrow() {
     </>
   )
 }
+SymbolArrow.displayName = 'SymbolArrow'
 
 export function Symbol1f517() {
   return (
@@ -59,6 +63,7 @@ export function Symbol1f517() {
     </>
   )
 }
+Symbol1f517.displayName = 'Symbol1f517'
 
 export function SymbolExtLink() {
   return (
@@ -81,3 +86,4 @@ export function SymbolExtLink() {
     </>
   )
 }
+SymbolExtLink.displayName = 'SymbolExtLink'

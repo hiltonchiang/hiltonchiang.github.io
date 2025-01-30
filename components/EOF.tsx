@@ -19,5 +19,5 @@ const EOF = () => {
     </div>
   )
 }
-
+EOF.displayName = 'EOF'
 export default EOF

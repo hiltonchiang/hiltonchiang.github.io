@@ -1,8 +1,8 @@
-import { BloggerIcon, TagIcon, LayersIcon, TimelineIcon, UserIcon } from '@/components/ExtLink'
+import { BloggerIcon, TagIcon, LayersIcon, TimelineIcon, UserIcon, HomeIcon } from '@/components/ExtLink'
 import WVert from '@/components/WVert'
 
 const headerNavLinks = [
-  { href: '/', title: 'Home', tip:'Home' },
+  { href: '/', title: 'Home', tip:'Home', icon: <HomeIcon /> },
   { href: '/blog', title: 'Blog', tip: 'Blogs', icon: <BloggerIcon /> },
   { href: '/tags', title: 'Tags', tip: 'Tags' , icon: <TagIcon />   },
   { href: '/projects', title: 'Projects', tip:'Projects', icon: <LayersIcon /> },

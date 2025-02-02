@@ -39,6 +39,7 @@
     "postcss": "^8.4.24",
     "puppeteer": "^23.1.0",
     "react": "rc",
+    "react-awesome-reveal": "^4.3.1",
     "react-dom": "rc",
     "reading-time": "1.5.0",
     "rehype-autolink-headings": "^7.1.0",

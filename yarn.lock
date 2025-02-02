@@ -9987,6 +9987,7 @@ __metadata:
     prettier-plugin-tailwindcss: ^0.5.11
     puppeteer: ^23.1.0
     react: rc
+    react-awesome-reveal: ^4.3.1
     react-dom: rc
     reading-time: 1.5.0
     rehype-autolink-headings: ^7.1.0
@@ -13479,6 +13480,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-awesome-reveal@npm:^4.3.1":
+  version: 4.3.1
+  resolution: "react-awesome-reveal@npm:4.3.1"
+  dependencies:
+    react-intersection-observer: ^9.13.0
+    react-is: ^18.3.1
+  peerDependencies:
+    "@emotion/react": ^11.0.0
+    react: ">=16.14.0"
+  checksum: 293256ecbd1c5b79fdcbea9690384e017a8e7af073143ed93982d7ac8438572501484621cb8c2bf0cdda834c7986c64dfc545b4bb9ac14c98887c2d9fce0def5
+  languageName: node
+  linkType: hard
+
 react-dom@rc:
   version: 18.3.1
   resolution: "react-dom@npm:18.3.1"
@@ -13491,10 +13505,30 @@ react-dom@rc:
   languageName: node
   linkType: hard
 
+"react-intersection-observer@npm:^9.13.0":
+  version: 9.15.1
+  resolution: "react-intersection-observer@npm:9.15.1"
+  peerDependencies:
+    react: ^17.0.0 || ^18.0.0 || ^19.0.0
+    react-dom: ^17.0.0 || ^18.0.0 || ^19.0.0
+  peerDependenciesMeta:
+    react-dom:
+      optional: true
+  checksum: 9769b06f065a246c2e477ad6a4ffeeb66c0c00098f094980f123df4ef1e09067b8d4b9f88d5f8e3a6de747c384b02452d0ac8cb91fff7093c15b8375ae097166
+  languageName: node
+  linkType: hard
+
 "react-is@npm:^16.13.1, react-is@npm:^16.7.0":
   version: 16.13.1
   resolution: "react-is@npm:16.13.1"
   checksum: f7a19ac3496de32ca9ae12aa030f00f14a3d45374f1ceca0af707c831b2a6098ef0d6bdae51bd437b0a306d7f01d4677fcc8de7c0d331eb47ad0f46130e53c5f
+  languageName: node
+  linkType: hard
+
+"react-is@npm:^18.3.1":
+  version: 18.3.1
+  resolution: "react-is@npm:18.3.1"
+  checksum: e20fe84c86ff172fc8d898251b7cc2c43645d108bf96d0b8edf39b98f9a2cae97b40520ee7ed8ee0085ccc94736c4886294456033304151c3f94978cec03df21
   languageName: node
   linkType: hard
 

@@ -14,6 +14,7 @@ import WVert from '@/components/WVert'
 import ENTER from '@/components/ENTER'
 import EOF from '@/components/EOF'
 import HOVER from '@/components/HOVER'
+import { Fade, Slide } from 'react-awesome-reveal'
 
 const editUrl = (path) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
 const discussUrl = (path) => `https://github.com/hiltonchiang/hiltonchiang.github.io/discussions/`
@@ -48,14 +49,18 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                 <div>
                   <dt className="sr-only">Published on</dt>
                   <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                    <time dateTime={date}>
-                      {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
-                    </time>
+                    <Slide duration={6000} direction="right" triggerOnce={true}>
+                      <time dateTime={date}>
+                        {new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
+                      </time>
+                    </Slide>
                   </dd>
                 </div>
               </dl>
               <div>
-                <PageTitle>{title}</PageTitle>
+                <Slide duration={6000} triggerOnce={true}>
+                  <PageTitle>{title}</PageTitle>
+                </Slide>
               </div>
             </div>
           </header>

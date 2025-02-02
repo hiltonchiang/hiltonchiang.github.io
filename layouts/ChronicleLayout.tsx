@@ -10,6 +10,7 @@ import siteMetadata from '@/data/siteMetadata'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 import ENTER from '@/components/ENTER'
 import EOF from '@/components/EOF'
+import { Fade, Slide } from 'react-awesome-reveal'
 
 interface LayoutProps {
   content: CoreContent<Chronicle>
@@ -32,12 +33,16 @@ export default function ChronicleLayout({ content, next, prev, children }: Layou
                 <div>
                   <dt className="sr-only">Published on</dt>
                   <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
-                    <time dateTime={date}>{duration}</time>
+                    <Slide duration={6000} direction="right" triggerOnce={true}>
+                      <time dateTime={date}>{duration}</time>
+                    </Slide>
                   </dd>
                 </div>
               </dl>
               <div>
-                <PageTitle>{title}</PageTitle>
+                <Slide duration={6000} triggerOnce={true}>
+                  <PageTitle>{title}</PageTitle>
+                </Slide>
               </div>
             </div>
           </header>

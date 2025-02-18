@@ -138,10 +138,14 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
                     <h2 className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400">
                       Refs
                     </h2>
-                    <div className="flex flex-wrap">
-                      {refs.map((ref) => (
-                        <Ref key={ref} mdx={slug} text={ref} />
-                      ))}
+                    <div className="round-2xl flex flex-wrap border-l-2 border-indigo-500">
+                      <ul>
+                        {refs.map((ref) => (
+                          <li key={ref} className="pl-4">
+                            <Ref key={ref} mdx={slug} text={ref} />
+                          </li>
+                        ))}
+                      </ul>
                     </div>
                   </div>
                 )}

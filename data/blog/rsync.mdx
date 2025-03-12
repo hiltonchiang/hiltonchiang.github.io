@@ -1,0 +1,53 @@
+---
+title: 'linux-to-windows-using-rsync'
+date: '2025-03-12'
+lastmod: '2025-03-12'
+tags: ['rsync']
+draft: false
+authors: ['hilton']
+summary: 'how to send files from Linux to Windows'
+
+---
+import ExtLink, {ContentColor} from "@/components/ExtLink"
+
+網搜這句: <ContentColor>"linux to use **rsync** to send files to windows"</ContentColor>, 谷歌大神的回覆：
+- To send files from Linux to Windows using **rsync**, you'll need a Windows **rsync** implementation (like cw**rsync** or **rsync** with Cygwin) and SSH access between the machines. Then, use the **rsync** command with the -a option to preserve permissions and recursively copy files, along with the -e "ssh" option to specify SSH for the remote shell. 
+Here's a breakdown of the steps:
+- Prerequisites:
+    - <ContentColor>Install **rsync** on Windows</ContentColor>:
+You can use tools like cwrsync (a GUI client with a secure channel wrapper and **rsync** server) or install **rsync** as part of a Cygwin installation. 
+    - <ContentColor>Configure SSH</ContentColor>:
+Ensure that SSH is enabled and properly configured on both the Linux and Windows systems for secure communication. 
+    - <ContentColor>Basic **rsync** Command Syntax</ContentColor>:
+```bash
+        From Linux to Windows.
+
+        rsync -avz -e "ssh" /path/to/source/directory user@windows_ip:/path/to/destination/directory
+            -a: Archive mode (preserves permissions, ownership, timestamps, etc.). 
+            -v: Verbose output. 
+            -z: Compression. 
+            -e "ssh": Uses SSH for the remote shell. 
+            /path/to/source/directory: The path to the directory you want to copy on the Linux system. 
+            user@windows_ip: Username and IP address of the Windows machine. 
+            /path/to/destination/directory: The path to the destination directory on the Windows system. 
+```
+- Examples
+```bash
+        Copying a directory from Linux to Windows:
+
+        rsync -avz -e "ssh" /home/user/documents/ /path/to/windows_share/backup_dir root@192.168.1.10:/cygdrive/c/users/user/documents/
+
+        Copying a file from Linux to Windows
+
+        rsync -avz -e "ssh" /home/user/data/myfile.txt root@192.168.1.10:/cygdrive/c/users/user/documents/
+```
+- Troubleshooting
+    - <ContentColor>Permissions</ContentColor>:
+Ensure that the user on the Linux system has sufficient permissions to access the source directory, and the user on the Windows machine has permissions to write to the destination directory. 
+    - <ContentColor>Firewall</ContentColor>:
+Verify that any firewalls on either system are not blocking the SSH port (default is 22). 
+    - <ContentColor>Cygwin Path</ContentColor>:
+If using Cygwin for Windows, ensure that **rsync** is added to the system PATH. 
+    - <ContentColor>Windows Share</ContentColor>:
+If using a Windows share, make sure the share is correctly configured and the Linux user has access rights to the share. 
+

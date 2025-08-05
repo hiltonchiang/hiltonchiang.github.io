@@ -4,7 +4,7 @@ import { allChronicles } from 'contentlayer/generated'
 import { genPageMetadata } from 'app/seo'
 
 const POSTS_PER_PAGE = 5
-const summary = 'Chronically show where I studied, where I worked and what I did.'
+const summary = 'Chronically listing where I studied, where I worked and what I did.'
 export const metadata = genPageMetadata({ title: 'Profile' })
 
 export default function Page() {

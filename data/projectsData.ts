@@ -8,13 +8,13 @@ interface Project {
 const projectsData: Project[] = [
   {
     title: 'Peer-to-Peer VoIP',
-    description: `I co-funded a start-up doing VoIP business. The key tech is to find a way to traverse NAT so that it can establish a so called peer-to-peer VoIP communication path.`,
+    description: `I co-founded a startup specializing in VoIP technology. Our core innovation was developing a method to traverse NAT, enabling the establishment of true peer-to-peer VoIP communication channels.`,
     imgSrc: '/static/images/sequence-port-forwarding.png',
     href: '/blog/voip',
   },
   {
     title: `Hilton's Blogs`,
-    description: `This is my first personal web page using nextjs to show my blogs previously posted on WordPress.`,
+    description: `This is my first personal website built with Next.js, designed to showcase my previously published WordPress blog posts.`,
     imgSrc: '/static/images/github-io-blog.png',
     href: '/blog/',
   },

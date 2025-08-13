@@ -3,7 +3,7 @@ const siteMetadata = {
   title: "Hilton's Blog",
   author: 'Hilton Chiang',
   headerTitle: 'HiltonChiang 蔣玉明',
-  description: "Hi, I'm Hilton Chiang. I use nextjs and tailwind css to build this personal web site. I write Chinese poems to present my views and thoughts, hope you like it.",
+  description: "Hello, I am Hilton Chiang. I leveraged Next.js and Tailwind CSS to create this personal online presence. Through Chinese poems, I convey my thoughts and perspectives, and I hope you enjoy them.",
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://hiltonchiang.github.io',

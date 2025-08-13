@@ -20,7 +20,7 @@ const projectsData: Project[] = [
   },
   {
     title: `Android Phone`,
-    description: `This was a long-lasting project I joined for 13 years.`,
+    description: `I was involved in this project for 13 years, making it one of my longest professional commitments.`,
     imgSrc: '/static/images/black-phone.svg',
     href: '/blog/android-phone',
   },

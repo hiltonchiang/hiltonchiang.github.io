@@ -12,6 +12,7 @@ images: ['/static/images/twitter-card.png']
 
 import ImgVert from '@/components/ImgVert'
 import BlockQuotes from '@/components/BlockQuotes'
+import TooltipX from '@/components/TooltipX' 
 
 ---
 # 重慶潼南雙江蔣氏家族
@@ -107,32 +108,54 @@ import BlockQuotes from '@/components/BlockQuotes'
 
 <div className="flex flex-wrap rounded-2xl border-l-2 border-indigo-500">
   <ul>
-    <li key='1' className="pl-4">
+    <li key='1' className="pl-4 md:pl-1">入川第七代（仁字輩）</li>
+    <li key='2' className="pl-4 md:pl-1">
       <div className="relative inline-block group">
-         <span className="hover:bg-blue-600">蔣超元（歿）<time>1870-1943</time></span><br/>
-         <div className="bg-popover text-popover-foreground animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 z-50 overflow-hidden rounded-md border px-3 py-1.5 text-sm shadow-md absolute bottom-full left-1/2 mb-2 p-2 bg-gray-800 text-white text-sm rounded opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none -translate-x-6 translate-y-4 text-base text-stone-300 dark:text-lime-300">
-           譜名仁孝、︁生於1870年2月24日<br/>歿於民國32年（1943年）陰曆11月11日<br/> 葬於雙江鎮老鸛嘴新房子山後
-         </div>
+         <span className="hover:bg-yellow-50 text-primary-500">蔣超元（歿）<time>1870-1943</time></span>
+         <TooltipX contents={['譜名仁孝','生於1870年2月24日','歿於民國32年（1943年）陰曆11月11日','葬於雙江鎮老鸛嘴新房子山後']} />
       </div>
-      蔣胡氏（歿）<time>1880-1957</time>
+      </li>
+    <li key='3' className="pl-4 md:pl-1">
+      <div className="relative inline-block group">
+        <span className="hover:bg-yellow-50 text-primary-500">蔣胡氏（歿）<time>1880-1957</time></span>
+        <TooltipX contents={['生於1880年6月14日','歿於民國46年（1957年)','葬於雙江鎮老鸛嘴新房子山後']} />
+      </div>
     </li>
+    <li key='4' className="pl-4 md:pl-1">入川第八代（必字輩）入臺第一代</li>
     <div className="flex flex-wrap rounded-2xl border-l-2 border-indigo-500">
       <ul>
-        <li key='2' className="pl-4">
-          男 : 蔣文彬（歿）<time>1922-1984</time><br/>
-          媳 : 劉文筠（歿）<time>1925-2021</time>
+        <li key='1' className="pl-4 md:pl-1">
+          <div className="relative inline-block group">
+            <span className="hover:bg-yellow-50 text-primary-500">男: 蔣文彬（歿）<time>1922-1984</time></span>
+            <TooltipX contents={['譜名必兵','生於民國11年（1922年）陰曆1月1日於四川潼南雙江鎮老鸛嘴新房子','歿於民國73年（1984年）陽曆10月19日於臺北榮總','葬於臺北觀音山','配劉文筠、︁育有二子五女']} />
+          </div>
         </li>
+        <li key='2' className="pl-4 md:pl-1">
+          <div className="relative inline-block group">
+            <span className="hover:bg-yellow-50 text-primary-500">媳: 劉文筠（歿）<time>1925-2021</time></span>
+            <TooltipX contents={['譜名祖貞','生於民國14年（1925年）陰曆6月15日於雙江鎮外北街10號','歿於民國110年（2021年）陰曆1月14日於臺北家中','與夫同葬於台北觀音山']} />
+          </div>
+        </li>
+        <li key='3' className="pl-4 md:pl-1">入川第九代（愈字輩）入臺第二代</li>
         <div className="flex flex-wrap rounded-2xl border-l-2 border-indigo-500">
           <ul>
-            <li key='3' className="pl-4">
-              男：蔣大毛（早歿）1946-1946
+            <li key='2' className="pl-4 md:pl-1">
+              <div className="relative inline-block group">
+                <span className="hover:bg-yellow-50 text-primary-500">男：蔣大毛（早歿）<time>1946-1946</time></span>
+                <TooltipX contents={['生於民國35年（1946年）6月13日於重慶','然未及7日即夭折']} />
+              </div>
             </li>
           </ul>
         </div>
         <div className="flex flex-wrap rounded-2xl border-l-2 border-indigo-500">
           <ul>
-            <li key='4' className="pl-4">
-              女：蔣玉芳 1948-<br/>
+            <li key='2' className="pl-4 md:pl-1">
+              <div className="relative inline-block group">
+                <span className="hover:bg-blue-600">長 女： 蔣玉芳 1948 - </span>
+                <TooltipX contents={['生於民國37年（1948年）陰曆9月28日於上海','適張亞明、︁育有一女張婷怡、︁一子張廼翔','今居台北']} />
+              </div>
+            </li>
+            <li key='3' className="pl-4 md:pl-1">
               婿：張亞明
             </li>
             <div className="flex flex-wrap rounded-2xl border-l-2 border-indigo-500">

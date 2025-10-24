@@ -199,11 +199,20 @@ export const Chronicle = defineDocumentType(() => ({
     },
   },
 }))
+
 export default makeSource({
   contentDirPath: 'data',
   documentTypes: [Blog, Authors, Chronicle],
   mdx: {
     cwd: process.cwd(),
+    // Provide an esbuildOptions mapper that merges incoming defaults and forces platform: 'node'
+    // This avoids "Could not resolve 'tty' / 'util' / 'os'" in Contentlayer's esbuild pipeline.
+    esbuildOptions: (options) => ({
+      ...options,
+      platform: 'node',
+      // Optionally mark node builtins as external (alternative to platform:'node'):
+      // external: [...(options?.external || []), 'tty', 'os', 'util', 'fs', 'net', 'tls'],
+    }),
     remarkPlugins: [
       remarkExtractFrontmatter,
       remarkGfm,

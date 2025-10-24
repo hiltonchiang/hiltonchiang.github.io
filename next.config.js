@@ -58,6 +58,7 @@ const output = process.env.EXPORT ? 'export' : undefined
 const basePath = process.env.BASE_PATH || undefined
 const unoptimized = process.env.UNOPTIMIZED ? true : undefined
 
+
 /**
  * @type {import('next/dist/next-server/server/config').NextConfig}
  **/
@@ -93,7 +94,6 @@ module.exports = () => {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
       })
-
       return config
     },
   })

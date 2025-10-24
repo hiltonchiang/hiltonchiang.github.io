@@ -1,8 +1,11 @@
-const { withContentlayer } = require('next-contentlayer2')
+import { withContentlayer } from 'next-contentlayer2'
+import withBundleAnalyzer from '@next/bundle-analyzer'
+import mdxMermaid from 'mdx-mermaid';
+import { Mermaid } from 'mdx-mermaid/lib/Mermaid'; // For direct component usage
 
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
+//({
+//  enabled: process.env.ANALYZE === 'true',
+//})
 
 // You might need to insert additional domains in script-src if you are using external services
 const ContentSecurityPolicy = `
@@ -58,10 +61,11 @@ const output = process.env.EXPORT ? 'export' : undefined
 const basePath = process.env.BASE_PATH || undefined
 const unoptimized = process.env.UNOPTIMIZED ? true : undefined
 
+
 /**
  * @type {import('next/dist/next-server/server/config').NextConfig}
  **/
-module.exports = () => {
+export default () => {
   const plugins = [withContentlayer, withBundleAnalyzer]
   return plugins.reduce((acc, next) => next(acc), {
     output,
@@ -93,7 +97,20 @@ module.exports = () => {
         test: /\.svg$/,
         use: ['@svgr/webpack'],
       })
-
+      config.module.rules.push({
+        test: /\.mdx?$/,
+        use: [
+          {
+            loader: '@mdx-js/loader',
+            options: {
+              remarkPlugins: [
+                [mdxMermaid.default, { output: 'svg' }], // Use mdx-mermaid plugin
+              ],
+              // ... other MDX options
+            },
+          },
+        ],
+      })
       return config
     },
   })

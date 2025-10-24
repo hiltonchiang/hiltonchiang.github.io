@@ -10,6 +10,7 @@ images: ['/static/images/twitter-card.png']
 ---
 
 import ExtLink from "@/components/ExtLink"
+import { Mermaid } from 'mdx-mermaid/lib/Mermaid';
 
 I initiated a VoIP company in 2000. It operated successfully until the introduction of free Skype. Our modest start-up was entirely impacted. Yet, the P2P NAT traversal technique we employed was quite innovative in the early 2000s. I will endeavor to briefly describe UDP/IP packet exchanges for devices located behind their configured NATs.
 
@@ -20,8 +21,8 @@ NAT (Network Address Translation) is needed for sending/receiving packets to/fro
 <div className="md max-w-[1088px] p-4 md:w-full hover:scale-150 transform-gpu">
 
 <span id ="figure1" />
-```mermaid
 
+<Mermaid chart={`
 sequenceDiagram
     title Fig. 1 - Port Forwarding
     participant A as Alice <br/> 192.168.0.100
@@ -33,8 +34,7 @@ sequenceDiagram
     B->>C: (1.1.1.1,SPx,2.2.2.2,DP)
     Note right of C: Port Forwarding
     C->>D: (1.1.1.1,SPx,192.168.0.99,DP)
-
-```
+`} />
 
 </div>
 As can be seen in the [Figure 1](#figure1), Alice has a private local IP address, 192.168.0.100; NAT-1 changes two tuples (Source Address, Source Port) of the packet before sending out, the packet reaches NAT-2, and NAT-2 can check (Destination Port) to see if is is a well-know port number and forwards the packet to its pre-assigned destination. This scenario is called [<ExtLink>port forwarding</ExtLink>](https://en.wikipedia.org/wiki/Port_forwarding).

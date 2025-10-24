@@ -1,1 +1,7 @@
-{"dob":1,"education":5,"navy":1,"work":2,"event":1}
+{
+  "dob": 1,
+  "education": 5,
+  "navy": 1,
+  "work": 2,
+  "event": 1
+}

@@ -1,3 +1,4 @@
+// contentlayer.config.ts
 import { defineDocumentType, ComputedFields, makeSource } from 'contentlayer2/source-files'
 import { writeFileSync } from 'fs'
 import readingTime from 'reading-time'
@@ -86,7 +87,8 @@ function createTagCount(allBlogs, allChronicles) {
       })
     }
   })
-  writeFileSync('./app/tag-data.json', JSON.stringify(tagCount))
+  // write with explicit utf8 encoding
+  writeFileSync('./app/tag-data.json', JSON.stringify(tagCount, null, 2), 'utf8')
   allChronicles.forEach((file) => {
     if (file.tags && (!isProduction || file.draft !== true)) {
       file.tags.forEach((tag) => {
@@ -99,7 +101,7 @@ function createTagCount(allBlogs, allChronicles) {
       })
     }
   })
-  writeFileSync('./app/ref-data.json', JSON.stringify(refCount))
+  writeFileSync('./app/ref-data.json', JSON.stringify(refCount, null, 2), 'utf8')
 }
 
 function createSearchIndex(allBlogs, allChronicles) {
@@ -107,11 +109,22 @@ function createSearchIndex(allBlogs, allChronicles) {
     siteMetadata?.search?.provider === 'kbar' &&
     siteMetadata.search.kbarConfig.searchDocumentsPath
   ) {
-    writeFileSync(
-      `public/${path.basename(siteMetadata.search.kbarConfig.searchDocumentsPath)}`,
-      JSON.stringify(allCoreContent(sortPosts(allBlogs.concat(allChronicles))))
-    )
-    console.log('Local search index generated...')
+    // sanitize and include only simple serializable fields to avoid binary/non-JSON content
+    const allContent = allCoreContent(sortPosts(allBlogs.concat(allChronicles)))
+    const sanitized = allContent.map((doc) => {
+      return {
+        title: String(doc.title || ''),
+        slug: String(doc._raw?.flattenedPath || doc.slug || ''),
+        summary: String(doc.summary || doc.excerpt || ''),
+        date: doc.date ? String(doc.date) : '',
+        tags: Array.isArray(doc.tags) ? doc.tags.map(String) : [],
+        authors: Array.isArray(doc.authors) ? doc.authors.map(String) : [],
+        image: Array.isArray(doc.images) && doc.images.length ? String(doc.images[0]) : siteMetadata.socialBanner || '',
+      }
+    })
+    const outPath = path.basename(siteMetadata.search.kbarConfig.searchDocumentsPath)
+    writeFileSync(`public/${outPath}`, JSON.stringify(sanitized, null, 2), 'utf8')
+    console.log(`Local search index generated to public/${outPath} (${sanitized.length} docs)`)
   }
 }
 
@@ -210,8 +223,6 @@ export default makeSource({
     esbuildOptions: (options) => ({
       ...options,
       platform: 'node',
-      // Optionally mark node builtins as external (alternative to platform:'node'):
-      // external: [...(options?.external || []), 'tty', 'os', 'util', 'fs', 'net', 'tls'],
     }),
     remarkPlugins: [
       remarkExtractFrontmatter,
@@ -250,7 +261,6 @@ export default makeSource({
   onSuccess: async (importData) => {
     const { allBlogs, allChronicles } = await importData()
     createTagCount(allBlogs, allChronicles)
-    createSearchIndex(allBlogs, allChronicles
-    )
+    createSearchIndex(allBlogs, allChronicles)
   },
 })

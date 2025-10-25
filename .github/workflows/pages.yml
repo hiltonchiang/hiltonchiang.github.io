@@ -53,3 +53,41 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+  generate-mermaid:
+    name: Generate Mermaid SVGs (pre-render)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build (generate diagrams)
+        env:
+          ENV_NAME: ci
+        run: |
+          # Ensure clean build
+          rm -rf .next .contentlayer
+          yarn build
+
+      - name: Commit generated assets (public/ or generated)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # Adjust paths below to where your plugin writes SVGs (e.g. public/diagrams or .contentlayer/generated)
+          git add public || true
+          git add .contentlayer/generated || true
+          if git diff --cached --quiet; then
+            echo "No generated changes to commit"
+          else
+            git commit -m "chore(ci): add generated mermaid SVGs" || true
+            git push
+          fi

@@ -1,0 +1,193 @@
+/*
+  Based on TailwindCSS recommendations,
+  consider using classes instead of the `@apply` directive
+  @see https://tailwindcss.com/docs/reusing-styles#avoiding-premature-abstraction
+*/
+#my-svg {
+  @apply text-base fill-[#ccc];
+  font-family: "trebuchet ms", verdana, arial, sans-serif;
+}
+@keyframes edge-animation-frame {
+  from {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+#my-svg .edge-animation-slow {
+  @apply animate-[dash_50s_linear_infinite];
+  stroke-dasharray: 9, 5 !important;
+  stroke-dashoffset: 900;
+  stroke-linecap: round;
+}
+#my-svg .edge-animation-fast {
+  @apply animate-[dash_20s_linear_infinite];
+  stroke-dasharray: 9, 5 !important;
+  stroke-dashoffset: 900;
+  stroke-linecap: round;
+}
+#my-svg .error-icon {
+  @apply fill-[#a44141];
+}
+#my-svg .error-text {
+  @apply fill-[#ddd] stroke-[#ddd];
+}
+#my-svg .edge-thickness-normal {
+  @apply stroke-[1px];
+}
+#my-svg .edge-thickness-thick {
+  @apply stroke-[3.5px];
+}
+#my-svg .edge-pattern-solid {
+  stroke-dasharray: 0;
+}
+#my-svg .edge-thickness-invisible {
+  @apply stroke-0 fill-none;
+}
+#my-svg .edge-pattern-dashed {
+  stroke-dasharray: 3;
+}
+#my-svg .edge-pattern-dotted {
+  stroke-dasharray: 2;
+}
+#my-svg .marker {
+  @apply fill-[lightgrey] stroke-[lightgrey];
+}
+#my-svg .marker.cross {
+  @apply stroke-[lightgrey];
+}
+#my-svg svg {
+  @apply text-base;
+  font-family: "trebuchet ms", verdana, arial, sans-serif;
+}
+#my-svg p {
+  @apply m-0;
+}
+#my-svg .label {
+  @apply text-[#ccc];
+  font-family: "trebuchet ms", verdana, arial, sans-serif;
+}
+#my-svg .cluster-label text {
+  @apply fill-[#F9FFFE];
+}
+#my-svg .cluster-label span {
+  @apply text-[#F9FFFE];
+}
+#my-svg .cluster-label span p {
+  @apply bg-transparent;
+}
+#my-svg .label text,
+#my-svg span {
+  @apply fill-[#ccc] text-[#ccc];
+}
+#my-svg .node rect,
+#my-svg .node circle,
+#my-svg .node ellipse,
+#my-svg .node polygon,
+#my-svg .node path {
+  @apply fill-[#1f2020] stroke-[#ccc] stroke-[1px];
+}
+#my-svg .rough-node .label text,
+#my-svg .node .label text,
+#my-svg .image-shape .label,
+#my-svg .icon-shape .label {
+  text-anchor: middle;
+}
+#my-svg .node .katex path {
+  @apply fill-black stroke-black stroke-[1px];
+}
+#my-svg .rough-node .label,
+#my-svg .node .label,
+#my-svg .image-shape .label,
+#my-svg .icon-shape .label {
+  @apply text-center;
+}
+#my-svg .node.clickable {
+  @apply cursor-pointer;
+}
+#my-svg .root .anchor path {
+  @apply fill-[lightgrey] stroke-0 stroke-[lightgrey];
+}
+#my-svg .arrowheadPath {
+  @apply fill-[lightgrey];
+}
+#my-svg .edgePath .path {
+  @apply stroke-[lightgrey] stroke-[2.0px];
+}
+#my-svg .flowchart-link {
+  @apply stroke-[lightgrey] fill-none;
+}
+#my-svg .edgeLabel {
+  @apply bg-[hsl(0,0%,34.4117647059%)] text-center;
+}
+#my-svg .edgeLabel p {
+  @apply bg-[hsl(0,0%,34.4117647059%)];
+}
+#my-svg .edgeLabel rect {
+  @apply opacity-50 bg-[hsl(0,0%,34.4117647059%)] fill-[hsl(0,0%,34.4117647059%)];
+}
+#my-svg .labelBkg {
+  @apply bg-[rgba(87.75,87.75,87.75,0.5)];
+}
+#my-svg .cluster rect {
+  @apply fill-[hsl(180,1.5873015873%,28.3529411765%)] stroke-[rgba(255,255,255,0.25)] stroke-[1px];
+}
+#my-svg .cluster text {
+  @apply fill-[#F9FFFE];
+}
+#my-svg .cluster span {
+  @apply text-[#F9FFFE];
+}
+#my-svg div.mermaidTooltip {
+  @apply absolute text-center max-w-[200px] text-xs border pointer-events-none z-[100] p-0.5 rounded-sm border-solid border-[rgba(255,255,255,0.25)];
+  font-family: "trebuchet ms", verdana, arial, sans-serif;
+  background: hsl(20, 1.5873015873%, 12.3529411765%);
+}
+#my-svg .flowchartTitleText {
+  @apply text-lg fill-[#ccc];
+  text-anchor: middle;
+}
+#my-svg rect.text {
+  @apply fill-none stroke-0;
+}
+#my-svg .icon-shape,
+#my-svg .image-shape {
+  @apply bg-[hsl(0,0%,34.4117647059%)] text-center;
+}
+#my-svg .icon-shape p,
+#my-svg .image-shape p {
+  @apply bg-[hsl(0,0%,34.4117647059%)] p-0.5;
+}
+#my-svg .icon-shape rect,
+#my-svg .image-shape rect {
+  @apply opacity-50 bg-[hsl(0,0%,34.4117647059%)] fill-[hsl(0,0%,34.4117647059%)];
+}
+#my-svg .label-icon {
+  @apply inline-block h-[1em] overflow-visible;
+  vertical-align: -0.125em;
+}
+#my-svg .node .label-icon path {
+  @apply fill-current stroke-[revert] stroke-[revert];
+}
+#my-svg :root {
+  --mermaid-font-family: "trebuchet ms", verdana, arial, sans-serif;
+}
+* {
+  @apply fill-[#66deff] stroke-black text-black fill-[#6ad98b] stroke-black text-black;
+}
+#my-svg .blue span {
+  @apply fill-[#66deff] stroke-black text-black;
+}
+#my-svg .blue tspan {
+  @apply fill-black;
+}
+#my-svg .green span {
+  @apply fill-[#6ad98b] stroke-black text-black;
+}
+#my-svg .green tspan {
+  @apply fill-black;
+}
+

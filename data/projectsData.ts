@@ -9,7 +9,7 @@ const projectsData: Project[] = [
   {
     title: 'Peer-to-Peer VoIP',
     description: `I co-founded a startup specializing in VoIP technology. Our core innovation was developing a method to traverse NAT, enabling the establishment of true peer-to-peer VoIP communication channels.`,
-    imgSrc: '/static/images/sequence-port-forwarding.png',
+    imgSrc: '/static/images/voip.svg',
     href: '/blog/voip',
   },
   {

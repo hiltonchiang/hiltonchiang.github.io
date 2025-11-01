@@ -10,9 +10,10 @@ const Mermaid = ({ chart }) => {
         // Generate a unique ID for the diagram
         const diagramId = `mermaid-diagram-${Math.random().toString(36).substring(7)}`
         try {
-          const { svg } = await mermaid.render(diagramId, chart)
+          const { svg, bindFunctions } = await mermaid.render(diagramId, chart)
           if (mermaidRef.current !== null) {
             mermaidRef.current.innerHTML = svg
+            bindFunctions?.(mermaidRef.current)
           }
         } catch (error) {
           console.error('Mermaid render error:', error)

@@ -5,6 +5,18 @@ import { useTheme } from 'next-themes'
 const Mermaid = dynamic(() => import('@/components/Mermaid'), {
   ssr: false,
 })
+export {} // This makes the file a module, preventing global scope pollution issues
+declare global {
+  interface Window {
+    callAlert: (message: string) => {
+      alert(message)
+    }
+  }
+}
+
+const callAlert = () => {
+  console.log('callAlert')
+}
 
 const FamilyTree = () => {
   const { theme, setTheme, resolvedTheme } = useTheme()
@@ -12,6 +24,7 @@ const FamilyTree = () => {
   const familyTreeCode = `---
 config:
     theme: 'forest'
+    securityLevel: 'loose'
     themeVariables:
         primaryColor: '#BB2528'
         primaryTextColor: '#000000'
@@ -25,24 +38,32 @@ config:
         classDef blue fill:#66deff,stroke:#000,color:#000
         classDef green fill:#6ad98b,stroke:#000,color:#000
         classDef pink fill:#ffc0cb,stroke:#000,color:#000
-        %% GENERATION 4 %%
+        %% GENERATION 7 %%
         Fa1(蔣超元):::green --> G3(入川第七代):::blue
-        Mo1(蔣胡氏):::green --- G3
-        %% GENERATION 3 %%	
+        click Fa1 "譜名仁孝,生於1870年2月24日,歿於民國32年（1943年）陰曆11月11日,葬於雙江鎮老鸛嘴新房子山後"
+        
+        Mo1(蔣胡氏):::green --- G3 
+        click Mo1 "生於1880年6月14日,歿於民國46年（1957年),葬於雙江鎮老鸛嘴新房子山後"
+    
+        %% GENERATION 8 %%
         G3 --長子--> Fa(蔣文彬):::green --- G2(入臺第一代):::blue
+        click Fa "譜名必兵,生於民國11年（1922年）陰曆1月1日於四川潼南雙江鎮老鸛嘴新房子,歿於民國73年（1984年）陽曆10月19日於臺北榮總,葬於臺北觀音山,配劉文筠,育有二子五女"
+
         Mo(劉文筠):::green --- G2
-        %% GENERATION 2 %%
-        G2 --> S0(蔣大毛):::pink
-        G2 --長女--> S1(蔣玉芳):::pink
+        click Mo "譜名祖貞,生於民國14年（1925年）陰曆6月15日於雙江鎮外北街10號,歿於民國110年（2021年）陰曆1月14日於臺北家中,與夫同葬於台北觀音山"
+        
+        %% GENERATION 9 %%
+        G2 --> S0(蔣大毛)
+        G2 --長女--> S1(蔣玉芳)
         G2 --長子--> Or(蔣玉華):::green
         S0 --- G1
         S1 --- G1
         Or --- G1(入臺第二代):::blue
-        G2 --次女--> S3(蔣玉萍):::pink
-        G2 --三女--> S4(蔣玉遐):::pink
-        G2 --四女--> S5(蔣玉蘭):::pink
-        G2 --次子--> S6(蔣玉明):::pink
-        G2 --五女--> S7(蔣德純):::pink
+        G2 --次女--> S3(蔣玉萍)
+        G2 --三女--> S4(蔣玉遐)
+        G2 --四女--> S5(蔣玉蘭)
+        G2 --次子--> S6(蔣玉明)
+        G2 --五女--> S7(蔣德純)
         S3 --- G1
         S4 --- G1
         S5 --- G1

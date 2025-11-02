@@ -2,21 +2,9 @@
 import dynamic from 'next/dynamic'
 import { useTheme } from 'next-themes'
 
-const Mermaid = dynamic(() => import('@/components/Mermaid'), {
+const Mermaid = dynamic(() => import('@/components/MermaidFamily'), {
   ssr: false,
 })
-export {} // This makes the file a module, preventing global scope pollution issues
-declare global {
-  interface Window {
-    callAlert: (message: string) => {
-      alert(message)
-    }
-  }
-}
-
-const callAlert = () => {
-  console.log('callAlert')
-}
 
 const FamilyTree = () => {
   const { theme, setTheme, resolvedTheme } = useTheme()

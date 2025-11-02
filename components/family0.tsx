@@ -2,7 +2,7 @@
 import * as React from 'react'
 import TooltipX from '@/components/TooltipX'
 
-function SvgComponent(props) {
+function Family0(props) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -16,6 +16,7 @@ function SvgComponent(props) {
       fontFamily='"trebuchet ms",verdana,arial,sans-serif'
       fontSize="16px"
       fill="#ccc"
+      transform="scale(0.8)"
       {...props}
     >
       <marker
@@ -875,15 +876,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_Mo1_G3_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -898,15 +898,14 @@ function SvgComponent(props) {
               transform="translate(287 1137) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5B50'}</p>
@@ -917,15 +916,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_Fa_G2_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -934,15 +932,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_Mo_G2_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -951,15 +948,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_G2_S0_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -974,15 +970,14 @@ function SvgComponent(props) {
               transform="translate(607 1251) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5973'}</p>
@@ -999,15 +994,14 @@ function SvgComponent(props) {
               transform="translate(607 1147) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5B50'}</p>
@@ -1018,15 +1012,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_S0_G1_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1035,15 +1028,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_S1_G1_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1052,15 +1044,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_Or_G1_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1075,15 +1066,14 @@ function SvgComponent(props) {
               transform="translate(607 1043) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u6B21\u5973'}</p>
@@ -1100,15 +1090,14 @@ function SvgComponent(props) {
               transform="translate(607 939) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u4E09\u5973'}</p>
@@ -1125,15 +1114,14 @@ function SvgComponent(props) {
               transform="translate(607 835) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u56DB\u5973'}</p>
@@ -1150,15 +1138,14 @@ function SvgComponent(props) {
               transform="translate(607 731) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u6B21\u5B50'}</p>
@@ -1175,15 +1162,14 @@ function SvgComponent(props) {
               transform="translate(607 627) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u4E94\u5973'}</p>
@@ -1194,15 +1180,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_S3_G1_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1211,15 +1196,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_S4_G1_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1228,15 +1212,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_S5_G1_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1245,15 +1228,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_S6_G1_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1262,15 +1244,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_S7_G1_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1279,15 +1260,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_G1_蔣玉芳_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1296,15 +1276,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_蔣玉芳_玉芳家_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1313,15 +1292,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_張亞明_玉芳家_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1336,15 +1314,14 @@ function SvgComponent(props) {
               transform="translate(1183 139) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5973'}</p>
@@ -1355,15 +1332,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_張婷怡_廷霖家_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1372,15 +1348,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_姜廷霖_廷霖家_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1395,15 +1370,14 @@ function SvgComponent(props) {
               transform="translate(1567.047 35) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5973'}</p>
@@ -1420,15 +1394,14 @@ function SvgComponent(props) {
               transform="translate(1183 243) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5B50'}</p>
@@ -1439,15 +1412,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_G1_蔣玉\u83EF_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1456,15 +1428,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_蔣玉\u83EF_玉\u83EF家_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1478,15 +1449,14 @@ function SvgComponent(props) {
               data-id="L_\u694A\u9D3B\u5A1F_玉\u83EF家_0"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1501,15 +1471,14 @@ function SvgComponent(props) {
               transform="translate(1183 493) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5973'}</p>
@@ -1525,15 +1494,14 @@ function SvgComponent(props) {
               data-id="L_蔣\u6B23\u6F54_明\u540C家_0"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1547,15 +1515,14 @@ function SvgComponent(props) {
               data-id="L_\u8B1D明\u540C_明\u540C家_0"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1570,15 +1537,14 @@ function SvgComponent(props) {
               transform="translate(1567.047 295) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5973'}</p>
@@ -1595,15 +1561,14 @@ function SvgComponent(props) {
               transform="translate(1567.047 409) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u6B21\u5973'}</p>
@@ -1620,15 +1585,14 @@ function SvgComponent(props) {
               transform="translate(1183 617) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5B50'}</p>
@@ -1644,15 +1608,14 @@ function SvgComponent(props) {
               data-id="L_蔣\u660C\u7FF0_\u660C\u7FF0家_0"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1667,15 +1630,14 @@ function SvgComponent(props) {
               transform="translate(1567.047 617) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5B50'}</p>
@@ -1691,15 +1653,14 @@ function SvgComponent(props) {
               data-id="L_蔣\u5141\u5091_\u7B2C\u56DB\u4EE3_0"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1714,15 +1675,14 @@ function SvgComponent(props) {
               transform="translate(1567.047 513) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u6B21\u5B50'}</p>
@@ -1738,15 +1698,14 @@ function SvgComponent(props) {
               data-id="L_蔣\u7FCA\u5F18_\u7B2C\u56DB\u4EE3_0"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1760,15 +1719,14 @@ function SvgComponent(props) {
               data-id="L_蔣\u6B23\u6F54_\u660C\u7FF0家_0"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1777,15 +1735,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_G1_蔣玉\u840D_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1794,15 +1751,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_蔣玉\u840D_玉\u840D家_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1816,15 +1772,14 @@ function SvgComponent(props) {
               data-id="L_\u674E\u8208\u5B89_玉\u840D家_0"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1839,15 +1794,14 @@ function SvgComponent(props) {
               transform="translate(1183 825) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5973'}</p>
@@ -1858,15 +1812,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_\u674E\u6F54_Camegla_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1875,15 +1828,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_Arthur_Camegla_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1898,15 +1850,14 @@ function SvgComponent(props) {
               transform="translate(1567.047 763) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5B50'}</p>
@@ -1917,15 +1868,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_G1_蔣玉\u9050_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1934,15 +1884,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_蔣玉\u9050_玉\u9050家_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1956,15 +1905,14 @@ function SvgComponent(props) {
               data-id="L_\u838A\u4FEE\u6E90_玉\u9050家_0"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -1979,15 +1927,14 @@ function SvgComponent(props) {
               transform="translate(1183 1033) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5973'}</p>
@@ -2003,15 +1950,14 @@ function SvgComponent(props) {
               data-id="L_\u838A\u8A69\u8A60_Meurer_0"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -2020,15 +1966,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_Chris_Meurer_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -2043,15 +1988,14 @@ function SvgComponent(props) {
               transform="translate(1567.047 971) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5B50'}</p>
@@ -2062,15 +2006,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_G1_蔣玉\u862D_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -2079,15 +2022,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_蔣玉\u862D_玉\u862D家_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -2101,15 +2043,14 @@ function SvgComponent(props) {
               data-id="L_\u6797\u795D\u5F18_玉\u862D家_0"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -2124,15 +2065,14 @@ function SvgComponent(props) {
               transform="translate(1183 1189) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5B50'}</p>
@@ -2149,15 +2089,14 @@ function SvgComponent(props) {
               transform="translate(1183 1397) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5973'}</p>
@@ -2173,15 +2112,14 @@ function SvgComponent(props) {
               data-id="L_\u6797\u5929\u60E0_\u5955\u4EFB家_0"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -2195,15 +2133,14 @@ function SvgComponent(props) {
               data-id="L_\u6797\u5955\u4EFB_\u5955\u4EFB家_0"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -2218,15 +2155,14 @@ function SvgComponent(props) {
               transform="translate(1567.047 1241) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5973'}</p>
@@ -2243,15 +2179,14 @@ function SvgComponent(props) {
               transform="translate(1567.047 1397) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5B50'}</p>
@@ -2262,15 +2197,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_G1_蔣玉明_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -2279,15 +2213,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_蔣玉明_玉明家_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -2296,15 +2229,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_張\u7F8E\u60E0_玉明家_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -2319,15 +2251,14 @@ function SvgComponent(props) {
               transform="translate(1183 1605) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5B50'}</p>
@@ -2343,15 +2274,14 @@ function SvgComponent(props) {
               data-id="L_蔣\u660C霖_\u7B2C\u4E09\u4EE3_0"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -2366,15 +2296,14 @@ function SvgComponent(props) {
               transform="translate(1183 1501) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u6B21\u5B50'}</p>
@@ -2390,15 +2319,14 @@ function SvgComponent(props) {
               data-id="L_蔣\u660C\u6E5B_\u7B2C\u4E09\u4EE3_0"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -2407,15 +2335,14 @@ function SvgComponent(props) {
           <g className="edgeLabel">
             <foreignObject width={0} height={0} className="" data-id="L_G1_蔣\u5FB7\u7D14_0">
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -2429,15 +2356,14 @@ function SvgComponent(props) {
               data-id="L_蔣\u5FB7\u7D14_\u5FB7\u7D14家_0"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -2451,15 +2377,14 @@ function SvgComponent(props) {
               data-id="L_\u9EC3\u4FCA\u5CEF_\u5FB7\u7D14家_0"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel" />
               </div>
@@ -2474,15 +2399,14 @@ function SvgComponent(props) {
               transform="translate(1183 1761) translate(-16 -12)"
             >
               <div
-                xmlns="http://www.w3.org/1999/xhtml"
                 className="labelBkg"
                 style={{
                   whiteSpace: 'nowrap',
                   lineHeight: 1.5,
                   maxWidth: 200,
                   textAlign: 'center',
+                  display: 'table-cell',
                 }}
-                display="table-cell"
               >
                 <span className="edgeLabel">
                   <p>{'\u9577\u5973'}</p>
@@ -2514,10 +2438,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'蔣超元'}</p>
@@ -2549,10 +2472,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'\u5165\u5DDD\u7B2C\u4E03\u4EE3'}</p>
@@ -2584,10 +2506,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'蔣\u80E1\u6C0F'}</p>
@@ -2619,10 +2540,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'蔣\u6587\u5F6C'}</p>
@@ -2654,10 +2574,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'\u5165\u81FA\u7B2C\u4E00\u4EE3'}</p>
@@ -2689,10 +2608,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'\u5289\u6587\u7B60'}</p>
@@ -2722,14 +2640,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣\u5927\u6BDB'}</p>
@@ -2759,14 +2676,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣玉芳'}</p>
@@ -2798,10 +2714,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'蔣玉\u83EF'}</p>
@@ -2833,10 +2748,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'\u5165\u81FA\u7B2C\u4E8C\u4EE3'}</p>
@@ -2866,14 +2780,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣玉\u840D'}</p>
@@ -2903,14 +2816,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣玉\u9050'}</p>
@@ -2940,14 +2852,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣玉\u862D'}</p>
@@ -2977,14 +2888,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣玉明'}</p>
@@ -3014,14 +2924,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣\u5FB7\u7D14'}</p>
@@ -3051,14 +2960,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣玉芳'}</p>
@@ -3090,10 +2998,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'玉芳家'}</p>
@@ -3123,14 +3030,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'張亞明'}</p>
@@ -3160,14 +3066,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'張婷怡'}</p>
@@ -3199,10 +3104,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'廷霖家'}</p>
@@ -3232,14 +3136,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'姜廷霖'}</p>
@@ -3269,14 +3172,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'姜\u52FB\u5A55'}</p>
@@ -3306,14 +3208,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'張\u8FFA\u7FD4'}</p>
@@ -3345,10 +3246,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'蔣玉\u83EF'}</p>
@@ -3380,10 +3280,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'玉\u83EF家'}</p>
@@ -3413,14 +3312,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u694A\u9D3B\u5A1F'}</p>
@@ -3450,14 +3348,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣\u6B23\u6F54'}</p>
@@ -3493,10 +3390,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'明\u540C家'}</p>
@@ -3526,14 +3422,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u8B1D明\u540C'}</p>
@@ -3563,14 +3458,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u8B1D\u8A60\u771F'}</p>
@@ -3600,14 +3494,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u8B1D\u5EF6\u5EAD'}</p>
@@ -3637,14 +3530,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣\u660C\u7FF0'}</p>
@@ -3680,10 +3572,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'\u5165\u81FA\u7B2C\u4E09\u4EE3'}</p>
@@ -3713,14 +3604,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣\u5141\u5091'}</p>
@@ -3756,10 +3646,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'\u5165\u81FA\u7B2C\u56DB\u4EE3'}</p>
@@ -3789,14 +3678,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣\u7FCA\u5F18'}</p>
@@ -3826,14 +3714,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣玉\u840D'}</p>
@@ -3865,10 +3752,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'玉\u840D家'}</p>
@@ -3898,14 +3784,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u674E\u8208\u5B89'}</p>
@@ -3935,14 +3820,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={32} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u674E\u6F54'}</p>
@@ -3978,10 +3862,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'Camegla'}</p>
@@ -4011,14 +3894,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={112.046875} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'Arthur Camegla'}</p>
@@ -4048,14 +3930,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u79D1\u674E\u6069'}</p>
@@ -4085,14 +3966,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣玉\u9050'}</p>
@@ -4124,10 +4004,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'玉\u9050家'}</p>
@@ -4157,14 +4036,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u838A\u4FEE\u6E90'}</p>
@@ -4194,14 +4072,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u838A\u8A69\u8A60'}</p>
@@ -4237,10 +4114,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'Meurer'}</p>
@@ -4270,14 +4146,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={92.46875} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'Chris Meurer'}</p>
@@ -4307,14 +4182,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u838A\u6709\u73E9'}</p>
@@ -4344,14 +4218,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣玉\u862D'}</p>
@@ -4383,10 +4256,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'玉\u862D家'}</p>
@@ -4416,14 +4288,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u6797\u795D\u5F18'}</p>
@@ -4453,14 +4324,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u6797\u6D69\u55BB'}</p>
@@ -4490,14 +4360,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u6797\u5929\u60E0'}</p>
@@ -4533,10 +4402,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'\u5955\u4EFB家'}</p>
@@ -4566,14 +4434,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u6797\u5955\u4EFB'}</p>
@@ -4603,14 +4470,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u6797\u82AE\u5E74'}</p>
@@ -4640,14 +4506,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u6797\u82AE\u85AA'}</p>
@@ -4677,14 +4542,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣玉明'}</p>
@@ -4716,10 +4580,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'玉明家'}</p>
@@ -4749,14 +4612,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'張\u7F8E\u60E0'}</p>
@@ -4786,14 +4648,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣\u660C霖'}</p>
@@ -4829,10 +4690,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'\u5165\u81FA\u7B2C\u4E09\u4EE3'}</p>
@@ -4862,14 +4722,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣\u660C\u6E5B'}</p>
@@ -4899,14 +4758,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'蔣\u5FB7\u7D14'}</p>
@@ -4938,10 +4796,9 @@ function SvgComponent(props) {
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  xmlns="http://www.w3.org/1999/xhtml"
                   color="#000"
-                  display="table-cell"
                 >
                   <span className="nodeLabel" color="#000">
                     <p>{'\u5FB7\u7D14家'}</p>
@@ -4971,14 +4828,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={48} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u9EC3\u4FCA\u5CEF'}</p>
@@ -5008,14 +4864,13 @@ function SvgComponent(props) {
               <rect />
               <foreignObject width={32} height={24}>
                 <div
-                  xmlns="http://www.w3.org/1999/xhtml"
                   style={{
                     whiteSpace: 'nowrap',
                     lineHeight: 1.5,
                     maxWidth: 200,
                     textAlign: 'center',
+                    display: 'table-cell',
                   }}
-                  display="table-cell"
                 >
                   <span className="nodeLabel">
                     <p>{'\u9EC3\u8335'}</p>
@@ -5030,4 +4885,4 @@ function SvgComponent(props) {
   )
 }
 
-export default SvgComponent
+export default Family0

@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from 'react'
 import mermaid from 'mermaid'
 import { useSearchParams } from 'next/navigation'
+import * as d3 from 'd3'
 
 let zoomIndex = 1.0
 let xPosition = 0.0
@@ -22,7 +23,6 @@ function handleButtons(diagramId: string) {
   const buttonLeft = document.getElementById('familyLeftArrow')
   if (buttonLeft !== null) {
     buttonLeft.addEventListener('click', function () {
-      console.log('LeftArrow Button clicked!')
       xPosition -= 5
       transformSVG(diagramId)
     })
@@ -30,7 +30,6 @@ function handleButtons(diagramId: string) {
   const buttonRight = document.getElementById('familyRightArrow')
   if (buttonRight !== null) {
     buttonRight.addEventListener('click', function () {
-      console.log('RightArrow Button clicked!')
       xPosition += 5
       transformSVG(diagramId)
     })
@@ -38,7 +37,6 @@ function handleButtons(diagramId: string) {
   const buttonUp = document.getElementById('familyUpArrow')
   if (buttonUp !== null) {
     buttonUp.addEventListener('click', function () {
-      console.log('UpArrow Button clicked!')
       yPosition -= 5
       transformSVG(diagramId)
     })
@@ -46,7 +44,6 @@ function handleButtons(diagramId: string) {
   const buttonDown = document.getElementById('familyDownArrow')
   if (buttonDown !== null) {
     buttonDown.addEventListener('click', function () {
-      console.log('DownArray Button clicked!')
       yPosition += 5
       transformSVG(diagramId)
     })
@@ -54,7 +51,6 @@ function handleButtons(diagramId: string) {
   const buttonZoomIn = document.getElementById('familyZoomIn')
   if (buttonZoomIn !== null) {
     buttonZoomIn.addEventListener('click', function () {
-      console.log('ZoomIn Button clicked!')
       if (zoomIndex < 1.45) {
         zoomIndex += 0.1
         transformSVG(diagramId)
@@ -64,7 +60,6 @@ function handleButtons(diagramId: string) {
   const buttonZoomOut = document.getElementById('familyZoomOut')
   if (buttonZoomOut !== null) {
     buttonZoomOut.addEventListener('click', function () {
-      console.log('ZoomOut Button clicked!')
       if (zoomIndex >= 1.0) {
         zoomIndex -= 0.1
         transformSVG(diagramId)
@@ -73,11 +68,37 @@ function handleButtons(diagramId: string) {
   }
 }
 
+function handleD3() {
+  const tooltip = d3
+    .select('body')
+    .append('div')
+    .attr(
+      'class',
+      'max-w-[300px] bg-stone-900  -translate-x-6 translate-y-4 text-base text-stone-300 dark:text-lime-300 border-2 border-blue-500 p-4'
+    )
+    .style('opacity', 0)
+    .style('position', 'absolute')
+    .style('pointer-events', 'none')
+  const anchor = d3.selectAll('a')
+  if (anchor.size() !== 0) {
+    anchor
+      .on('mouseover', function (event, d) {
+        console.log('we are in mouseover')
+        const tip = d3.select(this).attr('xlink:href')
+        tooltip.html(tip).style('opacity', 1)
+      })
+      .on('mousemove', function (event) {
+        tooltip.style('left', event.pageX + 10 + 'px').style('top', event.pageY - 10 + 'px')
+      })
+      .on('mouseout', function () {
+        tooltip.style('opacity', 0)
+      })
+  }
+}
 const Mermaid = ({ chart }) => {
   const mermaidRef = useRef<HTMLDivElement | null>(null)
   const searchParams = useSearchParams()
   const msg = searchParams.get('msg')
-  console.log(msg)
   useEffect(() => {
     if (mermaidRef.current) {
       const renderChart = async () => {
@@ -91,11 +112,10 @@ const Mermaid = ({ chart }) => {
             transformSVG(diagramId)
             handleButtons(diagramId)
             const tooltips = document.getElementById('tooltips-message') as HTMLTextAreaElement
-            console.log(tooltips)
             if (msg !== null && tooltips !== null) {
               tooltips.textContent = msg
-              console.log(tooltips)
             }
+            handleD3()
           }
         } catch (error) {
           console.error('Mermaid render error:', error)

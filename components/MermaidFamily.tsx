@@ -1,6 +1,7 @@
 'use client'
 import { useState, useRef, useEffect } from 'react'
 import mermaid from 'mermaid'
+import { useSearchParams } from 'next/navigation'
 
 let zoomIndex = 1.0
 let xPosition = 0.0
@@ -74,6 +75,9 @@ function handleButtons(diagramId: string) {
 
 const Mermaid = ({ chart }) => {
   const mermaidRef = useRef<HTMLDivElement | null>(null)
+  const searchParams = useSearchParams()
+  const msg = searchParams.get('msg')
+  console.log(msg)
   useEffect(() => {
     if (mermaidRef.current) {
       const renderChart = async () => {
@@ -86,6 +90,12 @@ const Mermaid = ({ chart }) => {
             bindFunctions?.(mermaidRef.current)
             transformSVG(diagramId)
             handleButtons(diagramId)
+            const tooltips = document.getElementById('tooltips-message') as HTMLTextAreaElement
+            console.log(tooltips)
+            if (msg !== null && tooltips !== null) {
+              tooltips.textContent = msg
+              console.log(tooltips)
+            }
           }
         } catch (error) {
           console.error('Mermaid render error:', error)
@@ -96,7 +106,7 @@ const Mermaid = ({ chart }) => {
       }
       renderChart()
     }
-  }, [chart]) // Re-render if the chart code changes
+  }, [chart, msg]) // Re-render if the chart code changes
 
   return <div ref={mermaidRef}></div>
 }

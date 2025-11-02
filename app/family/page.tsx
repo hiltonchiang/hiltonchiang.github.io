@@ -70,6 +70,7 @@ export default async function Page() {
               />
             </svg>
           </button>
+          <span className="text-blue-600 dark:text-sky-400" id="tooltips-message"></span>
         </div>
       </div>
 

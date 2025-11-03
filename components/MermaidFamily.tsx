@@ -74,7 +74,7 @@ function handleD3() {
     .append('div')
     .attr(
       'class',
-      'max-w-[300px] bg-stone-900  -translate-x-6 translate-y-4 text-base text-stone-300 dark:text-lime-300 border-2 border-blue-500 p-4'
+      'max-w-[150px] md:max-w-[300px] bg-stone-900  -translate-x-6 translate-y-4 text-base text-stone-300 dark:text-lime-300 border-2 border-blue-500 p-4'
     )
     .style('opacity', 0)
     .style('position', 'absolute')
@@ -83,7 +83,6 @@ function handleD3() {
   if (anchor.size() !== 0) {
     anchor
       .on('mouseover', function (event, d) {
-        console.log('we are in mouseover')
         const tip = d3.select(this).attr('xlink:href')
         tooltip.html(tip).style('opacity', 1)
       })
@@ -92,6 +91,9 @@ function handleD3() {
       })
       .on('mouseout', function () {
         tooltip.style('opacity', 0)
+      })
+      .on('click', function (e) {
+        e.preventDefault()
       })
   }
 }

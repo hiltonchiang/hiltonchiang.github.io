@@ -4,9 +4,6 @@ import mermaid from 'mermaid'
 import { useSearchParams } from 'next/navigation'
 import * as d3 from 'd3'
 
-let svgWidth
-let svgHeight
-let svgRoot
 /*
  * using d3 to zoom entire svg
  */
@@ -17,46 +14,61 @@ const zoom = d3.zoom().on('zoom', function (event) {
     .attr('stroke-width', 1 / event.transform.k)
 })
 
-function d3HandleZoom() {
+function getSVG(
+  svgId: string
+): [number, number, d3.Selection<SVGSVGElement, unknown, HTMLElement, unknown> | null] {
   const svg = d3.selectAll('svg')
-  svg.each(function (d, i, nodes) {
-    const id = d3.select(this).attr('id')
-    if (id !== null && id.includes('mermaid')) {
-      d3.select(this).call(zoom)
-      const vboxStr = d3.select(this).attr('viewBox')
+  const nodes = svg.nodes()
+  let svgRoot
+  let svgWidth = -1
+  let svgHeight = -1
+  for (let i = 0; i < nodes.length; i++) {
+    const id = d3.select(nodes[i]).attr('id')
+    if (id !== null && id === svgId) {
+      const vboxStr = d3.select(nodes[i]).attr('viewBox')
       if (vboxStr !== null) {
-        svgRoot = d3.select(this)
+        svgRoot = d3.select(nodes[i])
         const vbox = vboxStr.split(' ')
         svgWidth = Number(vbox[2])
         svgHeight = Number(vbox[3])
-        console.log(vbox, 'W ', svgWidth, 'H ', svgHeight)
-        d3.select(this).on('click', function () {
-          const _svg_ = d3.select(this)
-          const node = _svg_.node() as SVGSVGElement
-          if (node) {
-            _svg_
-              .transition()
-              .duration(750)
-              .on('end', function () {
-                if (this instanceof SVGSVGElement) {
-                  zoom.transform(
-                    d3.select<SVGSVGElement, unknown>(this),
-                    d3.zoomIdentity,
-                    d3.zoomTransform(node).invert([svgWidth / 2, svgHeight / 2])
-                  )
-                }
-              })
-          }
-        })
+        break
       }
     }
-  })
+  }
+  console.log(svgId)
+  console.log(svgRoot.node())
+  return [svgWidth, svgHeight, svgRoot]
+}
+
+function d3HandleZoom(id) {
+  const [svgWidth, svgHeight, svgRoot] = getSVG(id)
+  if (svgRoot !== null) {
+    svgRoot.call(zoom)
+    svgRoot.on('click', function () {
+      const _svg_ = d3.select(this)
+      const node = _svg_.node() as SVGSVGElement
+      if (node) {
+        _svg_
+          .transition()
+          .duration(750)
+          .on('end', function () {
+            if (this instanceof SVGSVGElement) {
+              zoom.transform(
+                d3.select<SVGSVGElement, unknown>(this),
+                d3.zoomIdentity,
+                d3.zoomTransform(node).invert([svgWidth / 2, svgHeight / 2])
+              )
+            }
+          })
+      }
+    })
+  }
 }
 
 /*
  * using d3 to find <span class='edgeLabel'
  */
-function d3HandleEdgeLabel() {
+function d3HandleEdgeLabel(id) {
   const group = d3.selectAll('g')
   group.each(function (d, i, nodes) {
     /*
@@ -91,7 +103,7 @@ function d3HandleEdgeLabel() {
 /*
  * using d3 to find anchor and display Tooltips
  */
-function d3HandleAnchor() {
+function d3HandleAnchor(id) {
   const className =
     'max-w-[150px] md:max-w-[300px] bg-stone-900 -translate-x-6 translate-y-4 text-base text-stone-300 dark:text-lime-300 border-2 border-blue-500 p-4'
   const tooltip = d3
@@ -101,7 +113,12 @@ function d3HandleAnchor() {
     .style('opacity', 0)
     .style('position', 'absolute')
     .style('pointer-events', 'none')
-  const anchor = d3.selectAll('a')
+  const [svgWidth, svgHeight, svgRoot] = getSVG(id)
+  if (svgRoot === null) {
+    console.log('in d3handleAnchor, svgRoot is null')
+    return
+  }
+  const anchor = svgRoot.selectAll('a')
   if (anchor.size() !== 0) {
     anchor
       .on('mouseover', function (event, d) {
@@ -127,6 +144,7 @@ function d3HandleAnchor() {
         if (transformList.numberOfItems > 0) {
           const transform = transformList.getItem(0)
           const matrix = transform.matrix
+          const [svgWidth, svgHeight, svgRoot] = getSVG(id)
           if (svgRoot) {
             const node = svgRoot.node()
             if (node) {
@@ -138,11 +156,12 @@ function d3HandleAnchor() {
                   const centerY = matrix.f
                   const svgCenterX = svgWidth / 2
                   const svgCenterY = svgHeight / 2
+                  console.log('in click ', node)
                   zoom.transform(
                     svgRoot,
                     d3.zoomIdentity
                       .translate(svgCenterX, svgCenterY)
-                      .scale(1.5)
+                      .scale(2)
                       .translate(-centerX, -centerY),
                     d3.pointer(e, node)
                   )
@@ -167,9 +186,9 @@ const Mermaid = ({ chart }) => {
           if (mermaidRef.current !== null) {
             mermaidRef.current.innerHTML = svg
             bindFunctions?.(mermaidRef.current)
-            d3HandleZoom()
-            d3HandleAnchor()
-            d3HandleEdgeLabel()
+            d3HandleZoom(diagramId)
+            d3HandleAnchor(diagramId)
+            d3HandleEdgeLabel(diagramId)
           }
         } catch (error) {
           console.error('Mermaid render error:', error)

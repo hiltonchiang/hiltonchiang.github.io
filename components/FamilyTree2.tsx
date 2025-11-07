@@ -45,7 +45,7 @@ title: 蔣氏家譜樹
         玉華家 e22@--長女--> 蔣欣潔((蔣欣潔)) e23@---> 明同家((明同家)):::blue
         謝明同((謝明同)) --- 明同家
         明同家 e24@--長女--> 謝詠真((謝詠真))
-        明同家 e25@--次女--> 謝延庭((謝延庭))
+        明同家 e25@--次女--> 謝妍廷((謝妍廷))
         玉華家 e26@--長子--> 蔣昌翰((蔣昌翰)) e27@--> 昌翰家((昌翰家<br/>入臺第三代)):::blue
         林思吟((林思吟))--- 昌翰家
         昌翰家 e28@--長子--> 蔣允傑((蔣允傑)) --- 第四代((入臺第四代)):::blue
@@ -57,37 +57,37 @@ title: 蔣氏家譜樹
         G1 e31@--> 蔣玉萍
         蔣玉萍((蔣玉萍)) e32@--> 玉萍家((玉萍家<br/>入臺第二代)):::blue
         李興安((李興安)) --- 玉萍家
-        玉萍家 e33@--長女--> 李潔((李潔)) e34@--- Camegla((Camegla<br/>Family)):::blue
+        玉萍家 e33@--長女--> 李潔((李潔)) e34@--> Camegla((Camegla<br/>Family)):::blue
         Arthur((Arthur<br/>Camegla)) --- Camegla
         Camegla e35@--長子--> River((科李恩<br/>River))
         %% Third Daughter %%
-        G1 --> 蔣玉遐
-        蔣玉遐((蔣玉遐)) --> 玉遐家((玉遐家)):::blue
+        G1 e40@--> 蔣玉遐
+        蔣玉遐((蔣玉遐)) e41@--> 玉遐家((玉遐家<br/>入臺第二代)):::blue
         莊修源((莊修源)) --- 玉遐家
-        玉遐家 --長女--> 莊詩詠((莊詩詠)) --- Meurer((Meurer<br/>Family)):::blue
+        玉遐家 e42@--長女--> 莊詩詠((莊詩詠)) e43@--> Meurer((Meurer<br/>Family)):::blue
         Chris((Chris<br/>Meurer)) --- Meurer
-        Meurer --長子--> Maxwell((莊有珩<br/>Maxwell))
+        Meurer e44@--長子--> Maxwell((莊有珩<br/>Maxwell))
         %% Fourth Daughter %%
-        G1 --> 蔣玉蘭
-        蔣玉蘭((蔣玉蘭)) --> 玉蘭家((玉蘭家)):::blue
+        G1 e501@--> 蔣玉蘭
+        蔣玉蘭((蔣玉蘭)) e50@--> 玉蘭家((玉蘭家<br/>入臺第二代)):::blue
         林祝弘((林祝弘)) --- 玉蘭家
-        玉蘭家 --長子--> 林浩喻((林浩喻))
-        玉蘭家 --長女--> 林天惠((林天惠)) --- 奕任家((奕任家)):::blue
+        玉蘭家 e51@--長子--> 林浩喻((林浩喻))
+        玉蘭家 e52@--長女--> 林天惠((林天惠)) e53@--> 奕任家((奕任家)):::blue
         林奕任((林奕任)) --- 奕任家
-        奕任家--長女--> 林芮年((林芮年))
-        奕任家--長子--> 林芮薪((林芮薪))
+        奕任家 e54@--長女--> 林芮年((林芮年))
+        奕任家 e55@--長子--> 林芮薪((林芮薪))
         %% Second Son %%
-        G1 --> 蔣玉明
-        蔣玉明((蔣玉明)) --> 玉明家((玉明家)):::blue
+        G1 e60@--> 蔣玉明
+        蔣玉明((蔣玉明)) e61@--> 玉明家((玉明家<br/>入臺第二代)):::blue
         張美惠((張美惠)) --- 玉明家
-        玉明家 --長子--> 蔣昌霖((蔣昌霖)) --- 第三代((入臺第三代)):::blue
-        玉明家 --次子--> 蔣昌湛((蔣昌湛)) 
+        玉明家 e62@--長子--> 蔣昌霖((蔣昌霖)) --- 第三代((入臺第三代)):::blue
+        玉明家 e63@--次子--> 蔣昌湛((蔣昌湛)) 
         蔣昌湛 --- 第三代
         %% Fifth Daughter %%
-        G1 --> 蔣德純
-        蔣德純((蔣德純)) --> 德純家((德純家)):::blue
+        G1 e70@--> 蔣德純
+        蔣德純((蔣德純)) e71@--> 德純家((德純家<br/>入臺第二代)):::blue
         黃俊峯((黃俊峯)) --- 德純家
-        德純家 --長女--> 黃茵((黃茵))
+        德純家 e72@--長女--> 黃茵((黃茵))
         
         e12@{ animate: true } 
         e13@{ animate: true } 
@@ -110,7 +110,25 @@ title: 蔣氏家譜樹
         e33@{ animate: true } 
         e34@{ animate: true } 
         e35@{ animate: true } 
+        e40@{ animate: true } 
+        e41@{ animate: true } 
+        e42@{ animate: true } 
+        e43@{ animate: true } 
+        e50@{ animate: true } 
+        e501@{ animate: true } 
+        e51@{ animate: true } 
+        e52@{ animate: true } 
+        e53@{ animate: true } 
+        e54@{ animate: true } 
+        e55@{ animate: true } 
+        e60@{ animate: true } 
+        e61@{ animate: true } 
+        e62@{ animate: true } 
+        e63@{ animate: true } 
+        e70@{ animate: true } 
+        e71@{ animate: true } 
+        e72@{ animate: true } 
 `
-  return <Mermaid chart={familyTreeCode} />
+  return <Mermaid chart={familyTreeCode} mDevice={false} />
 }
 export default FamilyTree2

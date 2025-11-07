@@ -30,6 +30,10 @@ title: 蔣氏家譜樹
         classDef TransparentSubgraph fill:#00000000,stroke-width:0
         classDef invisible fill:#0000, stroke:#0000, color:#0000
         %% GENERATION 7 %%
+        蔣以懋((蔣以懋)):::green e0@-->G4((以懋家<br/>入川第六代)):::blue
+        周氏((周氏)):::green ---G4
+        G4 e01@-->Fa1
+        click G4 "以字輩"
         Fa1((蔣超元)):::green e1@--> G3((超元家<br/>入川第七代)):::blue
         click Fa1 "蔣超元:譜名仁孝<br/>生於1870年2月24日<br/>歿於民國32年（1943年）陰曆11月11日<br/>葬於雙江鎮老鸛嘴新房子山後"
         
@@ -66,6 +70,8 @@ title: 蔣氏家譜樹
         S5 e23@--> G1
         S6 e24@--> G1
         S7 e25@--> G1
+        e0@{ animate: true } 
+        e01@{ animate: true } 
         e1@{ animate: true } 
         e2@{ animate: true } 
         e3@{ animate: true } 
@@ -85,6 +91,6 @@ title: 蔣氏家譜樹
         e24@{ animate: true } 
         e25@{ animate: true } 
 `
-  return <Mermaid chart={familyTreeCode} />
+  return <Mermaid chart={familyTreeCode} mDevice={false} />
 }
 export default FamilyTree1

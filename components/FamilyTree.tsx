@@ -149,6 +149,6 @@ title: 蔣氏家譜樹
         e24@{ animate: true } 
         e25@{ animate: true } 
 `
-  return <Mermaid chart={familyTreeCode} />
+  return <Mermaid chart={familyTreeCode} mDevice={false} />
 }
 export default FamilyTree

@@ -30,6 +30,10 @@ title: 蔣氏家譜樹
         classDef TransparentSubgraph fill:#00000000,stroke-width:0
         classDef invisible fill:#0000, stroke:#0000, color:#0000
         %% GENERATION 7 %%
+        蔣以懋((蔣以懋)):::green e0@-->G4((以懋家<br/>入川第六代)):::blue
+        周氏((周氏)):::green ---G4
+        G4 e01@-->Fa1
+        click G4 "以字輩"
         Fa1((蔣超元)):::green e1@--> G3((超元家<br/>入川第七代)):::blue
         click Fa1 "蔣超元:譜名仁孝<br/>生於1870年2月24日<br/>歿於民國32年（1943年）陰曆11月11日<br/>葬於雙江鎮老鸛嘴新房子山後"
         
@@ -45,11 +49,14 @@ title: 蔣氏家譜樹
         click Mo "劉文筠:譜名祖貞<br/>生於民國14年（1925年）陰曆6月15日於雙江鎮外北街10號<br/>歿於民國110年（2021年）陰曆1月14日於臺北家中<br/>與夫同葬於台北觀音山"
 
         click G2 "必字輩"
+        
+        e0@{ animate: true } 
+        e01@{ animate: true } 
         e1@{ animate: true } 
         e2@{ animate: true } 
         e3@{ animate: true } 
          
 `
-  return <Mermaid chart={familyTreeCode} />
+  return <Mermaid chart={familyTreeCode} mDevice={true} />
 }
 export default FamilyTreeMD1

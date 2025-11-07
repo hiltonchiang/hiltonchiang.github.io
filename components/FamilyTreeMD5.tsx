@@ -6,7 +6,7 @@ const Mermaid = dynamic(() => import('@/components/MermaidFamily'), {
   ssr: false,
 })
 
-const FamilyTreeMD3 = () => {
+const FamilyTreeMD5 = () => {
   const { theme, setTheme, resolvedTheme } = useTheme()
   const textColor = resolvedTheme === 'dark' ? 'fill-lime-300' : 'fill-stone-500'
   const familyTreeCode = `---
@@ -30,20 +30,18 @@ title: 蔣氏家譜樹
         classDef TransparentSubgraph fill:#00000000,stroke-width:0
         classDef invisible fill:#0000, stroke:#0000, color:#0000
 
-        %% First Daughter %%
-        蔣玉芳((蔣玉芳)) e13@--> 玉芳家((玉芳家<br/>入臺第二代)):::blue
-        張亞明((張亞明)) --- 玉芳家
-        玉芳家 e14@--長女--> 張婷怡((張婷怡)) e15@--> 廷霖家((廷霖家)):::blue
-        姜廷霖((姜廷霖)) --- 廷霖家
-        廷霖家 e16@--長女--> 姜勻婕((姜勻婕))
-        玉芳家 e17@--長子--> 張迺翔((張迺翔))
-        
-        e13@{ animate: true } 
-        e14@{ animate: true } 
-        e15@{ animate: true } 
-        e16@{ animate: true } 
-        e17@{ animate: true } 
+        %% Second Daughter %%
+        蔣玉萍((蔣玉萍)) e32@--> 玉萍家((玉萍家<br/>入臺第二代)):::blue
+        李興安((李興安)) --- 玉萍家
+        玉萍家 e33@--長女--> 李潔((李潔)) e34@--- Camegla((Camegla<br/>Family)):::blue
+        Arthur((Arthur<br/>Camegla)) --- Camegla
+        Camegla e35@--長子--> River((科李恩<br/>River))
+                
+        e32@{ animate: true } 
+        e33@{ animate: true } 
+        e34@{ animate: true } 
+        e35@{ animate: true } 
 `
   return <Mermaid chart={familyTreeCode} mDevice={true} />
 }
-export default FamilyTreeMD3
+export default FamilyTreeMD5

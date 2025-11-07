@@ -45,8 +45,6 @@ function getSVG(
       }
     }
   }
-  console.log(svgId)
-  console.log(svgRoot.node())
   return [svgWidth, svgHeight, svgRoot]
 }
 
@@ -113,7 +111,7 @@ function d3HandleEdgeLabel(id) {
 /*
  * using d3 to find anchor and display Tooltips
  */
-function d3HandleAnchor(id) {
+function d3HandleAnchor(id, md) {
   const [svgWidth, svgHeight, svgRoot] = getSVG(id)
   if (svgRoot === null) {
     console.log('in d3handleAnchor, svgRoot is null')
@@ -138,6 +136,9 @@ function d3HandleAnchor(id) {
         d3.select(this).attr('transform', tr.replace(',scale(2.0)', ''))
       })
       .on('click', function (e, d) {
+        if (md === true) {
+          return
+        }
         e.preventDefault()
         e.stopPropagation()
         const n = d3.select(this).node() as SVGSVGElement
@@ -157,7 +158,6 @@ function d3HandleAnchor(id) {
                   const centerY = matrix.f
                   const svgCenterX = svgWidth / 2
                   const svgCenterY = svgHeight / 2
-                  console.log('in click ', node)
                   zoom.transform(
                     svgRoot,
                     d3.zoomIdentity
@@ -227,7 +227,7 @@ function d3AppendResetSvg(id) {
       })
   }
 }
-const Mermaid = ({ chart }) => {
+const Mermaid = ({ chart, mDevice }) => {
   const mermaidRef = useRef<HTMLDivElement | null>(null)
   const searchParams = useSearchParams()
   const msg = searchParams.get('msg')
@@ -241,10 +241,14 @@ const Mermaid = ({ chart }) => {
           if (mermaidRef.current !== null) {
             mermaidRef.current.innerHTML = svg
             bindFunctions?.(mermaidRef.current)
-            d3HandleZoom(diagramId)
-            d3HandleAnchor(diagramId)
+            if (mDevice === false) {
+              d3HandleZoom(diagramId)
+            }
+            d3HandleAnchor(diagramId, mDevice)
             d3HandleEdgeLabel(diagramId)
-            d3AppendResetSvg(diagramId)
+            if (mDevice === false) {
+              d3AppendResetSvg(diagramId)
+            }
           }
         } catch (error) {
           console.error('Mermaid render error:', error)
@@ -255,7 +259,7 @@ const Mermaid = ({ chart }) => {
       }
       renderChart()
     }
-  }, [chart, msg]) // Re-render if the chart code changes
+  }, [chart, msg, mDevice]) // Re-render if the chart code changes
 
   return <div ref={mermaidRef}></div>
 }

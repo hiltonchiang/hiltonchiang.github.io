@@ -8,12 +8,12 @@ import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 export default async function Page() {
   return (
     <>
-      <div className="hidden realtive sm:block w-screen max-w-[1088px] border-2 border-solid p-4 sm:w-full">
+      <div className="realtive hidden w-screen max-w-[1088px] border-2 border-solid p-4 md:block md:w-full">
         <ScrollTopAndComment />
         <FamilyTree1 />
         <FamilyTree2 />
       </div>
-      <div className="sm:hidden">
+      <div className="md:hidden">
         <FamilyTreeMD1 />
         <FamilyTreeMD2 />
         <FamilyTreeMD3 />

@@ -31,12 +31,10 @@ title: 蔣氏家譜樹
         classDef invisible fill:#0000, stroke:#0000, color:#0000
 
         %% Fifth Daughter %%
-        G1 e70@--> 蔣德純
         蔣德純((蔣德純)) e71@--> 德純家((德純家<br/>入臺第二代)):::blue
         黃俊峯((黃俊峯)) --- 德純家
         德純家 e72@--長女--> 黃茵((黃茵))
         
-        e70@{ animate: true } 
         e71@{ animate: true } 
         e72@{ animate: true } 
 `

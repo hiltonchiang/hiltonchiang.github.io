@@ -5,6 +5,10 @@ import FamilyTreeMD2 from '@/components/FamilyTreeMD2'
 import FamilyTreeMD3 from '@/components/FamilyTreeMD3'
 import FamilyTreeMD4 from '@/components/FamilyTreeMD4'
 import FamilyTreeMD5 from '@/components/FamilyTreeMD5'
+import FamilyTreeMD6 from '@/components/FamilyTreeMD6'
+import FamilyTreeMD7 from '@/components/FamilyTreeMD7'
+import FamilyTreeMD8 from '@/components/FamilyTreeMD8'
+import FamilyTreeMD9 from '@/components/FamilyTreeMD9'
 import ScrollTopAndComment from '@/components/ScrollTopAndComment'
 
 export default async function Page() {
@@ -21,6 +25,10 @@ export default async function Page() {
         <FamilyTreeMD3 />
         <FamilyTreeMD4 />
         <FamilyTreeMD5 />
+        <FamilyTreeMD6 />
+        <FamilyTreeMD7 />
+        <FamilyTreeMD8 />
+        <FamilyTreeMD9 />
       </div>
     </>
   )

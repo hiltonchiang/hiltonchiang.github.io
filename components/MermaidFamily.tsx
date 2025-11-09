@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from 'react'
 import mermaid from 'mermaid'
 import { useSearchParams } from 'next/navigation'
+import { useTheme } from 'next-themes'
 import * as d3 from 'd3'
 
 /*
@@ -173,7 +174,15 @@ function d3HandleAnchor(id, md) {
       })
   }
 }
-
+function showTitle(id, md, theme) {
+  const [w, h, svg] = getSVG(id)
+  if (svg === null) return
+  const text = svg.select('text')
+  text?.attr('class', null)
+  text?.attr('font-size', '24px')
+  const color = theme === 'dark' ? 'white' : 'black'
+  text?.attr('fill', '#777')
+}
 function d3AppendResetSvg(id) {
   const [w, h, svg] = getSVG(id)
   if (svg !== null) {
@@ -229,6 +238,7 @@ function d3AppendResetSvg(id) {
 }
 const Mermaid = ({ chart, mDevice }) => {
   const mermaidRef = useRef<HTMLDivElement | null>(null)
+  const { theme, setTheme, resolvedTheme } = useTheme()
   const searchParams = useSearchParams()
   const msg = searchParams.get('msg')
   useEffect(() => {
@@ -249,6 +259,7 @@ const Mermaid = ({ chart, mDevice }) => {
             if (mDevice === false) {
               d3AppendResetSvg(diagramId)
             }
+            showTitle(diagramId, mDevice, resolvedTheme)
           }
         } catch (error) {
           console.error('Mermaid render error:', error)

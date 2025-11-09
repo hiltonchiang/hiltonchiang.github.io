@@ -59,7 +59,7 @@ import ExtLink from '@/components/ExtLink'
 ---
 
 # 族谱更新
-<div className="grid md:grid-cols-2 gap-2">
+<div className="hidden md:block md:grid md:grid-cols-2 gap-2">
   <ol className="relative border-s border-indigo-200 dark:border-indigo-700">
     <li className="mb-10 ms-4">
       <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
@@ -267,7 +267,6 @@ import ExtLink from '@/components/ExtLink'
       </ol>
     </li>
   </ol>
-
   <ol className="relative border-s border-indigo-200 dark:border-indigo-700">
     <li className="mb-10 ms-4">
       <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
@@ -394,7 +393,338 @@ import ExtLink from '@/components/ExtLink'
     </li>
   </ol>
 </div>
-
+<div className="md:hidden">
+  <ol className="relative border-s border-indigo-200 dark:border-indigo-700">
+    <li className="mb-10 ms-4">
+      <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+      <h3 className="text-lg -translate-x-10 font-normal leading-none">入川第六代（以字輩)</h3>
+      <div className="-translate-x-8">
+        <span className="text-lg font-semibold text-primary-500">蔣以懋 (待查)<br /></span>
+        <span className="text-lg font-semibold text-primary-500">周氏</span>
+      </div>
+    </li>
+    <li className="mb-10 ms-4">
+      <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+      <h3 className="text-lg -translate-x-10 font-normal leading-none">入川第七代（仁字輩)</h3>
+      <div className="grid grid-rows-2 -translate-x-8">
+        <div className="relative inline-block group">
+          <span className="hover:bg-yellow-50 text-primary-500">⑀ 蔣超元（歿）<time>1870-1943</time></span>
+          <TooltipX contents={['譜名仁孝','生於1870年2月24日','歿於民國32年（1943年）陰曆11月11日','葬於雙江鎮老鸛嘴新房子山後']} />
+        </div>
+        <div className="relative inline-block group">
+          <span className="hover:bg-yellow-50 text-primary-500">⑀ 蔣胡氏（歿）<time>1880-1957</time></span>
+          <TooltipX contents={['生於1880年6月14日','歿於民國46年（1957年)','葬於雙江鎮老鸛嘴新房子山後']} />
+        </div>
+      </div>
+    </li>
+    <li className="mb-10 ms-4">
+      <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+      <h3 className="text-lg -translate-x-10 font-normal leading-none">入臺第一代（必字輩）</h3>
+      <div className="grid grid-rows-2 -translate-x-8">
+        <div className="relative inline-block group">
+          <span className="hover:bg-yellow-50 text-primary-500">⑀男: 蔣文彬（歿）<time>1922-1984</time></span>
+          <TooltipX contents={['譜名必兵','生於民國11年（1922年）陰曆1月1日於四川潼南雙江鎮老鸛嘴新房子','歿於民國73年（1984年）陽曆10月19日於臺北榮總','葬於臺北觀音山','配劉文筠、︁育有二子五女']} />
+        </div>
+        <div className="relative inline-block group">
+          <span className="hover:bg-yellow-50 text-primary-500">⑀媳: 劉文筠（歿）<time>1925-2021</time></span>
+          <TooltipX contents={['譜名祖貞','生於民國14年（1925年）陰曆6月15日於雙江鎮外北街10號','歿於民國110年（2021年）陰曆1月14日於臺北家中','與夫同葬於台北觀音山']} />
+        </div>
+      </div>
+    </li>
+    <li className="mb-10 ms-4">
+      <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+      <h3 className="text-lg -translate-x-10 font-normal leading-none">入臺第二代（愈字輩）</h3>
+      <div className="grid grid-rows-1 -translate-x-8">
+        <div className="relative inline-block group">
+          <span className="hover:bg-yellow-50 text-primary-500">⑀男：蔣大毛（早歿）<time>1946-1946</time></span>
+          <TooltipX contents={['生於民國35年（1946年）6月13日於重慶','然未及7日即夭折']} />
+        </div>
+      </div>
+    </li>
+    <li className="mb-10 ms-4">
+      <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+      <h3 className="text-lg -translate-x-10 font-normal leading-none">入臺第二代（愈字輩）</h3>
+      <div className="grid grid-rows-2 -translate-x-8">
+        <div className="relative inline-block group">
+          <span className="hover:bg-blue-600">⑀長女：蔣玉芳 1948 - </span>
+          <TooltipX contents={['生於民國37年（1948年）陰曆9月28日於上海','適張亞明、︁育有一女張婷怡、︁一子張廼翔','今居台北']} />
+        </div>
+        <div className="relative inline-block group">
+          <span>婿：張亞明</span>
+        </div>
+      </div>
+      <ol className="relative border-s border-indigo-200 dark:border-indigo-700">
+        <li className="mb-10 ms-4">
+          <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+          <div className="grid grid-rows-2 -translate-x-8">
+            <div className="relative inline-block group">
+              <span>長女：張婷怡</span>
+            </div>
+            <div className="relative inline-block group">
+              <span>婿：姜廷霖</span>
+            </div>
+          </div>
+          <ol className="relative border-s border-indigo-200 dark:border-indigo-700">
+            <li className="mb-10 ms-4">
+              <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+              <div className="grid grid-rows-1 -translate-x-8">
+                <div className="relative inline-block group">
+                  <span>長女：姜勻婕</span>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </li>
+        <li className="mb-10 ms-4">
+          <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+          <div className="grid grid-rows-1 -translate-x-8">
+            <span>長男：張廼翔</span>
+          </div>
+        </li>
+      </ol>
+    </li>
+    <li className="mb-10 ms-4">
+      <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+      <h3 className="text-lg -translate-x-10 font-normal leading-none">入臺第二代（愈字輩）</h3>
+      <div className="grid grid-rows-2 -translate-x-8">
+        <div className="relative inline-block group">
+          <span className="hover:bg-blue-600 text-primary-500">⑀長男：蔣玉華（歿）1951-2002</span>
+          <TooltipX contents={['生於民國40年（1951年）陽曆6月1日於臺北','卒於民國91年（2002年）10月1日於雲南','葬於臺北五指山國軍公墓','配楊鴻娟︁、︁育有一女蔣欣潔、︁一子蔣昌翰','今居台北']} />
+        </div>
+        <div className="relative inline-block group">
+          <span>媳：楊鴻娟</span>
+        </div>
+      </div>
+      <ol className="relative border-s border-indigo-200 dark:border-indigo-700">
+        <li className="mb-10 ms-4">
+          <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+          <h3 className="text-lg -translate-x-10 font-normal leading-none">入臺第三代（昌字輩）</h3>
+          <div className="grid grid-rows-2 -translate-x-8">
+            <div className="relative inline-block group">
+              <span className="hover:bg-blue-600">⑀長女：蔣欣潔 1981-</span>
+              <TooltipX contents={['生於民國70年（1981年）於臺北','適謝明同。育有二女、︁謝詠貞、︁謝妍廷','今居台北']} />
+            </div>
+            <div className="relative inline-block group">
+              <span>婿：謝明同</span>
+            </div>
+          </div>
+          <ol className="relative border-s border-indigo-200 dark:border-indigo-700">
+            <li className="mb-10 ms-4">
+              <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+              <div className="grid grid-rows-2 -translate-x-8">
+                <div className="relative inline-block group">
+                  <span>長女：謝詠真</span>
+                </div>
+                <div className="relative inline-block group">
+                  <span>次女：謝妍廷</span>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </li>
+        <li className="mb-10 ms-4">
+          <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+          <h3 className="text-lg -translate-x-10 font-normal leading-none">入臺第三代（昌字輩）</h3>
+          <div className="grid grid-rows-2 -translate-x-8">
+            <div className="relative inline-block group">
+              <span className="hover:bg-blue-600">⑀長男：蔣昌翰 1984-</span>
+              <TooltipX contents={['生於民國73年（1984年）陽曆2月8日於臺北','配林思吟、︁育有二子、︁蔣允傑、︁蔣翊弘','現居新北汐止']} />
+            </div>
+            <div className="relative inline-block group">
+              <span>媳：林思吟</span>
+            </div>
+          </div>
+          <ol className="relative border-s border-indigo-200 dark:border-indigo-700">
+            <li className="mb-10 ms-4">
+              <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+              <h3 className="text-lg -translate-x-10 font-normal leading-none">入臺第四代（有字輩）</h3>
+              <div className="grid grid-rows-2 -translate-x-8">
+                <div className="relative inline-block group">
+                  <span className="hover:bg-blue-600">⑀長男：蔣允傑</span>
+                  <TooltipX contents={['生於民國年月日','現居臺北']} />
+                </div>
+                <div className="relative inline-block group">
+                  <span className="hover:bg-blue-600">⑀次男：蔣翊弘</span>
+                  <TooltipX contents={['生於民國年月日','現居臺北']} />
+                </div>
+              </div>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li className="mb-10 ms-4">
+      <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+      <h3 className="text-lg -translate-x-10 font-normal leading-none">入臺第二代（愈字輩）</h3>
+      <div className="grid grid-rows-2 -translate-x-8">
+        <div className="relative inline-block group">
+          <span className="hover:bg-blue-600">⑀次女：蔣玉萍 1953-</span>
+          <TooltipX contents={['生於民國42年（1953年）陰曆9月1日於臺北','適李興安、︁育有一女李潔','今居美國']} />
+        </div>
+        <div className="relative inline-block group">
+          <span>婿：李興安</span>
+        </div>
+      </div>
+      <ol className="relative border-s border-indigo-200 dark:border-indigo-700">
+        <li className="mb-10 ms-4">
+          <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+          <div className="grid grid-rows-2 -translate-x-8">
+            <div className="relative inline-block group">
+              <span>長女：李潔</span>
+            </div>
+            <div className="relative inline-block group">
+              <span>婿：Arthur Camegla</span>
+            </div>
+          </div>
+          <ol className="relative border-s border-indigo-200 dark:border-indigo-700">
+            <li className="mb-10 ms-4">
+              <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+              <div className="grid grid-rows-1 -translate-x-8">
+                <div className="relative inline-block group">
+                  <span>長男：River Camegla(科李恩)</span>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li className="mb-10 ms-4">
+      <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+      <h3 className="text-lg -translate-x-10 font-normal leading-none">入臺第二代（愈字輩）</h3>
+      <div className="grid grid-rows-2 -translate-x-8">
+        <div className="relative inline-block group">
+          <span className="hover:bg-blue-600">⑀三女：蔣玉遐 1955-</span>
+          <TooltipX contents={['生於民國44年（1955年）陰曆8月13於臺北','適莊修源、︁育有一女莊詩詠','今居美國']} />
+        </div>
+        <div className="relative inline-block group">
+          <span>婿：莊修源</span>
+        </div>
+      </div>
+      <ol className="relative border-s border-indigo-200 dark:border-indigo-700">
+        <li className="mb-10 ms-4">
+          <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+          <div className="grid grid-rows-2 -translate-x-8">
+            <div className="relative inline-block group">
+              <span>長女：莊斯詠</span>
+            </div>
+            <div className="relative inline-block group">
+              <span>婿：Chris Meurer</span>
+            </div>
+          </div>
+          <ol className="relative border-s border-indigo-200 dark:border-indigo-700">
+            <li className="mb-10 ms-4">
+              <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+              <div className="grid grid-rows-1 -translate-x-8">
+                <div className="relative inline-block group">
+                  <span>長男：Maxwell Meurer(莊有珩)</span>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li className="mb-10 ms-4">
+      <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+      <h3 className="text-lg -translate-x-10 font-normal leading-none">入臺第二代（愈字輩）</h3>
+      <div className="grid grid-rows-2 -translate-x-8">
+        <div className="relative inline-block group">
+          <span className="hover:bg-blue-600">⑀四女：蔣玉蘭 1957-</span>
+          <TooltipX contents={['生於民國46年（1957年）陰曆9月26於臺北','適林祝弘、︁育有一子林浩瑜、︁一女林天惠','今居臺中']} />
+        </div>
+        <div className="relative inline-block group">
+          <span>婿：林祝弘</span>
+        </div>
+      </div>
+      <ol className="relative border-s border-indigo-200 dark:border-indigo-700">
+        <li className="mb-10 ms-4">
+          <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+          <div className="grid grid-rows-1 -translate-x-8">
+            <span>長男：林浩瑜</span>
+          </div>
+        </li>
+        <li className="mb-10 ms-4">
+          <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+          <div className="grid grid-rows-2 -translate-x-8">
+            <div className="relative inline-block group">
+              <span>長女：林天惠</span>
+            </div>
+            <div className="relative inline-block group">
+              <span>婿：林奕任</span>
+            </div>
+          </div>
+          <ol className="relative border-s border-indigo-200 dark:border-indigo-700">
+            <li className="mb-10 ms-4">
+              <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+              <div className="grid grid-rows-2 -translate-x-8">
+                <div className="relative inline-block group">
+                  <span>長女：林芮年</span>
+                </div>
+                <div className="relative inline-block group">
+                  <span>長男：林芮薪</span>
+                </div>
+              </div>
+            </li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li className="mb-10 ms-4">
+      <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+      <h3 className="text-lg -translate-x-10 font-normal leading-none">入臺第二代（愈字輩）</h3>
+      <div className="grid grid-rows-2 -translate-x-8">
+        <div className="relative inline-block group">
+          <span className="hover:bg-blue-600">⑀次男：蔣玉明 1960-</span>
+          <TooltipX contents={['生於民國49年（1960年）陽曆2月11日（陰曆1月15日）於臺北','配張美惠、︁育有二子、︁蔣昌霖、︁蔣昌湛','今居台北']} />
+        </div>
+        <div className="relative inline-block group">
+          <span>媳：張美惠 1962-</span>
+        </div>
+      </div>
+      <ol className="relative border-s border-indigo-200 dark:border-indigo-700">
+        <li className="mb-10 ms-4">
+          <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+          <h3 className="text-lg -translate-x-10 font-normal leading-none">入臺第三代（昌字輩）</h3>
+          <div className="grid grid-rows-2 -translate-x-8">
+            <div className="relative inline-block group">
+              <span className="hover:bg-blue-600">⑀長男：蔣昌霖 1993-</span>
+              <TooltipX contents={['生於民國82年（1993年）陽曆8月21日於臺北","現居臺北']} />
+            </div>
+            <div className="relative inline-block group">
+              <span className="hover:bg-blue-600">⑀次男：蔣昌湛 1996-</span>
+              <TooltipX contents={['生於民國85年（1996年）陽曆6月5日於臺北','現居臺北']} />
+            </div>
+          </div>
+        </li>
+      </ol>
+    </li>
+    <li className="mb-10 ms-4">
+      <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+      <h3 className="text-lg -translate-x-10 font-normal leading-none">入臺第二代（愈字輩）</h3>
+      <div className="grid grid-rows-2 -translate-x-8">
+        <div className="relative inline-block group">
+          <span className="hover:bg-blue-600">⑀五女：蔣德純 1965-</span>
+          <TooltipX contents={['生於民國54年（1965年）陽曆6月7日（陰曆5月8日）於臺北','適黃俊峰、︁育有一女黃茵','今居臺北']} />
+        </div>
+        <div className="relative inline-block group">
+          <span>婿：黃俊峰</span>
+        </div>
+      </div>
+      <ol className="relative border-s border-indigo-200 dark:border-indigo-700">
+        <li className="mb-10 ms-4">
+          <div className="absolute w-3 h-3 bg-gray-200 rounded-full mt-1.5 -start-1.5 borider border-white dark:border-indigo-900 dark:bg-indigo-700"></div>
+          <h3 className="text-lg -translate-x-10 font-normal leading-none">入臺第三代（昌字輩）</h3>
+          <div className="grid grid-rows-1 -translate-x-8">
+            <div className="relative inline-block group">
+              <span >長女：黃茵</span>
+            </div>
+          </div>
+        </li>
+      </ol>
+    </li>
+  </ol>
+</div>
 ---
 
 # 家譜樹

@@ -20,7 +20,7 @@ config:
         lineColor: '#F8B229'
         secondaryColor: '#006100'
         tertiaryColor: '#fff'
-title: 蔣氏家譜樹
+title: 玉芳家譜樹
 ---
     flowchart TD
         %% Colors %%

@@ -113,7 +113,21 @@ function parseSvgTransform(transformString) {
   }
   return parsedTransforms
 }
-
+function getDataBlur() {
+  let flag = false
+  const divs = d3.selectAll('main').selectAll('div')
+  const id = divs.attr('id')
+  if (id === 'main-family-page') {
+    const blur = divs.attr('data-blur')
+    console.log('blur', blur)
+    if (blur === 'true') {
+      flag = true
+    } else {
+      flag = false
+    }
+  }
+  return flag
+}
 /*
  * using d3 to zoom entire svg
  */
@@ -129,6 +143,7 @@ const className =
 const tooltip = d3
   .select('body')
   .append('div')
+  .attr('id', 'mermaid-tooltip-body')
   .attr('class', className)
   .style('opacity', 0)
   .style('position', 'absolute')
@@ -273,7 +288,7 @@ function d3HandleEdgeLabel(id, map) {
 /*
  * using d3 to find anchor and display Tooltips
  */
-function d3HandleAnchor(id, md) {
+function d3HandleAnchor(id, md, flag) {
   const [svgWidth, svgHeight, svgRoot] = getSVG(id)
   if (svgRoot === null) {
     console.log('in d3handleAnchor, svgRoot is null')
@@ -287,10 +302,14 @@ function d3HandleAnchor(id, md) {
         const tr = d3.select(this).attr('transform')
         const trscale = tr + ',scale(2.0)'
         d3.select(this).attr('transform', trscale)
-        tooltip.html(tip).style('opacity', 1)
+        if (getDataBlur() === false) {
+          tooltip.html(tip).style('opacity', 1)
+        }
       })
       .on('mousemove', function (event) {
-        tooltip.style('left', event.pageX + 10 + 'px').style('top', event.pageY - 10 + 'px')
+        if (getDataBlur() === false) {
+          tooltip.style('left', event.pageX + 10 + 'px').style('top', event.pageY - 10 + 'px')
+        }
       })
       .on('mouseout', function () {
         tooltip.style('opacity', 0)
@@ -702,7 +721,19 @@ const Mermaid = ({ chart, mDevice }) => {
             if (mDevice === false) {
               d3HandleZoom(diagramId)
             }
-            d3HandleAnchor(diagramId, mDevice)
+            let flag = false
+            const divs = d3.selectAll('main').selectAll('div')
+            const id = divs.attr('id')
+            if (id === 'main-family-page') {
+              const blur = divs.attr('data-blur')
+              console.log('blur', blur)
+              if (blur === 'true') {
+                flag = true
+              } else {
+                flag = false
+              }
+            }
+            d3HandleAnchor(diagramId, mDevice, flag)
             d3HandleEdgeLabel(diagramId, map)
             if (mDevice === false) {
               d3AppendResetSvg(diagramId, map)

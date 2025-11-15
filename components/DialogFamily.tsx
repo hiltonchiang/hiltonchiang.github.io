@@ -104,11 +104,16 @@ const QArray: CellObj[] = [
   },
 ]
 
+const pswdString = '266-14-2'
+
 const clsNext =
   'inline-flex w-full justify-center rounded-md bg-blue-500 px-3 py-2 text-sm font-semibold text-white hover:bg-blue-400 sm:ml-3 sm:w-auto'
 
 const clsSubmit =
   'inline-flex w-full justify-center rounded-md bg-red-500 px-3 py-2 text-sm font-semibold text-white hover:bg-red-400 sm:ml-3 sm:w-auto'
+
+const clsExit =
+  'inline-flex w-full justify-center rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white hover:bg-green-400 sm:ml-3 sm:w-auto'
 
 function getDataBlur() {
   let flag = false
@@ -138,15 +143,15 @@ function setDataBlur(flag) {
     }
   }
 }
+
 /*
- * main program to return a svg
+ * main program to return Dialog in sequence
  */
 const DialogFamily = () => {
   /* consts */
-  const [open, setOpen] = useState(getDataBlur())
-  const [openLogging, setOpenLogging] = useState(getDataBlur())
-  const [logged, setLogged] = useState(false)
-  const [eyeSlash, setEyeSlash] = useState(true)
+  const [openRadio, setOpenRadio] = useState(getDataBlur())
+  const [openLogIn, setOpenLogIn] = useState(getDataBlur())
+  const [eyeSlash, setEyeSlash] = useState(false)
   const [pswdWrong, setPswdWrong] = useState(false)
   const [selectedOption, setSelectedOption] = useState('op1')
   const [ridx, setRidx] = useState(Math.floor(Math.random() * QArray.length))
@@ -172,8 +177,16 @@ const DialogFamily = () => {
     setSubmitButtonClassName(clsSubmit)
     setRidx(Math.floor(Math.random() * QArray.length))
     setRadioDisabled(false)
-    setPrompt('')
+    setPrompt('「 」')
     setSelectedOption('op1')
+  }
+  const fadeOutMainPage = () => {
+    gsap.set('#main-family-page', { opacity: 0 })
+    gsap.to('#main-family-page', {
+      duration: 1,
+      opacity: 1,
+      ease: 'sine.inOut',
+    })
   }
 
   const handleSubmitButton = async () => {
@@ -199,12 +212,21 @@ const DialogFamily = () => {
       }
     }
     if (scores >= 60) {
-      setOpen(false)
-      removeBlur()
+      gsap.set('#dialog-group-option', { opacity: 1 })
+      gsap.to('#dialog-group-option', {
+        duration: 1,
+        opacity: 0,
+        ease: 'sine.inOut',
+        onComplete: () => {
+          setOpenRadio(false)
+          removeBlur()
+          fadeOutMainPage()
+        },
+      })
     }
   }
 
-  const handleLogging = (event: FormEvent<HTMLFormElement>) => {
+  const handleLogIn = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault() // Prevent default page refresh
 
     const form = event.currentTarget
@@ -216,9 +238,23 @@ const DialogFamily = () => {
     // Convert FormData to a plain object for easier manipulation
     const data = Object.fromEntries(formData.entries())
     console.log('Form data:', data)
-    if (password === '266-14-2') {
+    if (password === pswdString) {
+      gsap.set('#dialog-logging', { opacity: 1 })
+      gsap.to('#dialog-logging', {
+        duration: 1,
+        opacity: 0,
+        ease: 'sine.inOut',
+        onComplete: () => {
+          gsap.set('#dialog-group-option', { opacity: 0 })
+          gsap.to('#dialog-group-option', {
+            duration: 1,
+            opacity: 1,
+            ease: 'sine.inOut',
+          })
+          setOpenLogIn(false)
+        },
+      })
       setPswdWrong(false)
-      setLogged(true)
     } else {
       setPswdWrong(true)
     }
@@ -226,11 +262,20 @@ const DialogFamily = () => {
   }
 
   const handleExitButton = async () => {
-    setOpen(false)
-    removeBlur()
+    gsap.set('#dialog-group-option', { opacity: 1 })
+    gsap.to('#dialog-group-option', {
+      duration: 1,
+      opacity: 0,
+      ease: 'sine.inOut',
+      onComplete: () => {
+        setOpenRadio(false)
+        removeBlur()
+        fadeOutMainPage()
+      },
+    })
   }
 
-  function ResultLogging() {
+  function ResultLogIn() {
     if (pswdWrong === true) {
       return (
         <svg
@@ -381,96 +426,78 @@ const DialogFamily = () => {
     }
   }
   /* useEffec */
-  useEffect(() => {}, [])
+  useEffect(() => {
+    gsap.registerPlugin(MotionPathPlugin)
+  }, [])
 
-  /* return */
-  if (!logged) {
-    return (
-      <>
-        <Transition show={openLogging}>
-          <div
-            className={clsx([
-              // Base styles
-              'absolute w-48 border transition ease-in-out',
-              // Shared closed styles
-              'data-closed:opacity-0',
-              // Entering styles
-              'data-enter:duration-1000 data-enter:data-closed:-translate-x-full',
-              // Leaving styles
-              'data-leave:duration-3000 data-leave:data-closed:translate-x-full',
-            ])}
-          >
-            <Dialog
-              open={openLogging}
-              onClose={() => console.log('onClose')} // escape or click out side of panel
-              id="dialog"
-              aria-labelledby="dialog-title"
-              className="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent"
-            >
-              <DialogBackdrop className="data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in fixed inset-0 bg-gray-900/50 transition-opacity"></DialogBackdrop>
-              <div className="flex min-h-full items-end justify-center p-4 text-center focus:outline-none sm:items-center sm:p-0">
-                <DialogPanel className="data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in data-closed:sm:translate-y-0 data-closed:sm:scale-95 relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all sm:my-8 sm:w-full sm:max-w-lg">
-                  <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-                    <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                      <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">
-                        請輸入通關密碼
-                      </h2>
-                    </div>
-
-                    <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
-                      <form onSubmit={handleLogging} action="#" method="POST" className="space-y-6">
-                        <div>
-                          <div className="flex items-center justify-between">
-                            <label
-                              htmlFor="password"
-                              className="block text-sm/6 font-medium text-gray-100"
-                            >
-                              Password
-                            </label>
-                            <div className="mx-auto flex size-4 shrink-0 items-center justify-center rounded-full bg-lime-500/10 sm:mx-0 sm:size-5">
-                              <ResultLogging />
-                            </div>
-                            <button className="mx-auto flex size-4 shrink-0 items-center justify-center rounded-full bg-lime-500/10 sm:mx-0 sm:size-5">
-                              <EyeLid />
-                            </button>
-                          </div>
-                          <div className="mt-2">
-                            <input
-                              id="password"
-                              name="password"
-                              type={eyeSlash ? 'password' : 'text'}
-                              required
-                              autoComplete="current-password"
-                              className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
-                            />
-                          </div>
-                        </div>
-
-                        <div>
-                          <button
-                            type="submit"
-                            className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                          >
-                            提交
-                          </button>
-                        </div>
-                      </form>
-                    </div>
-                  </div>
-                </DialogPanel>
-              </div>
-            </Dialog>
-          </div>
-        </Transition>
-      </>
-    )
-  } else {
+  const DialogLogIn = () => {
     return (
       <>
         <Dialog
-          open={open}
+          open={openLogIn}
           onClose={() => console.log('onClose')} // escape or click out side of panel
-          id="dialog"
+          id="dialog-logging"
+          aria-labelledby="dialog-title"
+          className="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent"
+        >
+          <DialogBackdrop className="data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in fixed inset-0 bg-gray-900/50 transition-opacity"></DialogBackdrop>
+          <div className="flex min-h-full items-end justify-center p-4 text-center focus:outline-none sm:items-center sm:p-0">
+            <DialogPanel className="data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in data-closed:sm:translate-y-0 data-closed:sm:scale-95 relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all sm:my-8 sm:w-full sm:max-w-lg">
+              <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+                <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+                  <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">
+                    請輸入通關密碼
+                  </h2>
+                </div>
+
+                <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+                  <form onSubmit={handleLogIn} action="#" method="POST" className="space-y-6">
+                    <div>
+                      <div className="flex items-center justify-between">
+                        <div className="mx-auto flex size-4 shrink-0 items-center justify-center rounded-full bg-lime-500/10 sm:mx-0 sm:size-5">
+                          <ResultLogIn />
+                        </div>
+                        <button className="mx-auto flex size-4 shrink-0 items-center justify-center rounded-full bg-lime-500/10 sm:mx-0 sm:size-5">
+                          <EyeLid />
+                        </button>
+                      </div>
+                      <div className="mt-2">
+                        <input
+                          id="password"
+                          name="password"
+                          type={eyeSlash ? 'password' : 'text'}
+                          required
+                          autoComplete="current-password"
+                          className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                          onInput={(e) => {console.log(e.target.value)}}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <button
+                        type="submit"
+                        className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                      >
+                        提交
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </DialogPanel>
+          </div>
+        </Dialog>
+      </>
+    )
+  }
+  const DialogRadio = () => {
+    return (
+      <>
+        <Dialog
+          open={openRadio}
+          onClose={() => console.log('onClose')} // escape or click out side of panel
+          id="dialog-group-option"
           aria-labelledby="dialog-title"
           className="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent"
         >
@@ -531,7 +558,7 @@ const DialogFamily = () => {
                   </div>
                 </div>
               </div>
-              <div className="bg-gray-700/25 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+              <div className="flex flex-wrap bg-gray-700/25 px-4 py-3 sm:flex-row-reverse sm:px-6">
                 <button
                   type="button"
                   id="nextButton"
@@ -554,7 +581,7 @@ const DialogFamily = () => {
                   type="button"
                   id="submitButton"
                   onClick={handleExitButton}
-                  className={clsSubmit}
+                  className={clsExit}
                 >
                   離開
                 </button>
@@ -574,5 +601,12 @@ const DialogFamily = () => {
       </>
     )
   }
+  /* return */
+  return (
+    <>
+      <DialogRadio />
+      <DialogLogIn />
+    </>
+  )
 }
 export default DialogFamily

@@ -8,7 +8,8 @@ import { MotionPathPlugin } from 'gsap/MotionPathPlugin'
 import parse from 'parse-svg-path'
 import * as d3 from 'd3'
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import { RadioGroup } from '@headlessui/react'
+import { RadioGroup, Transition } from '@headlessui/react'
+import clsx from 'clsx'
 
 type Props = { flag: boolean }
 interface OptionObj {
@@ -136,8 +137,8 @@ function setDataBlur(flag) {
 const DialogFamily = () => {
   /* consts */
   const [open, setOpen] = useState(getDataBlur())
-  const [openLogging, setOpenLOgging] = useState(getDataBlur())
-  const [logged, setLogger] = useState(false)
+  const [openLogging, setOpenLogging] = useState(getDataBlur())
+  const [logged, setLogged] = useState(false)
   const [eyeSlash, setEyeSlash] = useState(true)
   const [pswdWrong, setPswdWrong] = useState(false)
   const [selectedOption, setSelectedOption] = useState('op1')
@@ -208,7 +209,12 @@ const DialogFamily = () => {
     // Convert FormData to a plain object for easier manipulation
     const data = Object.fromEntries(formData.entries())
     console.log('Form data:', data)
-    setPswdWrong(true)
+    if (password === '266-14-2') {
+      setPswdWrong(false)
+      setLogged(true)
+    } else {
+      setPswdWrong(true)
+    }
     // You can now send 'data' to an API or process it further
   }
 
@@ -368,71 +374,81 @@ const DialogFamily = () => {
   if (!logged) {
     return (
       <>
-        <Dialog
-          open={openLogging}
-          onClose={() => console.log('onClose')} // escape or click out side of panel
-          id="dialog"
-          aria-labelledby="dialog-title"
-          className="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent"
-        >
-          <DialogBackdrop className="data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in fixed inset-0 bg-gray-900/50 transition-opacity"></DialogBackdrop>
-          <div className="flex min-h-full items-end justify-center p-4 text-center focus:outline-none sm:items-center sm:p-0">
-            <DialogPanel className="data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in data-closed:sm:translate-y-0 data-closed:sm:scale-95 relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all sm:my-8 sm:w-full sm:max-w-lg">
-              <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-                <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-                  <img
-                    alt="Your Company"
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=500"
-                    className="mx-auto h-10 w-auto"
-                  />
-                  <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">
-                    請輸入通關密碼
-                  </h2>
-                </div>
+        <Transition show={openLogging}>
+          <div
+            className={clsx([
+              // Base styles
+              'absolute w-48 border transition ease-in-out',
+              // Shared closed styles
+              'data-closed:opacity-0',
+              // Entering styles
+              'data-enter:duration-1000 data-enter:data-closed:-translate-x-full',
+              // Leaving styles
+              'data-leave:duration-3000 data-leave:data-closed:translate-x-full',
+            ])}
+          >
+            <Dialog
+              open={openLogging}
+              onClose={() => console.log('onClose')} // escape or click out side of panel
+              id="dialog"
+              aria-labelledby="dialog-title"
+              className="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent"
+            >
+              <DialogBackdrop className="data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in fixed inset-0 bg-gray-900/50 transition-opacity"></DialogBackdrop>
+              <div className="flex min-h-full items-end justify-center p-4 text-center focus:outline-none sm:items-center sm:p-0">
+                <DialogPanel className="data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in data-closed:sm:translate-y-0 data-closed:sm:scale-95 relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                  <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
+                    <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+                      <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-white">
+                        請輸入通關密碼
+                      </h2>
+                    </div>
 
-                <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
-                  <form onSubmit={handleLogging} action="#" method="POST" className="space-y-6">
-                    <div>
-                      <div className="flex items-center justify-between">
-                        <label
-                          htmlFor="password"
-                          className="block text-sm/6 font-medium text-gray-100"
-                        >
-                          Password
-                        </label>
-                        <div className="mx-auto flex size-4 shrink-0 items-center justify-center rounded-full bg-lime-500/10 sm:mx-0 sm:size-5">
-                          <ResultLogging />
+                    <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+                      <form onSubmit={handleLogging} action="#" method="POST" className="space-y-6">
+                        <div>
+                          <div className="flex items-center justify-between">
+                            <label
+                              htmlFor="password"
+                              className="block text-sm/6 font-medium text-gray-100"
+                            >
+                              Password
+                            </label>
+                            <div className="mx-auto flex size-4 shrink-0 items-center justify-center rounded-full bg-lime-500/10 sm:mx-0 sm:size-5">
+                              <ResultLogging />
+                            </div>
+                            <button className="mx-auto flex size-4 shrink-0 items-center justify-center rounded-full bg-lime-500/10 sm:mx-0 sm:size-5">
+                              <EyeLid />
+                            </button>
+                          </div>
+                          <div className="mt-2">
+                            <input
+                              id="password"
+                              name="password"
+                              type={eyeSlash ? 'password' : 'text'}
+                              required
+                              autoComplete="current-password"
+                              className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
+                            />
+                          </div>
                         </div>
-                        <button className="mx-auto flex size-4 shrink-0 items-center justify-center rounded-full bg-lime-500/10 sm:mx-0 sm:size-5">
-                          <EyeLid />
-                        </button>
-                      </div>
-                      <div className="mt-2">
-                        <input
-                          id="password"
-                          name="password"
-                          type={eyeSlash ? 'password' : 'text'}
-                          required
-                          autoComplete="current-password"
-                          className="block w-full rounded-md bg-white/5 px-3 py-1.5 text-base text-white outline-1 -outline-offset-1 outline-white/10 placeholder:text-gray-500 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-500 sm:text-sm/6"
-                        />
-                      </div>
-                    </div>
 
-                    <div>
-                      <button
-                        type="submit"
-                        className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                      >
-                        提交
-                      </button>
+                        <div>
+                          <button
+                            type="submit"
+                            className="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-1.5 text-sm/6 font-semibold text-white hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                          >
+                            提交
+                          </button>
+                        </div>
+                      </form>
                     </div>
-                  </form>
-                </div>
+                  </div>
+                </DialogPanel>
               </div>
-            </DialogPanel>
+            </Dialog>
           </div>
-        </Dialog>
+        </Transition>
       </>
     )
   } else {

@@ -113,22 +113,29 @@ const clsSubmit =
 function getDataBlur() {
   let flag = false
   const divs = d3.selectAll('main').selectAll('div')
-  const id = divs.attr('id')
-  if (id === 'main-family-page') {
-    const blur = divs.attr('data-blur')
-    if (blur === 'true') {
-      flag = true
-    } else {
-      flag = false
+  const nodes = divs.nodes()
+  for (let i = 0; i < nodes.length; i++) {
+    const id = d3.select(nodes[i]).attr('id')
+    if (id === 'main-family-page') {
+      const blur = d3.select(nodes[i]).attr('data-blur')
+      if (blur === 'true') {
+        flag = true
+      } else {
+        flag = false
+      }
     }
   }
   return flag
 }
+
 function setDataBlur(flag) {
   const divs = d3.selectAll('main').selectAll('div')
-  const id = divs.attr('id')
-  if (id === 'main-family-page') {
-    divs.attr('data-blur', flag)
+  const nodes = divs.nodes()
+  for (let i = 0; i < nodes.length; i++) {
+    const id = d3.select(nodes[i]).attr('id')
+    if (id === 'main-family-page') {
+      d3.select(nodes[i]).attr('data-blur', flag)
+    }
   }
 }
 /*
@@ -360,16 +367,22 @@ const DialogFamily = () => {
       setQStart(true)
     }
   }
-  /* useEffec */
-  useEffect(() => {}, [])
+
   function removeBlur() {
     const divs = d3.selectAll('main').selectAll('div')
-    const id = divs.attr('id')
-    if (id === 'main-family-page') {
-      divs.attr('class', '')
-      divs.attr('data-blur', 'false')
+    const nodes = divs.nodes()
+    for (let i = 0; i < nodes.length; i++) {
+      const id = d3.select(nodes[i]).attr('id')
+      if (id === 'main-family-page') {
+        d3.select(nodes[i]).attr('data-blur', 'false')
+        d3.select(nodes[i]).attr('class', '')
+        break
+      }
     }
   }
+  /* useEffec */
+  useEffect(() => {}, [])
+
   /* return */
   if (!logged) {
     return (

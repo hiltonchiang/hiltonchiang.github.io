@@ -116,18 +116,21 @@ function parseSvgTransform(transformString) {
 function getDataBlur() {
   let flag = false
   const divs = d3.selectAll('main').selectAll('div')
-  const id = divs.attr('id')
-  if (id === 'main-family-page') {
-    const blur = divs.attr('data-blur')
-    console.log('blur', blur)
-    if (blur === 'true') {
-      flag = true
-    } else {
-      flag = false
+  const nodes = divs.nodes()
+  for (let i = 0; i < nodes.length; i++) {
+    const id = d3.select(nodes[i]).attr('id')
+    if (id === 'main-family-page') {
+      const blur = d3.select(nodes[i]).attr('data-blur')
+      if (blur === 'true') {
+        flag = true
+      } else {
+        flag = false
+      }
     }
   }
   return flag
 }
+
 /*
  * using d3 to zoom entire svg
  */
@@ -288,7 +291,7 @@ function d3HandleEdgeLabel(id, map) {
 /*
  * using d3 to find anchor and display Tooltips
  */
-function d3HandleAnchor(id, md, flag) {
+function d3HandleAnchor(id, md) {
   const [svgWidth, svgHeight, svgRoot] = getSVG(id)
   if (svgRoot === null) {
     console.log('in d3handleAnchor, svgRoot is null')
@@ -721,19 +724,7 @@ const Mermaid = ({ chart, mDevice }) => {
             if (mDevice === false) {
               d3HandleZoom(diagramId)
             }
-            let flag = false
-            const divs = d3.selectAll('main').selectAll('div')
-            const id = divs.attr('id')
-            if (id === 'main-family-page') {
-              const blur = divs.attr('data-blur')
-              console.log('blur', blur)
-              if (blur === 'true') {
-                flag = true
-              } else {
-                flag = false
-              }
-            }
-            d3HandleAnchor(diagramId, mDevice, flag)
+            d3HandleAnchor(diagramId, mDevice)
             d3HandleEdgeLabel(diagramId, map)
             if (mDevice === false) {
               d3AppendResetSvg(diagramId, map)

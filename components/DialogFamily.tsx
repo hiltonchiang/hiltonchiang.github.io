@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef, useEffect, FormEvent } from 'react'
+import { Fragment, useState, useRef, useEffect, FormEvent } from 'react'
 import mermaid from 'mermaid'
 import { useSearchParams } from 'next/navigation'
 import { useTheme } from 'next-themes'
@@ -181,6 +181,7 @@ const DialogFamily = () => {
     setSelectedOption('op1')
   }
   const fadeOutMainPage = () => {
+    return
     gsap.set('#main-family-page', { opacity: 0 })
     gsap.to('#main-family-page', {
       duration: 1,
@@ -188,7 +189,23 @@ const DialogFamily = () => {
       ease: 'sine.inOut',
     })
   }
-
+  const FadeInLoginOutDialogRadio = () => {
+    gsap.set('#dialog-logging', { opacity: 1 })
+    gsap.to('#dialog-logging', {
+      duration: 1,
+      opacity: 0,
+      ease: 'sine.inOut',
+      onComplete: () => {
+        gsap.set('#dialog-group-option', { opacity: 0 })
+        gsap.to('#dialog-group-option', {
+          duration: 1,
+          opacity: 1,
+          ease: 'sine.inOut',
+        })
+        setOpenLogIn(false)
+      },
+    })
+  }
   const handleSubmitButton = async () => {
     setQStart(false)
     setNextButtonClassName(clsNext)
@@ -212,17 +229,7 @@ const DialogFamily = () => {
       }
     }
     if (scores >= 60) {
-      gsap.set('#dialog-group-option', { opacity: 1 })
-      gsap.to('#dialog-group-option', {
-        duration: 1,
-        opacity: 0,
-        ease: 'sine.inOut',
-        onComplete: () => {
-          setOpenRadio(false)
-          removeBlur()
-          fadeOutMainPage()
-        },
-      })
+      removeBlur()
     }
   }
 
@@ -239,40 +246,25 @@ const DialogFamily = () => {
     const data = Object.fromEntries(formData.entries())
     console.log('Form data:', data)
     if (password === pswdString) {
-      gsap.set('#dialog-logging', { opacity: 1 })
-      gsap.to('#dialog-logging', {
-        duration: 1,
-        opacity: 0,
-        ease: 'sine.inOut',
-        onComplete: () => {
-          gsap.set('#dialog-group-option', { opacity: 0 })
-          gsap.to('#dialog-group-option', {
-            duration: 1,
-            opacity: 1,
-            ease: 'sine.inOut',
-          })
-          setOpenLogIn(false)
-        },
-      })
+      setOpenLogIn(false)
       setPswdWrong(false)
     } else {
       setPswdWrong(true)
     }
-    // You can now send 'data' to an API or process it further
   }
 
   const handleExitButton = async () => {
-    gsap.set('#dialog-group-option', { opacity: 1 })
-    gsap.to('#dialog-group-option', {
-      duration: 1,
-      opacity: 0,
-      ease: 'sine.inOut',
-      onComplete: () => {
-        setOpenRadio(false)
-        removeBlur()
-        fadeOutMainPage()
-      },
-    })
+    //gsap.set('#dialog-group-option', { opacity: 1 })
+    //gsap.to('#dialog-group-option', {
+    //  duration: 1,
+    //  opacity: 0,
+    //  ease: 'sine.inOut',
+    //  onComplete: () => {
+    setOpenRadio(false)
+    removeBlur()
+    fadeOutMainPage()
+    //  },
+    //})
   }
 
   function ResultLogIn() {
@@ -440,7 +432,7 @@ const DialogFamily = () => {
           aria-labelledby="dialog-title"
           className="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent"
         >
-          <DialogBackdrop className="data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in fixed inset-0 bg-gray-900/50 transition-opacity"></DialogBackdrop>
+          <DialogBackdrop className="data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in fixed inset-0 bg-gray-900/50 backdrop-blur-lg transition-opacity"></DialogBackdrop>
           <div className="flex min-h-full items-end justify-center p-4 text-center focus:outline-none sm:items-center sm:p-0">
             <DialogPanel className="data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in data-closed:sm:translate-y-0 data-closed:sm:scale-95 relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all sm:my-8 sm:w-full sm:max-w-lg">
               <div className="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
@@ -500,7 +492,7 @@ const DialogFamily = () => {
           aria-labelledby="dialog-title"
           className="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent"
         >
-          <DialogBackdrop className="data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in fixed inset-0 bg-gray-900/50 transition-opacity"></DialogBackdrop>
+          <DialogBackdrop className="data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in fixed inset-0 bg-gray-900/50  backdrop-blur-lg transition-opacity"></DialogBackdrop>
           <div className="flex min-h-full items-end justify-center p-4 text-center focus:outline-none sm:items-center sm:p-0">
             <DialogPanel className="data-closed:translate-y-4 data-closed:opacity-0 data-enter:duration-300 data-enter:ease-out data-leave:duration-200 data-leave:ease-in data-closed:sm:translate-y-0 data-closed:sm:scale-95 relative transform overflow-hidden rounded-lg bg-gray-800 text-left shadow-xl outline -outline-offset-1 outline-white/10 transition-all sm:my-8 sm:w-full sm:max-w-lg">
               <div className="bg-gray-800 px-4 pb-4 pt-5 sm:p-6 sm:pb-4">

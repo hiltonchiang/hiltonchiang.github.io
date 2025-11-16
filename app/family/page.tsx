@@ -23,7 +23,7 @@ export default async function Page() {
   }
   return (
     <>
-      <div id="main-family-page" data-blur="true" className="blur-lg filter">
+      <div id="main-family-page" data-blur="true" className="">
         <ScrollTopAndComment />
         <div className="realtive hidden w-screen max-w-[1088px] divide-y border-2 border-solid p-4 md:block md:w-full">
           <FamilyTree1 />

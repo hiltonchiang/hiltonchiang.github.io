@@ -371,7 +371,7 @@ function showTitle(id, md, theme) {
   text?.attr('id', 'title-' + id)
 }
 /*
- * add a reset button to reset rezied svg to its origin
+ * add a reset button to reset re-sized svg to its origin
  */
 function d3AppendResetSvg(id, map) {
   const [w, h, svg] = getSVG(id)
@@ -581,6 +581,9 @@ function gsapAnimate(id, map) {
     yoyo: true,
     repeat: -1,
     ease: 'sine.inOut', // Easing function
+    onUpdate: function () {
+      // console.log("onUpdate", this.progress())
+    },
   })
 }
 /*
@@ -731,7 +734,7 @@ const Mermaid = ({ chart, mDevice }) => {
             }
             showTitle(diagramId, mDevice, resolvedTheme)
             findRelations(diagramId, map)
-            gsapAnimate(diagramId, map)
+            // gsapAnimate(diagramId, map)
             gsap.registerPlugin(MotionPathPlugin)
             console.log(diagramId, 'map ', map)
           }

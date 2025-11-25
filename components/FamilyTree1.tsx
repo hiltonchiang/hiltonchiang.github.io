@@ -20,6 +20,7 @@ config:
         lineColor: '#F8B229'
         secondaryColor: '#006100'
         tertiaryColor: '#fff'
+    logLevel: debug
 title: 蔣氏家譜樹
 ---
     flowchart LR
@@ -58,7 +59,7 @@ title: 蔣氏家譜樹
         L_G2_S0_0@{ animate: true }
         click S0 "蔣大毛<br/>生於民國35年（1946年）6月13日於重慶<br/>然未及7日即夭折"
         G2 --長女--> S1((蔣玉芳))
-        click S1 "蔣玉芳<br/>生於民國37年（1948年）陰曆9月28日於上海<br/>適張亞明、︁育有一女張婷怡、︁一子張廼翔<br/>今居台北"
+        click S1 "蔣玉芳<br/>生於民國37年於上海<br/>適張亞明、︁育有一女張婷怡、︁一子張廼翔<br/>今居台北"
         L_G2_S1_0@{ animate: true }
         G2 --長子--> Or((蔣玉華)):::green
         click Or "蔣玉華<br/>生於民國40年（1951年）陽曆6月1日於臺北<br/>卒於民國91年（2002年）10月1日於雲南<br/>葬於臺北五指山國軍公墓<br/>配楊鴻娟︁、︁育有一女蔣欣潔、︁一子蔣昌翰"

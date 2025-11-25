@@ -31,42 +31,42 @@ title: 文彬家譜樹
         classDef invisible fill:#0000, stroke:#0000, color:#0000
 
         %% First Daughter %%
-        G1((文彬家<br/>入臺第一代)):::blue e12@--> 蔣玉芳
-        蔣玉芳((蔣玉芳)) e13@--> 玉芳家((玉芳家<br/>入臺第二代)):::blue
+        G1((文彬家<br/>入臺第一代)):::blue L_G1_蔣玉芳_0@--> 蔣玉芳
+        蔣玉芳((蔣玉芳)) L_蔣玉芳_玉芳家_0@--> 玉芳家((玉芳家<br/>入臺第二代)):::blue
         張亞明((張亞明)) --- 玉芳家
-        玉芳家 e14@--長女--> 張婷怡((張婷怡)) e15@--> 廷霖家((廷霖家)):::blue
+        玉芳家 L_玉芳家_張婷怡_0@--長女--> 張婷怡((張婷怡)) L_張婷怡_廷霖家_0@--> 廷霖家((廷霖家)):::blue
         姜廷霖((姜廷霖)) --- 廷霖家
-        廷霖家 e16@--長女--> 姜勻婕((姜勻婕))
-        玉芳家 e17@--長子--> 張迺翔((張迺翔))
+        廷霖家 L_廷霖家_姜勻婕_0@--長女--> 姜勻婕((姜勻婕))
+        玉芳家 L_玉芳家_張迺翔_0@--長子--> 張迺翔((張迺翔))
         %%  First Son %%
-        G1 e20@--> 蔣玉華
-        蔣玉華((蔣玉華)):::green e21@--> 玉華家((玉華家<br/>入臺第二代)):::blue
+        G1 L_G1_蔣玉華_0@--> 蔣玉華
+        蔣玉華((蔣玉華)):::green L_蔣玉華_玉華家_0@--> 玉華家((玉華家<br/>入臺第二代)):::blue
         楊鴻娟((楊鴻娟)) --- 玉華家
-        玉華家 e22@--長女--> 蔣欣潔((蔣欣潔)) e23@---> 明同家((明同家)):::blue
+        玉華家 L_玉華家_蔣欣潔_0@--長女--> 蔣欣潔((蔣欣潔)) L_蔣欣潔_明同家_0@---> 明同家((明同家)):::blue
         謝明同((謝明同)) --- 明同家
-        明同家 e24@--長女--> 謝詠真((謝詠真))
-        明同家 e25@--次女--> 謝妍廷((謝妍廷))
-        玉華家 e26@--長子--> 蔣昌翰((蔣昌翰)) e27@--> 昌翰家((昌翰家<br/>入臺第三代)):::blue
+        明同家 L_明同家_謝詠真_0@--長女--> 謝詠真((謝詠真))
+        明同家 L_明同家_謝妍廷_0@--次女--> 謝妍廷((謝妍廷))
+        玉華家 L_玉華家_蔣昌翰_0@--長子--> 蔣昌翰((蔣昌翰)) L_蔣昌翰_昌翰家_0@--> 昌翰家((昌翰家<br/>入臺第三代)):::blue
         林思吟((林思吟))--- 昌翰家
-        昌翰家 e28@--長子--> 蔣允傑((蔣允傑)) --- 第四代((入臺第四代)):::blue
-        昌翰家 e29@--次子--> 蔣翊弘((蔣翊弘)) --- 第四代
+        昌翰家 L_昌翰家_蔣允傑_0@--長子--> 蔣允傑((蔣允傑)) --- 第四代((入臺第四代)):::blue
+        昌翰家 L_昌翰家_蔣翊弘_0@--次子--> 蔣翊弘((蔣翊弘)) --- 第四代
 
         click 昌翰家 "昌字輩"
         click 第四代 "有字輩"
         %% Second Daughter %%
-        G1 e31@--> 蔣玉萍
-        蔣玉萍((蔣玉萍)) e32@--> 玉萍家((玉萍家<br/>入臺第二代)):::blue
+        G1 L_G1_蔣玉萍_0@--> 蔣玉萍
+        蔣玉萍((蔣玉萍)) L_蔣玉萍_玉萍家_0@--> 玉萍家((玉萍家<br/>入臺第二代)):::blue
         李興安((李興安)) --- 玉萍家
-        玉萍家 e33@--長女--> 李潔((李潔)) e34@--> Camegla((Camegla<br/>Family)):::blue
+        玉萍家 L_玉萍家_李潔_0@--長女--> 李潔((李潔)) L_李潔_Camegla_0@--> Camegla((Camegla<br/>Family)):::blue
         Arthur((Arthur<br/>Camegla)) --- Camegla
-        Camegla e35@--長子--> River((科李恩<br/>River))
+        Camegla L_Camegla_River_0@--長子--> River((科李恩<br/>River))
         %% Third Daughter %%
-        G1 e40@--> 蔣玉遐
-        蔣玉遐((蔣玉遐)) e41@--> 玉遐家((玉遐家<br/>入臺第二代)):::blue
+        G1 L_G1_蔣玉遐_0@--> 蔣玉遐
+        蔣玉遐((蔣玉遐)) L_蔣玉遐_玉遐家_0@--> 玉遐家((玉遐家<br/>入臺第二代)):::blue
         莊修源((莊修源)) --- 玉遐家
-        玉遐家 e42@--長女--> 莊詩詠((莊詩詠)) e43@--> Meurer((Meurer<br/>Family)):::blue
+        玉遐家 L_玉遐家_莊詩詠_0@--長女--> 莊詩詠((莊詩詠)) L_莊詩詠_Meurer_0@--> Meurer((Meurer<br/>Family)):::blue
         Chris((Chris<br/>Meurer)) --- Meurer
-        Meurer e44@--長子--> Maxwell((莊有珩<br/>Maxwell))
+        Meurer L_Meurer_Maxwell_0@--長子--> Maxwell((莊有珩<br/>Maxwell))
         %% Fourth Daughter %%
         G1 e501@--> 蔣玉蘭
         蔣玉蘭((蔣玉蘭)) e50@--> 玉蘭家((玉蘭家<br/>入臺第二代)):::blue
@@ -90,31 +90,32 @@ title: 文彬家譜樹
         黃俊峯((黃俊峯)) --- 德純家
         德純家 e72@--長女--> 黃茵((黃茵))
         
-        e12@{ animate: true } 
-        e13@{ animate: true } 
-        e14@{ animate: true } 
-        e15@{ animate: true } 
-        e16@{ animate: true } 
-        e17@{ animate: true } 
-        e20@{ animate: true } 
-        e21@{ animate: true } 
-        e22@{ animate: true } 
-        e23@{ animate: true } 
-        e24@{ animate: true } 
-        e25@{ animate: true } 
-        e26@{ animate: true } 
-        e27@{ animate: true } 
-        e28@{ animate: true } 
-        e29@{ animate: true } 
-        e31@{ animate: true } 
-        e32@{ animate: true } 
-        e33@{ animate: true } 
-        e34@{ animate: true } 
-        e35@{ animate: true } 
-        e40@{ animate: true } 
-        e41@{ animate: true } 
-        e42@{ animate: true } 
-        e43@{ animate: true } 
+        L_G1_蔣玉芳_0@{ animate: true } 
+        L_蔣玉芳_玉芳家_0@{ animate: true } 
+        L_玉芳家_張婷怡_0@{ animate: true } 
+        L_張婷怡_廷霖家_0@{ animate: true } 
+        L_廷霖家_姜勻婕_0@{ animate: true } 
+        L_玉芳家_張迺翔_0@{ animate: true } 
+        L_G1_蔣玉華_0@{ animate: true } 
+        L_蔣玉華_玉華家_0@{ animate: true } 
+        L_玉華家_蔣欣潔_0@{ animate: true } 
+        L_蔣欣潔_明同家_0@{ animate: true } 
+        L_明同家_謝詠真_0@{ animate: true } 
+        L_明同家_謝妍廷_0@{ animate: true } 
+        L_玉華家_蔣昌翰_0@{ animate: true } 
+        L_蔣昌翰_昌翰家_0@{ animate: true } 
+        L_昌翰家_蔣允傑_0@{ animate: true } 
+        L_昌翰家_蔣翊弘_0@{ animate: true } 
+        L_G1_蔣玉萍_0@{ animate: true } 
+        L_蔣玉萍_玉萍家_0@{ animate: true } 
+        L_玉萍家_李潔_0@{ animate: true } 
+        L_李潔_Camegla_0@{ animate: true } 
+        L_Camegla_River_0@{ animate: true } 
+        L_G1_蔣玉遐_0@{ animate: true } 
+        L_蔣玉遐_玉遐家_0@{ animate: true } 
+        L_玉遐家_莊詩詠_0@{ animate: true } 
+        L_莊詩詠_Meurer_0@{ animate: true } 
+        L_Meurer_Maxwell_0@{ animate: true }
         e50@{ animate: true } 
         e501@{ animate: true } 
         e51@{ animate: true } 

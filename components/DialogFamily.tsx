@@ -63,14 +63,14 @@ const QArray: CellObj[] = [
     answer: 'op2',
   },
   {
-    question: '老爺爺是入臺第一代，若從入川算起該是第幾代？',
+    question: '老爺爺是入臺第一代，若從入川算起他該是第幾代？',
     options: [
       { label: '入川第五代', option: 'op1' },
       { label: '入川第六代', option: 'op2' },
       { label: '入川第七代', option: 'op3' },
       { label: '入川第八代', option: 'op4' },
     ],
-    answer: 'op3',
+    answer: 'op4',
   },
   {
     question: '老爺爺是入臺第一代，現在蔣家在臺已繁衍到了第幾代？',
@@ -102,6 +102,16 @@ const QArray: CellObj[] = [
     ],
     answer: 'op2',
   },
+  {
+    question: '我們以前住的個眷村叫那個眷村',
+    options: [
+      { label: '婦聯六村', option: 'op1' },
+      { label: '南京新村', option: 'op2' },
+      { label: '松山新村', option: 'op3' },
+      { label: '四四東村', option: 'op4' },
+    ],
+    answer: 'op2',
+  },
 ]
 
 const pswdString = '266-14-2'
@@ -114,6 +124,21 @@ const clsSubmit =
 
 const clsExit =
   'inline-flex w-full justify-center rounded-md bg-green-500 px-3 py-2 text-sm font-semibold text-white hover:bg-green-400 sm:ml-3 sm:w-auto'
+
+function shuffleArray(array) {
+  let currentIndex = array.length
+  let randomIndex
+
+  // While there remain elements to shuffle.
+  while (currentIndex !== 0) {
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex)
+    currentIndex--
+    // And swap it with the current element.
+    ;[array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]]
+  }
+  return array
+}
 
 function getDataBlur() {
   let flag = false
@@ -147,6 +172,11 @@ function setDataBlur(flag) {
 /*
  * main program to return Dialog in sequence
  */
+interface RidxProp {
+  index: number
+  option: string
+}
+
 const DialogFamily = () => {
   /* consts */
   const [openRadio, setOpenRadio] = useState(getDataBlur())
@@ -154,13 +184,13 @@ const DialogFamily = () => {
   const [eyeSlash, setEyeSlash] = useState(false)
   const [pswdWrong, setPswdWrong] = useState(false)
   const [selectedOption, setSelectedOption] = useState('op1')
-  const [ridx, setRidx] = useState(Math.floor(Math.random() * QArray.length))
+  const [ridx, setRidx] = useState({ index: 0, option: '' })
+  const [shuffledQArray, setShuffledQArray] = useState({ array: [] })
   const [nextButtonClassName, setNextButtonClassName] = useState(
     clsNext + ' ' + 'cursor-not-allowed'
   )
-  const [scores, setScores] = useState(0)
+  const [scores, setScores] = useState({ no: 0 })
   const [submitButtonClassName, setSubmitButtonClassName] = useState(clsSubmit)
-  const curGroups: CellObj = QArray[ridx]
   const [answer, setAnswer] = useState(true)
   const [qStart, setQStart] = useState(true)
   const [nextDisabled, setNextDisabled] = useState(true)
@@ -168,6 +198,9 @@ const DialogFamily = () => {
   const [submittedWrong, setSubmittedWrong] = useState(false)
   const [radioDisabled, setRadioDisabled] = useState(false)
   const [prompt, setPrompt] = useState('')
+  const curGroups: CellObj =
+    shuffledQArray.array.length > 0 ? shuffledQArray.array[ridx.index] : QArray[ridx.index]
+  console.log('DialogFamily IN. ridx.index', ridx.index)
   /** functions */
   const handleNextButton = () => {
     setQStart(true)
@@ -175,7 +208,7 @@ const DialogFamily = () => {
     setNextDisabled(true)
     setSubmitDisabled(false)
     setSubmitButtonClassName(clsSubmit)
-    setRidx(Math.floor(Math.random() * QArray.length))
+    if (++ridx.index === shuffledQArray.array.length) ridx.index = 0
     setRadioDisabled(false)
     setPrompt('「 」')
     setSelectedOption('op1')
@@ -213,7 +246,7 @@ const DialogFamily = () => {
     setSubmitDisabled(true)
     setSubmitButtonClassName(clsSubmit + ' ' + 'cursor-not-allowed')
     if (selectedOption === curGroups.answer) {
-      setScores(scores + 10)
+      scores.no += 10
       setAnswer(true)
       setSubmittedWrong(false)
       setRadioDisabled(true)
@@ -228,9 +261,9 @@ const DialogFamily = () => {
         break
       }
     }
-    if (scores >= 60) {
-      removeBlur()
-    }
+    // if (scores.no >= 60) {
+    //   removeBlur()
+    // }
   }
 
   const handleLogIn = (event: FormEvent<HTMLFormElement>) => {
@@ -419,8 +452,9 @@ const DialogFamily = () => {
   }
   /* useEffec */
   useEffect(() => {
+    if (shuffledQArray.array.length === 0) shuffledQArray.array = shuffleArray(QArray)
     gsap.registerPlugin(MotionPathPlugin)
-  }, [])
+  }, [shuffledQArray])
 
   const DialogLogIn = () => {
     return (
@@ -446,7 +480,7 @@ const DialogFamily = () => {
                   <form onSubmit={handleLogIn} action="#" method="POST" className="space-y-6">
                     <div>
                       <div className="flex items-center justify-between">
-                        <div className="mx-auto flex size-4 shrink-0 items-center justify-center rounded-full bg-lime-500/10 sm:mx-0 sm:size-5">
+                        <div className="mx-auto flex size-4 shrink-0 animate-bounce items-center justify-center rounded-full bg-lime-500/10 sm:mx-0 sm:size-5">
                           <ResultLogIn />
                         </div>
                         <button className="mx-auto flex size-4 shrink-0 items-center justify-center rounded-full bg-lime-500/10 sm:mx-0 sm:size-5">
@@ -577,9 +611,9 @@ const DialogFamily = () => {
                   離開
                 </button>
                 <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-lime-500/10 sm:mx-0 sm:size-10">
-                  <span>{scores}</span>
+                  <span>{scores.no}</span>
                 </div>
-                <div className="mx-auto flex size-12 shrink-0 items-center justify-center rounded-full bg-lime-500/10 sm:mx-0 sm:size-10">
+                <div className="mx-auto flex size-12 shrink-0 animate-bounce items-center justify-center rounded-full bg-lime-500/10 sm:mx-0 sm:size-10">
                   <Result />
                 </div>
                 <div className="mx-auto flex items-center justify-center bg-lime-500/10 sm:mx-0">

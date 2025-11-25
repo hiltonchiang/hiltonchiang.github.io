@@ -2751,6 +2751,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@heroicons/react@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "@heroicons/react@npm:2.2.0"
+  peerDependencies:
+    react: ">= 16 || ^19.0.0-rc"
+  checksum: ff4dbfa98dacc41f86db82be9102d0c2cd0b8652b428f0b49ffd2580bee8f36fca43937a3d3d5e8f209c7303f5317a32163c018dfa13a3730d79dec43addac93
+  languageName: node
+  linkType: hard
+
 "@humanfs/core@npm:^0.19.1":
   version: 0.19.1
   resolution: "@humanfs/core@npm:0.19.1"
@@ -11394,6 +11403,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"heroicons-react@npm:^1.4.1":
+  version: 1.4.1
+  resolution: "heroicons-react@npm:1.4.1"
+  peerDependencies:
+    react: ">=16.13"
+  checksum: b27892ee0f0d48951b60b892d6d7258c4e41665f0122e07f0a82dca56502f189ffcc1d2bbcb86a139ef5a7a9197bddf614b32e98c097addb528974f2ecf4bce2
+  languageName: node
+  linkType: hard
+
 "highlight.js@npm:^10.7.3":
   version: 10.7.3
   resolution: "highlight.js@npm:10.7.3"
@@ -11411,6 +11429,7 @@ __metadata:
     "@eslint/eslintrc": ^3.2.0
     "@eslint/js": ^9.16.0
     "@headlessui/react": 2.2.0
+    "@heroicons/react": ^2.2.0
     "@mermaid-js/mermaid-cli": ^11.4.2
     "@next/bundle-analyzer": 15.0.2
     "@puppeteer/browsers": ^2.7.0
@@ -11440,6 +11459,7 @@ __metadata:
     gray-matter: ^4.0.2
     gsap: ^3.13.0
     hast-util-from-html-isomorphic: ^2.0.0
+    heroicons-react: ^1.4.1
     husky: ^9.0.0
     image-size: 1.0.0
     lint-staged: ^13.0.0
@@ -11474,6 +11494,7 @@ __metadata:
     remark-github-blockquote-alert: ^1.2.1
     remark-math: ^6.0.0
     shiki: ^2.0.3
+    svg-path-to-polygons: ^0.1.0
     tailwind-merge: ^2.6.0
     tailwindcss: ^3.4.14
     typescript: ^5.1.3
@@ -17577,6 +17598,22 @@ __metadata:
   version: 2.0.4
   resolution: "svg-parser@npm:2.0.4"
   checksum: b3de6653048212f2ae7afe4a423e04a76ec6d2d06e1bf7eacc618a7c5f7df7faa5105561c57b94579ec831fbbdbf5f190ba56a9205ff39ed13eabdf8ab086ddf
+  languageName: node
+  linkType: hard
+
+"svg-path-parser@npm:^1.1.0":
+  version: 1.1.0
+  resolution: "svg-path-parser@npm:1.1.0"
+  checksum: bab42996b17151ee7ec40d199fa980f58492b1d662297a017eea1f5f85a0e3bbb78cdc0620bbd37d4fff7146854ef0c9ddbba7143a2fe58e1bd1e6accf48c613
+  languageName: node
+  linkType: hard
+
+"svg-path-to-polygons@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "svg-path-to-polygons@npm:0.1.0"
+  dependencies:
+    svg-path-parser: ^1.1.0
+  checksum: 7a90b7708dc02746dac7ad5fc578dc5ed6924a5941a8d68f0a2071295540c6c629bca592faaf3713d6e9f008d01647f386031aca7329bd0736d7ea423fb2bf84
   languageName: node
   linkType: hard
 

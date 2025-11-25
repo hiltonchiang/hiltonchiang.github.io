@@ -7,8 +7,63 @@ import { gsap } from 'gsap'
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin'
 import parse from 'parse-svg-path'
 import * as d3 from 'd3'
+import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
+import {
+  ArchiveBoxXMarkIcon,
+  ChevronDownIcon,
+  PencilIcon,
+  Square2StackIcon,
+  TrashIcon,
+} from '@heroicons/react/24/solid'
+
+const DropDownMenuString = `
+  <div className="fixed top-24 w-52 text-right" id="DropDownMenu">
+    <Menu __demoMode>
+      <MenuButton className="focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-700 data-open:bg-gray-700 inline-flex items-center gap-2 rounded-md bg-gray-800 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10">
+        <ChevronDownIcon className="size-4 fill-white/60" />
+      </MenuButton>
+
+      <MenuItems
+        transition
+        anchor="bottom end"
+        className="data-closed:scale-95 data-closed:opacity-0 w-52 origin-top-right rounded-xl border border-white/5 bg-white/5 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none"
+      >
+        <MenuItem>
+          <button className="data-focus:bg-white/10 group flex w-full items-center gap-2 rounded-lg px-3 py-1.5">
+            <PencilIcon className="size-4 fill-white/30" />
+            Edit
+            <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">⌘E</kbd>
+          </button>
+        </MenuItem>
+        <MenuItem>
+          <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
+            <Square2StackIcon className="size-4 fill-white/30" />
+            Duplicate
+            <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">⌘D</kbd>
+          </button>
+        </MenuItem>
+        <div className="my-1 h-px bg-white/5" />
+        <MenuItem>
+          <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
+            <ArchiveBoxXMarkIcon className="size-4 fill-white/30" />
+            Archive
+            <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">⌘A</kbd>
+          </button>
+        </MenuItem>
+        <MenuItem>
+          <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
+            <TrashIcon className="size-4 fill-white/30" />
+            Delete
+            <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">⌘D</kbd>
+          </button>
+        </MenuItem>
+      </MenuItems>
+    </Menu>
+  </div>
+`
+
 /*
- * Transform return types
+ * transform return types
  */
 interface TypeMatrix {
   type: string
@@ -57,7 +112,11 @@ function parseSvgTransform(transformString) {
   for (let i = 0; i < transformList.numberOfItems; i++) {
     const transform = transformList.getItem(i)
     const matrix = transform.matrix
-
+    /*
+     * [ a, c, e ] [x]
+     * [ b, d, f ] [y]
+     * [ 0, 0, 1 ] [1]
+     */
     switch (transform.type) {
       case SVGTransform.SVG_TRANSFORM_MATRIX:
         parsedTransforms.push({
@@ -175,6 +234,7 @@ function getSVG(
   }
   return [svgWidth, svgHeight, svgRoot]
 }
+
 function getG(
   gId: string
 ): [string, d3.Selection<SVGSVGElement, unknown, HTMLElement, unknown> | null] {
@@ -222,6 +282,17 @@ interface CellObj {
   group: string
   index: number
 }
+interface PositionObj {
+  x: number
+  y: number
+  dx: number
+  dy: number
+}
+interface CircleObj {
+  cx: number
+  cy: number
+  r: number
+}
 interface EdgeLabelObj {
   g: d3.Selection<SVGGElement, unknown, HTMLElement | null, unknown>
   transform: TypeTransform[]
@@ -261,7 +332,7 @@ function d3HandleEdgeLabel(id, map) {
               const D = dataId?.split('_')
               if (D.length >= 3) {
                 const O: EdgeLabelObj = {
-                  g: gg,
+                  g: g,
                   transform: transform,
                   dataId: dataId,
                   from: D[1],
@@ -373,65 +444,15 @@ function showTitle(id, md, theme) {
 /*
  * add a reset button to reset re-sized svg to its origin
  */
-function d3AppendResetSvg(id, map) {
-  const [w, h, svg] = getSVG(id)
-  if (svg !== null) {
-    const resetSVG = svg
-      .append('svg')
-      .attr('viewBox', '0 0 24 24') // Set width of the inner SVG
-      .attr('width', 36) // Set height of the inner SVG
-      .attr('height', 36) // Set height of the inner SVG
-      .attr('x', 10) // Position the inner SVG within the parent SVG
-      .attr('y', 10)
-      .attr('fill', 'none')
-      .attr('stroke-width', '1.5')
-      .attr('stroke', 'currentColor')
-      .attr('class', 'size-6')
-    resetSVG
-      .style('fill', 'transparent')
-      .append('path')
-      .attr('stroke-linecap', 'round')
-      .attr('stroke-linejoin', 'round')
-      .attr(
-        'd',
-        'M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z'
-      )
-    resetSVG
-      .on('click', function () {
-        const node = svg.node() as SVGSVGElement
-        if (node) {
-          svg
-            .transition()
-            .duration(750)
-            .on('end', function () {
-              if (this instanceof SVGSVGElement) {
-                zoom.transform(
-                  d3.select<SVGSVGElement, unknown>(this),
-                  d3.zoomIdentity,
-                  d3.zoomTransform(node).invert([w / 2, h / 2])
-                )
-              }
-            })
-        }
-      })
-      .on('dblclick', function (e, d) {
-        e.preventDefault()
-        e.stopPropagation()
-        AnimationOne(id, map, null)
-      })
-      .on('mouseover', function (e, d) {
-        d3.select(this).style('cursor', 'pointer')
-        tooltip.html('Click<br/>OR<br/>Double Click').style('opacity', 1)
-      })
-      .on('mousemove', function (e, d) {
-        tooltip.style('left', e.pageX + 10 + 'px').style('top', e.pageY - 10 + 'px')
-      })
-      .on('mouseout', function () {
-        tooltip.style('opacity', 0)
-      })
-  }
+interface MenuTitle {
+  title: string
+  action: (a, b, c) => void
+  actable: boolean
 }
-
+interface MenuDivider {
+  divider: boolean
+}
+type TypeMenuItem = MenuTitle | MenuDivider
 /*
  *
  */
@@ -444,6 +465,7 @@ interface PathObj {
   child: CellObj[]
   parent: CellObj[]
   type: string
+  curPos: PositionObj
 }
 interface NodeObj {
   node: d3.Selection<SVGGElement, unknown, HTMLElement | null, unknown>
@@ -453,6 +475,8 @@ interface NodeObj {
   child: CellObj[]
   parent: CellObj[]
   type: string
+  curPos: PositionObj
+  circle: CircleObj
 }
 function findRelations(svgId, map) {
   const [w, h, svg] = getSVG(svgId)
@@ -484,6 +508,7 @@ function findRelations(svgId, map) {
               child: [],
               parent: [],
               type: 'PathObj',
+              curPos: { x: -1, y: -1, dx: 0, dy: 0 },
             }
             Ppaths.push(O)
           }
@@ -495,11 +520,21 @@ function findRelations(svgId, map) {
         const id = d3.select(this).attr('id')
         if (id !== null) {
           const s = id.split('-')
-          const n: d3.Selection<SVGGElement, unknown, HTMLElement | null, unknown> = d3.select<
+          let n: d3.Selection<SVGGElement, unknown, HTMLElement | null, unknown> = d3.select<
             SVGGElement,
             unknown
           >(this as SVGGElement)
-          const transform = parseSvgTransform(d3.select(this).attr('transform'))
+          let transform = parseSvgTransform(d3.select(this).attr('transform'))
+          if (transform.length == 0) {
+            const parentE = n?.node()?.parentNode as SVGGElement
+            transform = parseSvgTransform(d3.select(parentE)?.attr('transform'))
+            // console.log('tran', transform)
+            n = d3.select(parentE)
+          }
+          //const C = d3.select(this).select('circle')
+          //const r = C?.attr('r')
+          //const cx = C?.attr('cx')
+          //const cy = C?.attr('cy')
           const O: NodeObj = {
             node: n,
             transform: transform,
@@ -508,6 +543,8 @@ function findRelations(svgId, map) {
             child: [],
             parent: [],
             type: 'NodeObj',
+            curPos: { x: -1, y: -1, dx: 0, dy: 0 },
+            circle: { cx: 0, cy: 0, r: 0 },
           }
           Nnodes.push(O)
         }
@@ -561,6 +598,8 @@ function findRelations(svgId, map) {
       }
     }
   }
+  // console.log('paths', paths)
+  // console.log('labels', labels)
 }
 /*
  * use gsap to animate
@@ -585,20 +624,107 @@ function gsapAnimate(id, map) {
       // console.log("onUpdate", this.progress())
     },
   })
+  function angleBetweenVectors(v1, v2): [number, number] {
+    // Calculate the dot product
+    const dotProduct = v1.x * v2.x + v1.y * v2.y
+
+    // Calculate the magnitudes
+    const magnitudeV1 = Math.sqrt(v1.x * v1.x + v1.y * v1.y)
+    const magnitudeV2 = Math.sqrt(v2.x * v2.x + v2.y * v2.y)
+    const scale = magnitudeV1 / magnitudeV1
+    // Calculate the cosine of the angle
+    const cosTheta = dotProduct / (magnitudeV1 * magnitudeV2)
+
+    // Handle potential floating-point inaccuracies
+    // Ensure cosTheta is within the valid range for acos [-1, 1]
+    const clampedCosTheta = Math.max(-1, Math.min(1, cosTheta))
+
+    // Calculate the angle in radians
+    const angleRad = Math.acos(clampedCosTheta)
+
+    return [angleRad, scale] // Returns the angle in radians
+  }
+
+  const N = d3.select('g#flowchart-蔣以懋-0')
+  const P = d3.select('g.edgePaths').select('path#L_蔣以懋_G4_0')
+  const NM: TypeTranslateScale[] = parseSvgTransform(N.attr('transform')) as TypeTranslateScale[]
+  const PM = parse(P.attr('d'))
+  const lx = PM[4][1]
+  const ly = PM[4][2]
+  let cx = NM[0].x
+  let cy = NM[0].y
+  let curV = { x: cx - lx, y: cy - ly }
+  gsap.to(N.node(), {
+    y: '-=50',
+    duration: 3, // Animation duration in seconds
+    yoyo: true,
+    repeat: -1,
+    ease: 'sine.inOut', // Easing function
+    onUpdate: function () {
+      /*
+       *
+       *       o
+       *       | \
+       *       |  \
+       *     dy|   \
+       *       |    \
+       *       |     \
+       *  <----x------X (lx,ly) it may change later for moving all elements
+       *    dx
+       */
+      const M: TypeMatrix[] = parseSvgTransform(N.attr('transform')) as TypeMatrix[]
+      const newV = { x: M[0].e - lx, y: M[0].f - ly }
+      const [angle, scale] = angleBetweenVectors(curV, newV)
+      curV = newV
+      let dx = M[0].e - cx
+      let dy = M[0].f - cy
+      if (Math.abs(dy) > 1.0) console.log('dy', dy)
+      if (dx >= 1.0 || dy >= 1.0) {
+        dx = 0.0
+        dy = 0.0
+      }
+      cx = M[0].e
+      cy = M[0].f
+      const MM = parse(P.attr('d'))
+      const beta = 7
+      MM[0][1] = cx // M
+      MM[0][2] += dy / beta
+      MM[1][2] += ((dy / beta) * Math.abs(MM[1][1] - lx)) / Math.abs(MM[0][1] - lx)
+      MM[2][2] += ((dy / beta) * Math.abs(MM[2][1] - lx)) / Math.abs(MM[0][1] - lx)
+      MM[2][4] += ((dy / beta) * Math.abs(MM[2][3] - lx)) / Math.abs(MM[0][1] - lx)
+      MM[2][6] += ((dy / beta) * Math.abs(MM[2][5] - lx)) / Math.abs(MM[0][1] - lx)
+      MM[3][2] += ((dy / beta) * Math.abs(MM[3][1] - lx)) / Math.abs(MM[0][1] - lx)
+      MM[3][4] += ((dy / beta) * Math.abs(MM[3][3] - lx)) / Math.abs(MM[0][1] - lx)
+      MM[3][6] += ((dy / beta) * Math.abs(MM[3][5] - lx)) / Math.abs(MM[0][1] - lx)
+
+      let newString = ''
+      for (let i = 0; i < MM.length; i++) {
+        for (let j = 0; j < MM[i].length; j++) {
+          if (j === 0 || j === 1) {
+            newString += MM[i][j]
+          } else {
+            newString = newString + ' ' + MM[i][j]
+          }
+        }
+      }
+      P.attr('d', newString)
+    },
+  })
 }
 /*
  * Animation One
  *
  */
-function findRoot(id, map): Array<PathObj | NodeObj> {
-  const [w, h, svg] = getSVG(id)
+function findRoot(svg, map): Array<PathObj | NodeObj> {
+  // const [w, h, svg] = getSVG(id)
   const M: Array<PathObj | NodeObj> = []
   if (svg === null) {
+    console.log('findRoot svg is null !!!')
     return M
   }
-  if (id !== map.get('diagramId')) {
-    return M
-  }
+  // if (id !== map.get('diagramId')) {
+  //  return M
+  //}
   const N: NodeObj[] = map.get('Nodes')
   const P: PathObj[] = map.get('edgePaths')
   for (let i = 0; i < N.length; i++) {
@@ -614,95 +740,13 @@ function findRoot(id, map): Array<PathObj | NodeObj> {
   console.log('root obj ', M)
   return M
 }
-function AnimationOne(id, map, curRoots: Array<PathObj | NodeObj> | null) {
-  const [w, h, svg] = getSVG(id)
-  if (svg === null) return
-  if (id !== map.get('diagramId')) return
-  const N: NodeObj[] = map.get('Nodes')
-  const P: PathObj[] = map.get('edgePaths')
-  const L: EdgeLabelObj[] = map.get('edgelabels')
-  if (N.length == 0) return
-  if (P.length == 0) return
-  if (curRoots === null) {
-    curRoots = findRoot(id, map)
-  }
-  if (curRoots.length === 0) return
-  let totalAnimations = 0
-  let finished = 0
-
-  function allComplete() {
-    finished++
-    if (finished === totalAnimations) {
-      console.log('All animations are complete!')
-      const M: Array<PathObj | NodeObj> = []
-      if (curRoots != null) {
-        for (let i = 0; i < curRoots.length; i++) {
-          for (let j = 0; j < curRoots[i]?.child?.length; j++) {
-            const cCell = curRoots[i].child[j]
-            if (cCell.group === 'Nodes') {
-              const n = N[cCell.index].child
-              for (let k = 0; k < n.length; k++) {
-                if (n[k].group === 'edgePaths') {
-                  M.push(P[n[k].index])
-                }
-              }
-            } else if (cCell.group === 'edgePaths') {
-              const p = P[cCell.index].child
-              for (let k = 0; k < p.length; k++) {
-                if (p[k].group === 'Nodes') {
-                  M.push(N[p[k].index])
-                }
-              }
-            }
-          }
-        }
-      }
-      AnimationOne(id, map, M)
-    }
-  }
-  for (let i = 0; i < curRoots.length; i++) {
-    if (curRoots[i].type === 'NodeObj') {
-      const Root = curRoots[i] as NodeObj
-      totalAnimations = Root.child.length
-      finished = 0
-      for (let j = 0; j < Root.child.length; j++) {
-        const cIdx = Root.child[j].index
-        const circle = Root.node.append('circle')
-        const path = P[cIdx].path.node()
-        circle
-          .attr('cx', 0) // X-coordinate of the center
-          .attr('cy', 0) // Y-coordinate of the center
-          .attr('r', 5) // Radius of the circle
-          .attr('style', 'fill:#ff0000 !important') // Fill color
-          .attr('stroke', 'black') // Border color
-        if (path !== null) {
-          gsap.to(circle.node(), {
-            duration: 1,
-            ease: 'power1.inOut',
-            overwrite: 'auto',
-            immediateRender: false,
-            motionPath: {
-              path: path,
-              align: path,
-              autoRotate: false,
-              alignOrigin: [0.5, 0.5],
-            },
-            onStart: () => {},
-            onComplete: () => {
-              circle.remove()
-              allComplete()
-            },
-            onUpdate: () => {
-              // console.log('animating...')
-            },
-          })
-        }
-      }
-    } else if (curRoots[i].type === 'PathObj') {
-      const Root = curRoots[i] as PathObj
-      console.log('Path without parent ', Root)
-    }
-  }
+interface TweenProp {
+  tween: gsap.core.Tween
+  index: number
+}
+interface MenuProp {
+  on: boolean
+  selected: string
 }
 /*
  * main program to return a svg
@@ -711,13 +755,475 @@ const Mermaid = ({ chart, mDevice }) => {
   const mermaidRef = useRef<HTMLDivElement | null>(null)
   const { theme, setTheme, resolvedTheme } = useTheme()
   const [map, setMap] = useState(new Map())
+  const [tweens, setTweens] = useState<TweenProp[]>([])
+  const [menuState, setMenuState] = useState<MenuProp>({ on: false, selected: '' })
+  const [resetGraph, setResetGraph] = useState(0)
   const searchParams = useSearchParams()
   const msg = searchParams.get('msg')
   useEffect(() => {
+    /*
+     * Animate #1
+     */
+    const AnimationOne = (svg, map, curRoots: Array<PathObj | NodeObj> | null) => {
+      console.log('AnimationOne IN')
+      if (svg === null) return
+      const N: NodeObj[] = map.get('Nodes')
+      const P: PathObj[] = map.get('edgePaths')
+      const L: EdgeLabelObj[] = map.get('edgelabels')
+      if (N.length == 0) return
+      if (P.length == 0) return
+      if (curRoots === null) {
+        curRoots = findRoot(svg, map)
+      }
+      console.log('curRoots.length', curRoots.length)
+      if (curRoots.length === 0) return
+      let totalAnimations = 0
+      let finished = 0
+      interface OperationProp {
+        Nindex: number
+        Pindex: number
+      }
+      const Operations: OperationProp[] = []
+      function allComplete() {
+        finished++
+        // if (finished === totalAnimations) {
+        if (Operations.length == 0) {
+          console.log('All animations are complete!')
+          tweens.length = 0
+          const M: Array<PathObj | NodeObj> = []
+          if (curRoots != null) {
+            for (let i = 0; i < curRoots.length; i++) {
+              for (let j = 0; j < curRoots[i]?.child?.length; j++) {
+                const cCell = curRoots[i].child[j]
+                if (cCell.group === 'Nodes') {
+                  const n = N[cCell.index].child
+                  for (let k = 0; k < n.length; k++) {
+                    if (n[k].group === 'edgePaths') {
+                      M.push(P[n[k].index])
+                    }
+                  }
+                } else if (cCell.group === 'edgePaths') {
+                  const p = P[cCell.index].child
+                  for (let k = 0; k < p.length; k++) {
+                    if (p[k].group === 'Nodes') {
+                      M.push(N[p[k].index])
+                    }
+                  }
+                }
+              }
+            }
+          }
+          AnimationOne(svg, map, M)
+        }
+      }
+      for (let i = 0; i < curRoots.length; i++) {
+        if (curRoots[i].type === 'NodeObj') {
+          const Root = curRoots[i] as NodeObj
+          totalAnimations = Root.child.length
+          finished = 0
+          // console.log('Root.child.length', Root.child.length)
+          // if (Root.child.length === 0) console.log(Root)
+          for (let j = 0; j < Root.child.length; j++) {
+            const cIdx = Root.child[j].index
+            const circle = Root.node.append('circle')
+            const path = P[cIdx].path.node()
+            // console.log('path', path)
+            circle
+              .attr('cx', 0) // X-coordinate of the center
+              .attr('cy', 0) // Y-coordinate of the center
+              .attr('r', 5) // Radius of the circle
+              .attr('style', 'fill:#ff0000 !important') // Fill color
+              .attr('stroke', 'black') // Border color
+            if (path !== null) {
+              Operations.push({ Nindex: i, Pindex: j })
+              const myTween = gsap.to(circle.node(), {
+                duration: 3,
+                ease: 'power1.inOut',
+                overwrite: 'auto',
+                immediateRender: false,
+                motionPath: {
+                  path: path,
+                  align: path,
+                  autoRotate: false,
+                  alignOrigin: [0.5, 0.5],
+                },
+                onStart: () => {},
+                onComplete: () => {
+                  // console.log('AnimationOne onComplete!', i, j)
+                  circle.remove()
+                  for (let k = 0; k < Operations.length; k++) {
+                    const O = Operations[k]
+                    if (O.Nindex === i && O.Pindex === j) {
+                      Operations.splice(k, 1)
+                      break
+                    }
+                  }
+                  allComplete()
+                },
+                onUpdate: () => {
+                  // console.log('animating...')
+                },
+              })
+              const T: TweenProp = { tween: myTween, index: j }
+              tweens.push(T)
+            } else {
+              console.log('path is null')
+            }
+          }
+        } else if (curRoots[i].type === 'PathObj') {
+          const Root = curRoots[i] as PathObj
+          console.log('Path without parent ', Root)
+        } else {
+          console.log('What is this', curRoots[i])
+        }
+      }
+      if (Operations.length === 0) {
+        console.log('No more nodes to pass path')
+        AnimationOne(svg, map, null)
+      }
+    }
+    /*
+     * Animate # 2
+     */
+    const AnimationTwo = (svg, map, curRoots: Array<PathObj | NodeObj> | null) => {
+      if (svg === null) return
+      const N: NodeObj[] = map.get('Nodes')
+      const P: PathObj[] = map.get('edgePaths')
+      const L: EdgeLabelObj[] = map.get('edgeLabels')
+      if (N.length == 0) return
+      if (P.length == 0) return
+      for (let i = 0; i < N.length; i++) {
+        let dir: string = Math.random() > 0.5 ? '-=50' : '+=50'
+        const M: TypeTranslateScale[] = parseSvgTransform(
+          N[i].node.attr('transform')
+        ) as TypeTranslateScale[]
+        N[i].curPos = { x: -1, y: -1, dx: 0, dy: 0 }
+        if (M.length > 0) {
+          N[i].curPos.x = M[0].x
+          N[i].curPos.y = M[0].y
+        }
+        const myTween = gsap.to(N[i].node.node(), {
+          y: () => dir,
+          duration: 2, // Animation duration in seconds
+          yoyo: true,
+          repeat: -1,
+          repeatRefresh: true,
+          ease: 'sine.inOut',
+          onRepeat: () => {
+            dir = Math.random() > 0.5 ? '-=50' : '+=50'
+          },
+          onStart: () => {},
+          onUpdate: () => {
+            const NM: TypeMatrix[] = parseSvgTransform(N[i].node.attr('transform')) as TypeMatrix[]
+            if (N[i].curPos.x === -1 && N[i].curPos.y === -1) {
+              N[i].curPos.x = NM[0].e
+              N[i].curPos.y = NM[0].f
+            }
+            const dx = NM[0].e - N[i].curPos.x
+            const dy = NM[0].f - N[i].curPos.y
+            N[i].curPos.x = NM[0].e
+            N[i].curPos.y = NM[0].f
+            N[i].curPos.dx = dx
+            N[i].curPos.dy = dy
+            for (let j = 0; j < N[i].child.length; j++) {
+              try {
+                const cidx = N[i].child[j].index
+                const PM = parse(P[cidx].path.attr('d'))
+                const beta = 1
+                PM[0][1] = NM[0].e // M
+                PM[0][2] += dy / beta
+                const PChild: CellObj[] = P[cidx].child
+                if (PChild.length > 0) {
+                  // console.log('PChild', PChild)
+                  for (let k = 0; k < PChild.length; k++) {
+                    if (PChild[k].group === 'Nodes') {
+                      const nidx = PChild[k].index
+                      const NChild = N[nidx]
+                      if (NChild.curPos.x === -1 && NChild.curPos.y === -1) {
+                        const NChildM: TypeMatrix[] = parseSvgTransform(
+                          NChild.node.attr('transform')
+                        ) as TypeMatrix[]
+                        if (NChildM.length > 0) {
+                          NChild.curPos.x = NChildM[0].e
+                          NChild.curPos.y = NChildM[0].f
+                        }
+                      }
+                      PM[4][1] += NChild.curPos.dx
+                      PM[4][2] += NChild.curPos.dy
+                      interface Pos {
+                        x: number
+                        y: number
+                      }
+                      const x0 = PM[0][1]
+                      const y0 = PM[0][2]
+                      const x1 = PM[4][1]
+                      const y1 = PM[4][2]
+                      const lineData = [
+                        { x: x0, y: y0 },
+                        { x: (x0 + x1) / 2, y: y0 },
+                        { x: x1, y: y1 },
+                      ]
+                      const LineFunction = d3
+                        .line<Pos>()
+                        .x((d: Pos) => d.x)
+                        .y((d: Pos) => d.y)
+                        .curve(d3.curveBasis)
+
+                      const out = LineFunction(lineData)
+                      P[cidx].path.attr('d', out)
+                      /* handle edgeLabel */
+                      if (PChild.length >= 2 && PChild[k + 1].group === 'edgeLabels') {
+                        const label = L[PChild[k + 1].index]
+                        const LM: TypeTranslateScale[] = parseSvgTransform(
+                          label.g.attr('transform')
+                        ) as TypeTranslateScale[]
+                        LM[0].x = (x0 + x1) / 2
+                        LM[0].y = (y0 + y1) / 2
+                        label.g.attr('transform', 'translate(' + LM[0].x + ',' + LM[0].y + ')')
+                        /*
+                        const path = P[cidx].path.node()
+                        if (path !== null) {
+                          gsap.to(label.g.node(), {
+                            duration: 1, // Set duration as needed
+                            motionPath: {
+                              path: path,
+                              align: path,
+                              alignOrigin: [0.5, 0.5],
+                              autoRotate: false,
+                              end: 0.5,
+                            },
+                          })
+                        }*/
+                      }
+                      break
+                    }
+                  }
+                }
+              } catch (error) {
+                console.log(error)
+              }
+            }
+            /** check if nodes are intersecting 
+            const lC = N[i].node.select('circle')
+            const lCm: TypeMatrix[] = parseSvgTransform(N[i].node.attr('transform')) as TypeMatrix[]
+            const lr = lC?.attr('r')
+            const lcx = lC?.attr('cx')
+            const lcy = lC?.attr('cy')
+            const lgx = Number(lcx) + Number(lCm[0].e)
+            const lgy = Number(lcy) + Number(lCm[0].f)
+            for (let m = 0; m < N.length; m++) {
+              if (i !== m) {
+                const mC = N[m].node.select('circle')
+                const mCm: TypeMatrix[] = parseSvgTransform(N[m].node.attr('transform')) as TypeMatrix[]
+                const mr = mC?.attr('r')
+                const mcx = mC?.attr('cx')
+                const mcy = mC?.attr('cy')
+                const mgx = Number(mcx) + Number(mCm[0].e)
+                const mgy = Number(mcy) + Number(mCm[0].f)
+                const D = Math.hypot(mgx - lgx, mgy - lgy)
+                if (D < Number(lr) + Number(mr)) {
+                  if (dir === '+=50') {
+                    dir = '-=50'
+                  } else {
+                    dir = '+=50'
+                  }
+                  break
+                }
+              }
+            }*/
+          },
+        })
+        tweens.push({ tween: myTween, index: i })
+      }
+    }
+    const menuItems: TypeMenuItem[] = [
+      {
+        title: 'AnimateOne',
+        action: function (svg, map, root) {
+          menuState.selected = 'AnimateOne'
+          AnimationOne(svg, map, null)
+        },
+        actable: true,
+      },
+      {
+        title: 'AnimateTwo',
+        action: function (svg, map, root) {
+          menuState.selected = 'AnimateTwo'
+          AnimationTwo(svg, map, null)
+        },
+        actable: true,
+      },
+      {
+        divider: true,
+      }, // Optional divider
+      {
+        title: 'Stop Animate',
+        action: function (a, b, c) {
+          for (let i = 0; i < tweens.length; i++) {
+            tweens[i].tween.kill()
+          }
+          tweens.length = 0
+          menuState.selected = ''
+          setResetGraph((prevResetGraph) => prevResetGraph + 1) // just re-render
+        },
+        actable: false,
+      },
+      {
+        divider: true,
+      }, // Optional divider
+      {
+        title: 'Reset Graph',
+        action: function (w, h, svg) {
+          setResetGraph((prevResetGraph) => prevResetGraph + 1) // just re-render
+        },
+        actable: false,
+      },
+    ]
+
+    /*
+     * add a main menu
+     */
+    const d3AddMenu = (id, map) => {
+      const [w, h, svg] = getSVG(id)
+      if (svg === null) {
+        console.log('d3AddMenu svg is null')
+        return
+      }
+      console.log('d3AddMenu IN', w, h, svg)
+      /*
+       *
+       */
+      const createContextMenu = (data, x, y) => {
+        console.log('createContextMenu', data, x, y)
+        d3.select('.context-menu').remove()
+        const clsMenu: string =
+          'absolute bg-stone-900 text-base text-stone-300 dark:text-lime-300 border-2 shadow-[2px_2px_5px_rgba(0,0,0,0.2)] z-[1000] px-0 py-[5px] border-solid border-[#ccc]'
+        const clsLiEnable: string =
+          'cursor-pointer px-2.5 py-[5px] hover:bg-[#f0f0f0] dark:hover:bg-blue-700 m-0 p-0'
+        const clsLiDisable: string = 'cursor-not-allowed px-2.5 py-[5px] bg-stone-500 m-0 p-0'
+        const clsDivider: string =
+          'px-2.5 py-[5px] mx-0 my-[5px] p-0 border-t-[#eee] border-t border-solid'
+        const menu = d3
+          .select('body')
+          .append('div')
+          .attr('class', clsMenu)
+          .style('left', x + 20 + 'px')
+          .style('top', y - 10 + 'px')
+          .style('position', 'absolute')
+          .style('display', 'block') // Show the menu
+        menu
+          .append('ul')
+          .selectAll('li')
+          .data(menuItems)
+          .enter()
+          .append('li')
+          .attr('class', (f: TypeMenuItem): string => {
+            const d: MenuDivider = f as MenuDivider
+            if (d.divider) {
+              return clsDivider
+            } else {
+              const l: MenuTitle = f as MenuTitle
+              if (menuState.selected !== '') {
+                switch (l.title) {
+                  case 'AnimateOne':
+                    return clsLiDisable
+                  case 'AnimateTwo':
+                    return clsLiDisable
+                  default:
+                    return clsLiEnable
+                }
+              }
+              return clsLiEnable
+            }
+          })
+          .text((d: MenuTitle) => d.title)
+          .on('click', function (event, d: MenuTitle) {
+            event.preventDefault()
+            if (d.action) {
+              switch (d.title) {
+                case 'AnimateOne':
+                  if (menuState.selected === '') d.action(svg, map, null)
+                  break
+                case 'AnimateTwo':
+                  if (menuState.selected === '') d.action(svg, map, null)
+                  break
+                case 'Stop Animate':
+                  d.action(null, null, null)
+                  break
+                case 'Reset Graph':
+                  d.action(w, h, svg)
+                  break
+              }
+            }
+            menu.remove() // Hide the menu after clicking an option
+            menuState.on = false
+          })
+        // Hide the menu when clicking outside of it
+        d3.select('body').on('click.context-menu', function (event) {
+          if (!menu?.node()?.contains(event.target)) {
+            menu.remove()
+            d3.select('body').on('click.context-menu', null) // Remove the event listener
+            menuState.on = false
+          }
+        })
+        menuState.on = true
+      }
+
+      if (svg !== null) {
+        const resetSVG = svg
+          .append('svg')
+          .attr('id', 'mainMenuIcon')
+          .attr('viewBox', '0 0 24 24') // Set width of the inner SVG
+          .attr('width', 36) // Set height of the inner SVG
+          .attr('height', 36) // Set height of the inner SVG
+          .attr('x', 10) // Position the inner SVG within the parent SVG
+          .attr('y', 10)
+          .attr('fill', 'none')
+          .attr('stroke-width', '1.5')
+          .attr('stroke', 'currentColor')
+          .attr('class', 'cursor-context-menu size-6')
+        resetSVG
+          .style('fill', 'transparent')
+          .append('path')
+          .attr('stroke-linecap', 'round')
+          .attr('stroke-linejoin', 'round')
+          .attr(
+            'd',
+            'M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z'
+          )
+        resetSVG
+          /*
+          .on('mouseover', function (e, d) {
+            if (menuState.on) return
+            d3.select(this).style('cursor', 'pointer')
+            tooltip.html('Right Click').style('opacity', 1)
+          })
+          .on('mousemove', function (e, d) {
+            if (menuState.on) return
+            tooltip.style('left', e.pageX + 10 + 'px').style('top', e.pageY - 10 + 'px')
+          })
+          .on('mouseout', function () {
+            tooltip.style('opacity', 0)
+          })
+          */
+          .on('contextmenu', function (e, d) {
+            tooltip.style('opacity', 0)
+            e.preventDefault() // Prevent the browser's default context menu
+            createContextMenu(d, e.pageX, e.pageY)
+          })
+      }
+    }
+    /*
+     * generate svg chart
+     */
     if (mermaidRef.current) {
       const renderChart = async () => {
+        //mermaid.initialize({
+        //  logLevel: 'trace', // or 'debug', 'info', 'warn', 'fatal', or their corresponding numeric values (1-5)
+        //})
         // Generate a unique ID for the diagram
         const diagramId = `mermaid-diagram-${Math.random().toString(36).substring(7)}`
+        console.log('rerendering', diagramId)
         try {
           const { svg, bindFunctions } = await mermaid.render(diagramId, chart)
           if (mermaidRef.current !== null) {
@@ -729,14 +1235,12 @@ const Mermaid = ({ chart, mDevice }) => {
             }
             d3HandleAnchor(diagramId, mDevice)
             d3HandleEdgeLabel(diagramId, map)
-            if (mDevice === false) {
-              d3AppendResetSvg(diagramId, map)
-            }
+            // if (mDevice === false) {
+            d3AddMenu(diagramId, map)
+            // }
             showTitle(diagramId, mDevice, resolvedTheme)
             findRelations(diagramId, map)
-            // gsapAnimate(diagramId, map)
             gsap.registerPlugin(MotionPathPlugin)
-            console.log(diagramId, 'map ', map)
           }
         } catch (error) {
           console.error('Mermaid render error:', error)
@@ -747,7 +1251,7 @@ const Mermaid = ({ chart, mDevice }) => {
       }
       renderChart()
     }
-  }, [chart, msg, mDevice, resolvedTheme, map]) // Re-render if the chart code changes
+  }, [chart, msg, mDevice, resolvedTheme, menuState, map, tweens, resetGraph]) // Re-render if the chart code changes
 
   return <div ref={mermaidRef}></div>
 }

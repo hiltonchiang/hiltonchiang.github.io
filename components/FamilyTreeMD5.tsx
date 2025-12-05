@@ -31,11 +31,11 @@ title: 玉萍家譜樹
         classDef invisible fill:#0000, stroke:#0000, color:#0000
 
         %% Second Daughter %%
-        蔣玉萍((蔣玉萍)) e32@--> 玉萍家((玉萍家<br/>入臺第二代)):::blue
+        蔣玉萍((蔣玉萍)) e32@--> 玉萍家((玉萍家<br />入臺第二代)):::blue
         李興安((李興安)) --- 玉萍家
-        玉萍家 e33@--長女--> 李潔((李潔)) e34@--- Camegla((Camegla<br/>Family)):::blue
-        Arthur((Arthur<br/>Camegla)) --- Camegla
-        Camegla e35@--長子--> River((科李恩<br/>River))
+        玉萍家 e33@--長女--> 李潔((李潔)) e34@--- Camegla((Camegla<br />Family)):::blue
+        Arthur((Arthur<br />Camegla)) --- Camegla
+        Camegla e35@--長子--> River((科李恩<br />River))
                 
         e32@{ animate: true } 
         e33@{ animate: true } 

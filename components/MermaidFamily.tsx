@@ -6,6 +6,7 @@ import { useTheme } from 'next-themes'
 import { gsap } from 'gsap'
 import { MotionPathPlugin } from 'gsap/MotionPathPlugin'
 import parse from 'parse-svg-path'
+import parseSvgPath from 'parse-svg-path'
 import * as d3 from 'd3'
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import {
@@ -15,53 +16,38 @@ import {
   Square2StackIcon,
   TrashIcon,
 } from '@heroicons/react/24/solid'
-
-const DropDownMenuString = `
-  <div className="fixed top-24 w-52 text-right" id="DropDownMenu">
-    <Menu __demoMode>
-      <MenuButton className="focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-700 data-open:bg-gray-700 inline-flex items-center gap-2 rounded-md bg-gray-800 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-inner shadow-white/10">
-        <ChevronDownIcon className="size-4 fill-white/60" />
-      </MenuButton>
-
-      <MenuItems
-        transition
-        anchor="bottom end"
-        className="data-closed:scale-95 data-closed:opacity-0 w-52 origin-top-right rounded-xl border border-white/5 bg-white/5 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none"
-      >
-        <MenuItem>
-          <button className="data-focus:bg-white/10 group flex w-full items-center gap-2 rounded-lg px-3 py-1.5">
-            <PencilIcon className="size-4 fill-white/30" />
-            Edit
-            <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">⌘E</kbd>
-          </button>
-        </MenuItem>
-        <MenuItem>
-          <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
-            <Square2StackIcon className="size-4 fill-white/30" />
-            Duplicate
-            <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">⌘D</kbd>
-          </button>
-        </MenuItem>
-        <div className="my-1 h-px bg-white/5" />
-        <MenuItem>
-          <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
-            <ArchiveBoxXMarkIcon className="size-4 fill-white/30" />
-            Archive
-            <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">⌘A</kbd>
-          </button>
-        </MenuItem>
-        <MenuItem>
-          <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
-            <TrashIcon className="size-4 fill-white/30" />
-            Delete
-            <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">⌘D</kbd>
-          </button>
-        </MenuItem>
-      </MenuItems>
-    </Menu>
-  </div>
-`
-
+// import { SVGLoader } from 'three/examples/jsm/loaders/SVGLoader.js'
+import { DecalGeometry } from 'three/examples/jsm/geometries/DecalGeometry.js'
+import { FontLoader, Font } from 'three/examples/jsm/loaders/FontLoader.js'
+import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
+import { Text } from 'troika-three-text'
+import { SVGLoader } from '@/components/SVGLoader'
+import * as THREE from 'three'
+import { easing } from 'maath'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Sky, Bvh, OrbitControls, DragControls } from '@react-three/drei'
+import {
+  EffectComposer,
+  Selection,
+  Outline,
+  N8AO,
+  TiltShift2,
+  ToneMapping,
+} from '@react-three/postprocessing'
+import Scene from '@/components/Scene'
+import { createRoot, Root } from 'react-dom/client'
+import { MeshLineGeometry, MeshLineMaterial, raycast } from 'meshline'
+/**
+ *
+ */
+interface UserData {
+  node
+  style
+}
+interface ShapePathX {
+  shape: THREE.ShapePath
+  userData: UserData
+}
 /*
  * transform return types
  */
@@ -90,6 +76,23 @@ interface TypeSkew {
   angle: number
 }
 type TypeTransform = TypeMatrix | TypeTranslateScale | TypeRotate | TypeSkew
+
+/*
+ *
+ */
+const getPathPointsV2 = (path) => {
+  const points: THREE.Vector2[] = []
+  if (path) {
+    const pathLength = path.getTotalLength()
+    const numSegments = 100 // Number of points to sample along the path
+    for (let i = 0; i <= numSegments; i++) {
+      const length = (i / numSegments) * pathLength
+      const point = path.getPointAtLength(length)
+      points.push(new THREE.Vector2(point.x, point.y))
+    }
+  }
+  return points
+}
 
 function parseSvgTransform(transformString) {
   const svgns = 'http://www.w3.org/2000/svg'
@@ -447,7 +450,7 @@ function showTitle(id, md, theme) {
 interface MenuTitle {
   title: string
   action: (a, b, c) => void
-  actable: boolean
+  actionable: boolean
 }
 interface MenuDivider {
   divider: boolean
@@ -477,13 +480,27 @@ interface NodeObj {
   type: string
   curPos: PositionObj
   circle: CircleObj
+  label: string
+  color: string
 }
+function threeGenMesh(svg, map) {
+  if (svg === null) return
+  const N: NodeObj[] = map.get('Nodes')
+  const P: PathObj[] = map.get('edgePaths')
+  const L: EdgeLabelObj[] = map.get('edgelabels')
+  if (N.length == 0) return
+  if (P.length == 0) return
+  const curRoots = findRoot(svg, map)
+  if (curRoots.length === 0) return
+}
+
 function findRelations(svgId, map) {
   const [w, h, svg] = getSVG(svgId)
   if (svg === null) return
   const Ppaths: PathObj[] = []
   const Nnodes: NodeObj[] = []
   const group = svg.selectAll('g')
+  const svgLoader = new SVGLoader(THREE.DefaultLoadingManager)
   group.each(function (d, i, nodes) {
     const cls = d3.select(this).attr('class')
     if (cls === 'edgePaths') {
@@ -528,13 +545,8 @@ function findRelations(svgId, map) {
           if (transform.length == 0) {
             const parentE = n?.node()?.parentNode as SVGGElement
             transform = parseSvgTransform(d3.select(parentE)?.attr('transform'))
-            // console.log('tran', transform)
             n = d3.select(parentE)
           }
-          //const C = d3.select(this).select('circle')
-          //const r = C?.attr('r')
-          //const cx = C?.attr('cx')
-          //const cy = C?.attr('cy')
           const O: NodeObj = {
             node: n,
             transform: transform,
@@ -545,8 +557,40 @@ function findRelations(svgId, map) {
             type: 'NodeObj',
             curPos: { x: -1, y: -1, dx: 0, dy: 0 },
             circle: { cx: 0, cy: 0, r: 0 },
+            label: '',
+            color: '',
           }
+          const span = d3.select(this).select('span').attr('class')
+          if (span !== null && span === 'nodeLabel') {
+            const p = d3.select(this).select('span').select('p')
+            if (!p.empty()) {
+              O.label = p.html()
+              // console.log('nodeLable', O.label)
+            }
+          }
+          const circle = d3.select(this).select('circle').attr('style')
+          let color = ''
+          if (circle !== null) {
+            const styles = circle.split(' ')
+            // console.log('circle style', O.name, styles)
+            if (styles.length > 0) {
+              const fills = styles[0].split(':')
+              if (fills.length == 2) color = fills[1]
+              else color = '#cde498'
+            } else {
+              color = '#cde498'
+            }
+          } else {
+            color = '#cde498'
+          }
+          O.color = color
+          // console.log(O.name, color)
           Nnodes.push(O)
+          //if (n !== null) {
+          //  const D = svgLoader.parse(n.html())
+          //  const paths: ShapePathX[] = D.paths as ShapePathX[]
+          //  console.log('Node: pathShape', paths)
+          //}
         }
       })
     }
@@ -753,12 +797,14 @@ interface MenuProp {
  */
 const Mermaid = ({ chart, mDevice }) => {
   const mermaidRef = useRef<HTMLDivElement | null>(null)
+  const threeSceneRef = useRef<HTMLDivElement | null>(null)
   const { theme, setTheme, resolvedTheme } = useTheme()
   const [map, setMap] = useState(new Map())
   const [tweens, setTweens] = useState<TweenProp[]>([])
   const [menuState, setMenuState] = useState<MenuProp>({ on: false, selected: '' })
   const [resetGraph, setResetGraph] = useState(0)
   const searchParams = useSearchParams()
+  const [meshRoot, setMeshRoot] = useState<Root | null>(null)
   const msg = searchParams.get('msg')
   useEffect(() => {
     /*
@@ -885,6 +931,7 @@ const Mermaid = ({ chart, mDevice }) => {
     /*
      * Animate # 2
      */
+
     const AnimationTwo = (svg, map, curRoots: Array<PathObj | NodeObj> | null) => {
       if (svg === null) return
       const N: NodeObj[] = map.get('Nodes')
@@ -930,7 +977,7 @@ const Mermaid = ({ chart, mDevice }) => {
                 const cidx = N[i].child[j].index
                 const PM = parse(P[cidx].path.attr('d'))
                 const beta = 1
-                PM[0][1] = NM[0].e // M
+                PM[0][1] += dx // NM[0].e // M
                 PM[0][2] += dy / beta
                 const PChild: CellObj[] = P[cidx].child
                 if (PChild.length > 0) {
@@ -948,16 +995,16 @@ const Mermaid = ({ chart, mDevice }) => {
                           NChild.curPos.y = NChildM[0].f
                         }
                       }
-                      PM[4][1] += NChild.curPos.dx
-                      PM[4][2] += NChild.curPos.dy
+                      PM[PM.length - 1][1] += NChild.curPos.dx
+                      PM[PM.length - 1][2] += NChild.curPos.dy
                       interface Pos {
                         x: number
                         y: number
                       }
                       const x0 = PM[0][1]
                       const y0 = PM[0][2]
-                      const x1 = PM[4][1]
-                      const y1 = PM[4][2]
+                      const x1 = PM[PM.length - 1][1]
+                      const y1 = PM[PM.length - 1][2]
                       const lineData = [
                         { x: x0, y: y0 },
                         { x: (x0 + x1) / 2, y: y0 },
@@ -971,29 +1018,45 @@ const Mermaid = ({ chart, mDevice }) => {
 
                       const out = LineFunction(lineData)
                       P[cidx].path.attr('d', out)
+                      const getPathPoints = (path) => {
+                        const points: { x: number; y: number }[] = []
+                        if (path) {
+                          const pathLength = path.getTotalLength()
+                          const numSegments = 100 // Number of points to sample along the path
+                          for (let i = 0; i <= numSegments; i++) {
+                            const length = (i / numSegments) * pathLength
+                            const point = path.getPointAtLength(length)
+                            points.push({ x: point.x, y: point.y })
+                          }
+                        }
+                        // console.log('points', points)
+                        return points
+                      }
+                      function getAvgPosition(points): [number, number] {
+                        let x = 0
+                        let y = 0
+                        for (let i = 0; i < points.length; i++) {
+                          x += points[i].x
+                          y += points[i].y
+                        }
+                        if (points.length > 0) {
+                          x = x / points.length
+                          y = y / points.length
+                        }
+                        // console.log(points.length, x, y)
+                        return [x, y]
+                      }
+                      const [pCx, pCy] = getAvgPosition(getPathPoints(P[cidx].path.node()))
                       /* handle edgeLabel */
                       if (PChild.length >= 2 && PChild[k + 1].group === 'edgeLabels') {
                         const label = L[PChild[k + 1].index]
                         const LM: TypeTranslateScale[] = parseSvgTransform(
                           label.g.attr('transform')
                         ) as TypeTranslateScale[]
-                        LM[0].x = (x0 + x1) / 2
-                        LM[0].y = (y0 + y1) / 2
-                        label.g.attr('transform', 'translate(' + LM[0].x + ',' + LM[0].y + ')')
-                        /*
-                        const path = P[cidx].path.node()
-                        if (path !== null) {
-                          gsap.to(label.g.node(), {
-                            duration: 1, // Set duration as needed
-                            motionPath: {
-                              path: path,
-                              align: path,
-                              alignOrigin: [0.5, 0.5],
-                              autoRotate: false,
-                              end: 0.5,
-                            },
-                          })
-                        }*/
+                        //LM[0].x = (x0 + x1) / 2
+                        //LM[0].y = (y0 + y1) / 2
+                        const newPcx = pCx + 16
+                        label.g.attr('transform', 'translate(' + pCx + ',' + pCy + ')')
                       }
                       break
                     }
@@ -1003,34 +1066,6 @@ const Mermaid = ({ chart, mDevice }) => {
                 console.log(error)
               }
             }
-            /** check if nodes are intersecting 
-            const lC = N[i].node.select('circle')
-            const lCm: TypeMatrix[] = parseSvgTransform(N[i].node.attr('transform')) as TypeMatrix[]
-            const lr = lC?.attr('r')
-            const lcx = lC?.attr('cx')
-            const lcy = lC?.attr('cy')
-            const lgx = Number(lcx) + Number(lCm[0].e)
-            const lgy = Number(lcy) + Number(lCm[0].f)
-            for (let m = 0; m < N.length; m++) {
-              if (i !== m) {
-                const mC = N[m].node.select('circle')
-                const mCm: TypeMatrix[] = parseSvgTransform(N[m].node.attr('transform')) as TypeMatrix[]
-                const mr = mC?.attr('r')
-                const mcx = mC?.attr('cx')
-                const mcy = mC?.attr('cy')
-                const mgx = Number(mcx) + Number(mCm[0].e)
-                const mgy = Number(mcy) + Number(mCm[0].f)
-                const D = Math.hypot(mgx - lgx, mgy - lgy)
-                if (D < Number(lr) + Number(mr)) {
-                  if (dir === '+=50') {
-                    dir = '-=50'
-                  } else {
-                    dir = '+=50'
-                  }
-                  break
-                }
-              }
-            }*/
           },
         })
         tweens.push({ tween: myTween, index: i })
@@ -1043,7 +1078,7 @@ const Mermaid = ({ chart, mDevice }) => {
           menuState.selected = 'AnimateOne'
           AnimationOne(svg, map, null)
         },
-        actable: true,
+        actionable: true,
       },
       {
         title: 'AnimateTwo',
@@ -1051,7 +1086,7 @@ const Mermaid = ({ chart, mDevice }) => {
           menuState.selected = 'AnimateTwo'
           AnimationTwo(svg, map, null)
         },
-        actable: true,
+        actionable: true,
       },
       {
         divider: true,
@@ -1066,7 +1101,7 @@ const Mermaid = ({ chart, mDevice }) => {
           menuState.selected = ''
           setResetGraph((prevResetGraph) => prevResetGraph + 1) // just re-render
         },
-        actable: false,
+        actionable: false,
       },
       {
         divider: true,
@@ -1076,14 +1111,24 @@ const Mermaid = ({ chart, mDevice }) => {
         action: function (w, h, svg) {
           setResetGraph((prevResetGraph) => prevResetGraph + 1) // just re-render
         },
-        actable: false,
+        actionable: false,
+      },
+      {
+        title: 'ThreeSVG',
+        action: function (w, h, svg) {
+          if (svg) {
+            menuState.selected = 'ThreeSVG'
+            threeSVG(svg)
+          }
+        },
+        actionable: true,
       },
     ]
 
     /*
      * add a main menu
      */
-    const d3AddMenu = (id, map) => {
+    const d3AddMenu = (id, map, svgOrig) => {
       const [w, h, svg] = getSVG(id)
       if (svg === null) {
         console.log('d3AddMenu svg is null')
@@ -1153,6 +1198,9 @@ const Mermaid = ({ chart, mDevice }) => {
                 case 'Reset Graph':
                   d.action(w, h, svg)
                   break
+                case 'ThreeSVG':
+                  d.action(w, h, svgOrig)
+                  break
               }
             }
             menu.remove() // Hide the menu after clicking an option
@@ -1213,6 +1261,501 @@ const Mermaid = ({ chart, mDevice }) => {
           })
       }
     }
+    function Effects() {
+      const { size } = useThree()
+      useFrame((state, delta) => {
+        easing.damp3(
+          state.camera.position,
+          [state.pointer.x, 1 + state.pointer.y / 2, 8 + Math.atan(state.pointer.x * 2)],
+          0.3,
+          delta
+        )
+        state.camera.lookAt(state.camera.position.x * 0.9, 0, -4)
+      })
+      return (
+        <EffectComposer stencilBuffer enableNormalPass autoClear={false} multisampling={4}>
+          <N8AO halfRes aoSamples={5} aoRadius={0.4} distanceFalloff={0.75} intensity={1} />
+          <Outline
+            visibleEdgeColor={'white' as unknown as number}
+            hiddenEdgeColor={'white' as unknown as number}
+            blur
+            width={size.width * 1.25}
+            edgeStrength={10}
+          />
+          <TiltShift2 samples={5} blur={0.1} />
+          <ToneMapping />
+        </EffectComposer>
+      )
+    }
+    interface CanProps {
+      grp: THREE.Group
+    }
+    function CanvasContent({ grp }: CanProps) {
+      return (
+        <div className="h-857 border-2 border-blue-300">
+          <Canvas
+            flat
+            dpr={[1, 1.5]}
+            gl={{ antialias: false }}
+            camera={{ position: [0, 0, 120], fov: 150, near: 1, far: 200 }}
+            style={{ width: '100%', height: '856px' }}
+          >
+            <ambientLight intensity={1.5 * Math.PI} />
+            <Sky />
+            <DragControls>
+              <Scene rotation={[0, 0, 0]} position={[100, 0, -0.85]} grp={grp} />
+            </DragControls>
+            <OrbitControls
+              enableDamping // Smooths out camera movements
+              dampingFactor={0.05} // Control damping intensity
+              maxPolarAngle={Math.PI / 2} // Limit vertical rotation
+              enableZoom={true}
+              enablePan={true}
+            />
+          </Canvas>
+        </div>
+      )
+    }
+    interface UserData {
+      node
+      style
+    }
+    interface ShapePathX {
+      shape: THREE.ShapePath
+      userData: UserData
+    }
+    const threeSVG = (svg) => {
+      /**
+       *
+       */
+      function hasNaNValuesInShape(shape: THREE.Shape): boolean {
+        let hasNaN = false
+        // Check main curves
+        shape.curves.forEach((curve) => {
+          const points = curve.getPoints()
+          for (const point of points) {
+            if (Number.isNaN(point.x) || Number.isNaN(point.y)) {
+              console.warn('NaN found in a curve point:', point)
+              hasNaN = true
+              return // Exit forEach early if NaN is found
+            }
+          }
+        })
+
+        if (hasNaN) return true
+
+        // Check holes (which are also arrays of curves)
+        shape.holes.forEach((hole) => {
+          const points = hole.getPoints()
+          for (const point of points) {
+            if (Number.isNaN(point.x) || Number.isNaN(point.y)) {
+              console.warn('NaN found in a hole point:', point)
+              hasNaN = true
+              return // Exit forEach early if NaN is found
+            }
+          }
+        })
+        return hasNaN
+      }
+      /**
+       *
+       */
+      /**
+       * Draws text along an arc path in a canvas context.
+       * @param {CanvasRenderingContext2D} context The canvas rendering context.
+       * @param {string} str The text to draw.
+       * @param {number} centerX The x-coordinate of the circle's center.
+       * @param {number} centerY The y-coordinate of the circle's center.
+       * @param {number} radius The radius of the circle.
+       * @param {number} angle The total angle in radians that the text should span (e.g., Math.PI for a semi-circle).
+       */
+      function drawTextAlongArc(context, str, centerX, centerY, radius, angle) {
+        const len = str.length
+        context.save()
+        context.translate(centerX, centerY)
+        // Initial rotation to center the text along the angle provided
+        context.rotate((-1 * angle) / 2)
+        // Optional: adjust starting position slightly
+        context.rotate((-1 * (angle / len)) / 2)
+
+        for (let n = 0; n < len; n++) {
+          // Rotate for each character
+          context.rotate(angle / len)
+          context.save()
+          // Move to the position on the circumference
+          context.translate(0, -1 * radius)
+          const C = str[n]
+          // Draw the character
+          context.fillText(C, 0, 0)
+          context.restore()
+        }
+        context.restore()
+      }
+      function resizeText(ctx, text, maxWidth, startFontSize, fontFamily) {
+        let fontSize = startFontSize
+        ctx.font = `${fontSize}px ${fontFamily}`
+        let textWidth = ctx.measureText(text).width
+
+        // Decrease font size until the text fits within maxWidth
+        while (textWidth > maxWidth && fontSize > 1) {
+          // Ensure font size doesn't go below 1px
+          fontSize -= 1 // You can decrement by smaller amounts (e.g., 0.1) for more precision
+          ctx.font = `${fontSize}px ${fontFamily}`
+          textWidth = ctx.measureText(text).width
+        }
+
+        // Return the final font size and width
+        return {
+          fontSize: fontSize,
+          width: textWidth,
+        }
+      }
+      function measureTextHeight(ctx, text) {
+        const metrics = ctx.measureText(text)
+        const height = metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent
+        return height
+      }
+      function createTextCanvas(text, radius, color) {
+        const canvas = document.createElement('canvas')
+        const context = canvas.getContext('2d')
+        if (context !== null) {
+          canvas.width = radius * 2 // 1.414
+          canvas.height = radius * 2 // 1.414
+          canvas.style.display = 'block'
+          const T = text.split('<br>')
+          const desiredCanvasWidth = canvas.width
+          const initialFont = 50
+          const fontStyle = 'Arial'
+          const w = desiredCanvasWidth
+          const h = desiredCanvasWidth
+          // context.fillStyle = 'red'
+          // context.fillRect(0, 0, w, h)
+          context.beginPath()
+          context.arc(radius, radius, radius, 0, 2 * Math.PI, false) // Define the circle
+          context.fillStyle = color
+          context.fill()
+          //context.lineWidth = 1
+          //context.strokeStyle = color // 'red'
+          //context.stroke()
+          context.textAlign = 'center'
+          context.textBaseline = 'middle'
+          let finalFontSize = initialFont
+          for (let i = 0; i < T.length; i++) {
+            const txt = T[i]
+            const F = resizeText(context, txt, desiredCanvasWidth * 0.8, initialFont, fontStyle)
+            if (F.fontSize < finalFontSize) finalFontSize = F.fontSize
+          }
+          context.font = `${finalFontSize}px ${fontStyle}`
+          context.fillStyle = 'black'
+          const textHeight = measureTextHeight(context, T[0])
+          const totalHeight = (textHeight + 1) * T.length
+          const startY = (h - totalHeight) / 2 + textHeight / 2
+          /*console.log(
+            'startY',
+            startY,
+            'textHeight',
+            textHeight,
+            'h',
+            h,
+            'radius',
+            radius,
+            'fontSize',
+            context.font
+          )*/
+          for (let i = 0; i < T.length; i++) {
+            const txt = T[i]
+            context.fillText(txt, w / 2, startY + (textHeight + 1) * i)
+          }
+        }
+        return canvas
+      }
+      /**
+       *
+       */
+      function createTextLabel(text, position, radius, color) {
+        const canvas = createTextCanvas(text, radius, color)
+        const texture = new THREE.CanvasTexture(canvas)
+        texture.needsUpdate = true
+        console.log('createTextlabel color', color)
+        const material = new THREE.MeshBasicMaterial({
+          map: texture,
+          color: color,
+          transparent: true,
+          opacity: 1,
+          side: THREE.DoubleSide,
+          //depthTest: false,
+          //depthWrite: false,
+        })
+        // Use a PlaneGeometry for the text label
+        // Adjust plane size based on canvas dimensions for correct aspect ratio
+        // console.log('createTextLabel, w, h', canvas.width, canvas.height)
+        const beta = 1
+        const planeWidth = canvas.width / beta // Scale factor
+        const planeHeight = canvas.height / beta
+
+        // const geometry = new THREE.PlaneGeometry(planeWidth, planeHeight)
+        const geometry = new THREE.CircleGeometry(radius + 2, 32, 0, Math.PI * 2)
+        // const geometry = new THREE.CylinderGeometry(radius + 2, radius + 2, 10, 32)
+        // const geometry = new THREE.SphereGeometry(radius + 2, 32, 16)
+        const mesh = new THREE.Mesh(geometry, material)
+        // const mesh = new THREE.Mesh(textGeometry, material)
+        mesh.geometry.computeBoundingBox()
+        if (mesh.geometry.boundingBox) {
+          mesh.geometry.translate(position.x, position.y + 0.01, position.z)
+          mesh.geometry.computeBoundingBox()
+          mesh.geometry.computeBoundingSphere()
+        }
+        // mesh.position.copy(position)
+        // Offset slightly to be visible above the circle
+        // mesh.position.y += 0.01
+
+        // Make the label always face the camera (optional, but recommended for labels)
+        // This is commonly done in the render loop or by using a SpriteMaterial instead of MeshBasicMaterial
+        // If you want it to always face the camera, use SpriteMaterial and a Sprite
+        return mesh
+      }
+      /**
+       * Decal function
+       */
+      function addDecal(mesh, point, texture) {
+        const position = point.clone()
+        const orientation = new THREE.Euler()
+        orientation.setFromQuaternion(
+          new THREE.Quaternion().setFromUnitVectors(
+            new THREE.Vector3(0, 0, 1),
+            new THREE.Vector3(0, 1, 0)
+          )
+        )
+        const size = new THREE.Vector3(60, 60, 60) // Decal dimensions
+        const decalGeometry = new DecalGeometry(
+          mesh, // The target mesh for the decal projection
+          position,
+          orientation,
+          size
+        )
+        // Create a decal material (using a texture is common, here's a basic color)
+        const decalMaterial = new THREE.MeshBasicMaterial({
+          map: texture,
+          color: 0xff0000, // Red color
+          transparent: true,
+          depthTest: true,
+          depthWrite: false, // Prevents the decal from writing to the depth buffer, avoiding z-fighting
+          polygonOffset: true,
+          polygonOffsetFactor: -4, // Pushes the decal forward slightly
+        })
+        const decalMesh = new THREE.Mesh(decalGeometry, decalMaterial)
+        return decalMesh
+      }
+
+      /**
+       *  main line of codes
+       */
+      const loader = new SVGLoader(THREE.DefaultLoadingManager)
+      // const svgData = loader.parse(svg)
+      const xnodes: NodeObj[] = map.get('Nodes')
+      const xpaths: PathObj[] = map.get('edgePaths')
+      const group = new THREE.Group()
+      /**
+       * handle Nodes
+       */
+      for (let k = 0; k < xnodes.length; k++) {
+        const X = xnodes[k]?.node?.node()
+        if (X !== null) {
+          const aString = '<a xlink:href'
+          const nString = '<a href'
+          let htmlString = X.outerHTML
+          if (X.outerHTML.startsWith(aString)) {
+            htmlString = X.outerHTML.replace(aString, nString)
+          }
+          const D = loader.parse(htmlString)
+          const paths: ShapePathX[] = D.paths as ShapePathX[]
+          for (let i = 0; i < paths.length; i++) {
+            const path = paths[i].shape
+            const material = new THREE.MeshBasicMaterial({
+              color: xnodes[k].color, // 'white', //path.color,
+              side: THREE.DoubleSide,
+              transparent: true,
+              opacity: 1,
+            })
+            material.needsUpdate = true
+            const shapes: THREE.Shape[] = SVGLoader.createShapes(path)
+            for (let j = 0; j < shapes.length; j++) {
+              const shape = shapes[j]
+              if (hasNaNValuesInShape(shape)) {
+                console.log('xnodes:hasNanValuesInShape')
+                continue
+              }
+              const geometry = new THREE.ShapeGeometry(shape)
+              const mesh = new THREE.Mesh(geometry, material)
+              mesh.name = xnodes[k].name
+              mesh.geometry.computeBoundingBox()
+              if (mesh.geometry.boundingBox) {
+                const C = new THREE.Vector3()
+                mesh.geometry.boundingBox.getCenter(C)
+                console.log('boundingBox Center', mesh.name, C)
+                const scaleMatrix = new THREE.Matrix4()
+                scaleMatrix.makeScale(1, -1, 1)
+                mesh.geometry.translate(-500, -400, 0)
+                mesh.geometry.applyMatrix4(scaleMatrix)
+                mesh.geometry.computeBoundingBox()
+                mesh.geometry.computeBoundingSphere()
+              }
+              mesh.material.color.setRGB(1, 0, 0)
+              if (mesh.geometry !== null && mesh.geometry.boundingSphere !== null) {
+                const C = new THREE.Vector3()
+                if (mesh.geometry.boundingBox) mesh.geometry.boundingBox.getCenter(C)
+                if (mesh.geometry.boundingSphere) {
+                  const r = mesh.geometry.boundingSphere.radius
+                  const tMesh = createTextLabel(xnodes[k].label, C, r, xnodes[k].color)
+                  group.add(tMesh)
+                }
+              }
+            }
+          }
+        }
+      }
+      /**
+       * handle edgePaths
+       */
+      for (let k = 0; k < xpaths.length; k++) {
+        //for (let k = 2; k <= 2; k++) {
+        const X = xpaths[k]?.path?.node()
+        if (X !== null) {
+          const aString = '<a xlink:href'
+          const nString = '<a href'
+          let htmlString = X.outerHTML
+          if (X.outerHTML.startsWith(aString)) {
+            htmlString = X.outerHTML.replace(aString, nString)
+          }
+          const D = loader.parse(htmlString)
+          const paths: ShapePathX[] = D.paths as ShapePathX[]
+          for (let i = 0; i < paths.length; i++) {
+            const path = paths[i].shape
+            const material = new THREE.MeshBasicMaterial({
+              color: path.color,
+              side: THREE.DoubleSide,
+            })
+            const shapes: THREE.Shape[] = SVGLoader.createShapes(path)
+            for (let j = 0; j < shapes.length; j++) {
+              const shape = shapes[j]
+              if (hasNaNValuesInShape(shape)) {
+                console.log('xpaths.hasNanValuesInShape')
+                continue
+              }
+              function collinearCheck(p1, p2, p3) {
+                // Handle vertical lines
+                if (p1.x === p2.x && p2.x === p3.x) {
+                  return true // All points are on a vertical line
+                }
+
+                // Calculate slopes
+                const slope12 = (p2.y - p1.y) / (p2.x - p1.x)
+                const slope23 = (p3.y - p2.y) / (p3.x - p2.x)
+
+                // Compare slopes (using a small epsilon for floating-point comparisons if necessary)
+                return slope12 === slope23
+              }
+              const shapeX = new THREE.Shape()
+              const points = getPathPointsV2(xpaths[k].path.node())
+              const len = Math.trunc(points.length / 3) * 3
+              let flag = false
+              for (let i = 0; i < len; i += 3) {
+                flag = collinearCheck(points[i], points[i + 1], points[i + 2])
+                if (!flag) break
+              }
+              if (flag) {
+                // modify points a little bit
+                console.log('modify points', xpaths[k].pathCmd)
+                const x1 = xpaths[k].pathCmd[0][1] as number
+                const y1 = xpaths[k].pathCmd[0][2] as number
+                const x2 = xpaths[k].pathCmd[xpaths[k].pathCmd.length - 1][1] as number
+                const y2 = xpaths[k].pathCmd[xpaths[k].pathCmd.length - 1][2] as number
+                const r = ((x2 - x1) / 2) * 2
+                const cx = (x1 + x2) / 2
+                const cy = y1 + ((x2 - x1) / 2) * Math.sqrt(3)
+                /**
+                 * (y - cy)^2 + (x - cx)^2 = r^2
+                 */
+                for (let i = 0; i < xpaths[k].pathCmd.length; i++) {
+                  const cmd: Array<string | number> = xpaths[k].pathCmd[i] as Array<string | number>
+                  switch (cmd[0]) {
+                    case 'M': {
+                      const x = cmd[1] as number
+                      const y = cmd[2] as number
+                      shapeX.moveTo(x, y)
+                      console.log('M', x, y, cx, cy)
+                      break
+                    }
+                    case 'L': {
+                      const x = cmd[1] as number
+                      const y = cmd[2] as number
+                      shapeX.lineTo(x, y)
+                      console.log('L', x, y, cx, cy)
+                      break
+                    }
+                    case 'C': {
+                      const xa = cmd[1] as number
+                      const xb = cmd[3] as number
+                      const xc = cmd[5] as number
+                      const ya = -Math.sqrt(r * r - (xa - cx) * (xa - cx)) + cy
+                      const yb = -Math.sqrt(r * r - (xb - cx) * (xb - cx)) + cy
+                      const yc = -Math.sqrt(r * r - (xc - cx) * (xc - cx)) + cy
+                      shapeX.bezierCurveTo(xa, ya, xb, yb, xc, yc)
+                      console.log('C a', xa, ya, cx, cy)
+                      console.log('C b', xb, yb, cx, cy)
+                      console.log('C c', xc, yc, cx, cy)
+                      break
+                    }
+                  }
+                }
+              } else {
+                shapeX.setFromPoints(points)
+              }
+              /*
+              const geometryX = new MeshLineGeometry()
+              geometryX.setPoints(points)
+              const materialX = new MeshLineMaterial({
+                color: path.color,
+                resolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
+              })
+              const mesh = new THREE.Mesh(geometryX, materialX)
+              */
+              //const geometry = new THREE.ShapeGeometry(shape)
+              const geometry = new THREE.ShapeGeometry(shapeX)
+              const mesh = new THREE.Mesh(geometry, material)
+              mesh.geometry.computeBoundingBox()
+              if (mesh.geometry.boundingBox) {
+                const C = new THREE.Vector3()
+                mesh.geometry.boundingBox.getCenter(C)
+                const scaleMatrix = new THREE.Matrix4()
+                scaleMatrix.makeScale(1, -1, 1)
+                mesh.geometry.translate(-500, -400, 0)
+                mesh.geometry.applyMatrix4(scaleMatrix)
+                mesh.geometry.computeBoundingBox()
+                mesh.geometry.computeBoundingSphere()
+              }
+              mesh.material.color.setRGB(1, 0, 0)
+              mesh.name = xpaths[k].id
+              group.add(mesh)
+            }
+          }
+        }
+      }
+      group.children.forEach((O) => {
+        const worldPosition = new THREE.Vector3()
+        O.getWorldPosition(worldPosition)
+        // console.log('mesh', worldPosition, O)
+      })
+      const container = document.getElementById('ThreeCanvas')
+      if (meshRoot === null) {
+        const root = createRoot(container!) // createRoot(container!) if you use TypeScript
+        root.render(<CanvasContent grp={group} />)
+        setMeshRoot(root)
+      } else {
+        meshRoot.unmount()
+        meshRoot.render(<CanvasContent grp={group} />)
+      }
+    }
     /*
      * generate svg chart
      */
@@ -1236,11 +1779,12 @@ const Mermaid = ({ chart, mDevice }) => {
             d3HandleAnchor(diagramId, mDevice)
             d3HandleEdgeLabel(diagramId, map)
             // if (mDevice === false) {
-            d3AddMenu(diagramId, map)
+            d3AddMenu(diagramId, map, svg)
             // }
             showTitle(diagramId, mDevice, resolvedTheme)
             findRelations(diagramId, map)
             gsap.registerPlugin(MotionPathPlugin)
+            // threeSVG(svg)
           }
         } catch (error) {
           console.error('Mermaid render error:', error)
@@ -1251,7 +1795,7 @@ const Mermaid = ({ chart, mDevice }) => {
       }
       renderChart()
     }
-  }, [chart, msg, mDevice, resolvedTheme, menuState, map, tweens, resetGraph]) // Re-render if the chart code changes
+  }, [chart, msg, mDevice, resolvedTheme, menuState, map, tweens, resetGraph, meshRoot]) // Re-render if the chart code changes
 
   return <div ref={mermaidRef}></div>
 }

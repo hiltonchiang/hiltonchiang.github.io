@@ -2,13 +2,11 @@
 import dynamic from 'next/dynamic'
 import { useTheme } from 'next-themes'
 
-const Mermaid = dynamic(() => import('@/components/MermaidFamily'), {
+const Mermaid = dynamic(() => import('@/components/MermaidFamilyRoot'), {
   ssr: false,
 })
-const ThreeSvg = dynamic(() => import('@/components/ThreeSvg'), {
-  ssr: false,
-})
-const FamilyTree1 = () => {
+
+const FamilyTreeRoot = () => {
   const { theme, setTheme, resolvedTheme } = useTheme()
   const textColor = resolvedTheme === 'dark' ? 'fill-lime-300' : 'fill-stone-500'
   const familyTreeCode = `---
@@ -96,12 +94,11 @@ title: 蔣氏家譜樹
         L_S7_G1_0@{ animate: true }
          
 `
-  console.log('FamilyTree1')
+  console.log('FamilyTreeRoot')
   return (
     <>
       <Mermaid chart={familyTreeCode} mDevice={false} />
-      <div id="ThreeCanvas" />
     </>
   )
 }
-export default FamilyTree1
+export default FamilyTreeRoot

@@ -32,11 +32,11 @@ title: 玉遐家譜樹
 
 
         %% Third Daughter %%
-        蔣玉遐((蔣玉遐)) e41@--> 玉遐家((玉遐家<br/>入臺第二代)):::blue
+        蔣玉遐((蔣玉遐)) e41@--> 玉遐家((玉遐家<br />入臺第二代)):::blue
         莊修源((莊修源)) --- 玉遐家
-        玉遐家 e42@--長女--> 莊詩詠((莊詩詠)) e43@--> Meurer((Meurer<br/>Family)):::blue
-        Chris((Chris<br/>Meurer)) --- Meurer
-        Meurer e44@--長子--> Maxwell((莊有珩<br/>Maxwell))
+        玉遐家 e42@--長女--> 莊詩詠((莊詩詠)) e43@--> Meurer((Meurer<br />Family)):::blue
+        Chris((Chris<br />Meurer)) --- Meurer
+        Meurer e44@--長子--> Maxwell((莊有珩<br />Maxwell))
                 
         e41@{ animate: true } 
         e42@{ animate: true } 

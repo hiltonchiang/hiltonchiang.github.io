@@ -64,7 +64,10 @@ const baseConfig = {
   basePath,
   reactStrictMode: true,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
-  images: {
+  eslint: {
+    dirs: ['app', 'components', 'layouts', 'scripts'],
+ },
+    images: {
     remotePatterns: [
       {
         protocol: 'https',

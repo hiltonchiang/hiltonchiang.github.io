@@ -45,7 +45,7 @@
     "mdx-mermaid": "^2.0.3",
     "mermaid": "^11.12.1",
     "meshline": "^3.3.1",
-    "next": "16.0.7",
+    "next": "15.0.5",
     "next-contentlayer2": "0.5.3",
     "next-themes": "^0.3.0",
     "node-nlp": "^5.0.0-alpha.5",

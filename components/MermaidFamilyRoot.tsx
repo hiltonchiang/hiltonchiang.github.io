@@ -1,6 +1,6 @@
 'use client'
-import { Sky, Bvh, OrbitControls, DragControls, OrthographicCamera } from '@react-three/drei'
 import { ArrowsPointingOutIcon, ArrowsPointingInIcon } from '@heroicons/react/24/solid'
+import { ConvexGeometry } from 'three/examples/jsm/geometries/ConvexGeometry.js'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 import { DecalGeometry } from 'three/examples/jsm/geometries/DecalGeometry.js'
 import { MeshLineGeometry, MeshLineMaterial, raycast } from 'meshline'
@@ -10,7 +10,9 @@ import { createRoot, Root } from 'react-dom/client'
 import { SVGLoader } from '@/components/SVGLoader'
 import { useSearchParams } from 'next/navigation'
 import ReactDOMServer from 'react-dom/server'
+import HeroLogo from '@/components/HeroLogo'
 import parseSvgPath from 'parse-svg-path'
+import WVertX from '@/components/WVertX'
 import { useTheme } from 'next-themes'
 import {
   EffectComposer,
@@ -21,11 +23,27 @@ import {
   ToneMapping,
 } from '@react-three/postprocessing'
 import parse from 'parse-svg-path'
+import dynamic from 'next/dynamic'
 import { debounce } from 'lodash'
 import * as THREE from 'three'
 import { easing } from 'maath'
 import mermaid from 'mermaid'
+import {
+  OrthographicCamera,
+  OrbitControls,
+  DragControls,
+  useCursor,
+  Html,
+  Text,
+  Bvh,
+  Sky,
+} from '@react-three/drei'
 import * as d3 from 'd3'
+
+const DialogFamily = dynamic(() => import('@/components/DialogFamily'), {
+  ssr: false,
+})
+
 /**
  *
  */
@@ -69,8 +87,6 @@ type TypeTransform = TypeMatrix | TypeTranslateScale | TypeRotate | TypeSkew
  *
  */
 const fixedScreenPos = {
-  pOut: new THREE.Vector3(-500, 400, 0),
-  pIn: new THREE.Vector3(-500, 400, 0),
   camera: new THREE.Vector3(0, 0, 120),
 }
 /*
@@ -327,6 +343,7 @@ interface NodeObj {
   circle: CircleObj
   label: string
   color: string
+  aString: string
 }
 /**
  *
@@ -396,6 +413,7 @@ function findRelations(svgId, map) {
             circle: { cx: 0, cy: 0, r: 0 },
             label: '',
             color: '',
+            aString: '',
           }
           const span = d3.select(this).select('span').attr('class')
           if (span !== null && span === 'nodeLabel') {
@@ -486,8 +504,6 @@ function findRelations(svgId, map) {
 interface MeshRootProp {
   inited: boolean
   root: Root | null
-  pOut: THREE.Mesh | null
-  pIn: THREE.Mesh | null
 }
 /**
  *
@@ -523,8 +539,8 @@ function Effects() {
  */
 interface CanProps {
   grp: THREE.Group
-  pOut: THREE.Mesh | null
-  pIn: THREE.Mesh | null
+  map: Map<string, number>
+  container: HTMLElement | null
 }
 /**
  *
@@ -533,105 +549,140 @@ interface SceneProps {
   rotation: number[]
   position: number[]
   grp: THREE.Group<THREE.Object3DEventMap>
-  pOut: THREE.Mesh | null
-  pIn: THREE.Mesh | null
 }
 interface ButtonProps {
   expand: boolean
 }
-function Scene({ rotation, position, grp, pOut, pIn }: SceneProps) {
-  const [hovered, hover] = useState(null)
-  const [buttonToggle, setButtonToggle] = useState<ButtonProps>({ expand: true })
-  const debouncedHover = useCallback(debounce(hover, 30), [])
-  const over = (name) => (e) => (e.stopPropagation(), debouncedHover(name))
-  const mesh: THREE.Mesh[] = grp.children as THREE.Mesh[]
-  // for (let i = 0; i < mesh.length; i++) console.log('Scene', mesh[i].name)
-
-  const handlePointerOver = (e) => {
-    const mesh = e.object
-    //console.log('PointerOver', mesh)
-  }
-  const handlePointerOut = (e) => {
-    const mesh = e.object
-    // console.log('PointerOut', mesh.name)
-  }
-  const pOutRef = useRef<THREE.Mesh>(pOut)
-  const pInRef = useRef<THREE.Mesh>(pIn)
-  const groupRef = useRef()
-  useEffect(() => {
-    globalThis.updatePoutRef = (camera) => {
-      if (pOutRef.current) {
-        const pos = new THREE.Vector3()
-        camera.getWorldPosition(pos)
-        console.log('updatePoutRef', pos)
-      }
+function getAstring(name, map) {
+  const xnodes: NodeObj[] = map.get('Nodes')
+  let retString = ''
+  for (let k = 0; k < xnodes.length; k++) {
+    if (xnodes[k].name === name) {
+      retString = xnodes[k].aString
+      break
     }
-  }, [])
-  return (
-    <>
-      <group ref={groupRef} {...rotation}>
-        {mesh.map((m) => (
-          <mesh
-            key={m.uuid}
-            geometry={m.geometry}
-            material={m.material}
-            name={m.name}
-            onPointerOver={handlePointerOver}
-            onPointerOut={handlePointerOut}
-          />
-        ))}
-        <mesh
-          ref={pOutRef}
-          key={pOut?.uuid}
-          geometry={pOut?.geometry}
-          material={pOut?.material}
-          name={pOut?.name}
-          visible={pOut?.visible}
-          position={pOut?.position}
-          onPointerOver={handlePointerOver}
-          onPointerOut={handlePointerOut}
-        />
-        <mesh
-          ref={pInRef}
-          key={pIn?.uuid}
-          geometry={pIn?.geometry}
-          material={pIn?.material}
-          name={pIn?.name}
-          visible={pIn?.visible}
-          position={pIn?.position}
-          onPointerOver={handlePointerOver}
-          onPointerOut={handlePointerOut}
-        />
-      </group>
-    </>
-  )
+  }
+  function getStringBetween(fullString, startDelimiter, endDelimiter) {
+    const startIndex = fullString.indexOf(startDelimiter)
+    if (startIndex === -1) {
+      return null // Start delimiter not found
+    }
+    const actualStartIndex = startIndex + startDelimiter.length
+    const endIndex = fullString.indexOf(endDelimiter, actualStartIndex)
+    if (endIndex === -1) {
+      return null // End delimiter not found after the start delimiter
+    }
+    return fullString.substring(actualStartIndex, endIndex)
+  }
+  const bStr = getStringBetween(retString, '<a href="', '"')
+  if (bStr !== null) {
+    const cStr = bStr.replace(/&lt;br \/&gt;/g, '<br/>')
+    //const dStr = d3.select('three-wvertx-tooltips').html(cStr)
+    return cStr
+  } else {
+    return null
+  }
 }
 
 /**
- *
+ * CanvasContent
+ * This is the container for rendering all contents.
  */
-function CanvasContent({ grp, pOut, pIn }: CanProps) {
+function CanvasContent({ grp, map, container }: CanProps) {
+  const [fullScreenState, setFullScreenState] = useState({ exited: false })
+  const [buttonToggle, setButtonToggle] = useState({ f: true })
   const canvasRef = useRef<HTMLCanvasElement | null>(null)
   const cameraRef = useRef<HTMLCanvasElement | null>(null)
+  const meshRef = useRef<HTMLCanvasElement | null>(null)
+  const [textStrings, setTextStrings] = useState<string[]>([
+    '重慶潼南雙江蔣氏家族',
+    ' ',
+    '先父蔣文彬（譜名必兵）、︁祖籍重慶潼南雙江鎮老鸛嘴、︁房系列爲蔣氏入川第八代、︁先祖蔣超元於年五十有二時方生先父。︁先父弱冠離鄉投身軍旅、︁於民國三十八年（1949年）攜母劉文筠（譜名祖貞）隨政府入臺、︁定居於臺北。︁在臺發枝散葉、︁子息頗豐、︁育有二子五女。︁歿於民國73年（1984年）、︁享年六十有三、︁葬於臺北近郊觀音山、︁隔海遙望大陸。︁先父生逢戰亂、︁少小離家、︁因兩岸隔閡︁︁、︁終未能於有生之年回鄉探親；今吾等有幸、︁能回先父故里尋根問祖、︁無憾矣！吾等後輩子孫當牢記吾家發源之地、︁並恪遵祖傳字輩起名、︁以綿延吾蔣氏三千年宗脈。︁先父入臺之時、︁舉目無親、︁惟靠與母勤樸持家、︁育子成人。︁今吾後輩子孫當牢記先人安身立命艱辛、︁並力行勤樸家訓、︁奮發向上、︁振興家業、︁今將雙江蔣氏入臺支脈子孫姓名列於後、︁永誌不忘。︁',
+    ' ',
+    '潼南雙江蔣氏字輩',
+    ' ',
+    '蔣氏源起於周公姬旦三子伯齡之後、︁天下蔣氏源於一家、︁吾潼南雙江蔣氏於明末清初自湖南入川。︁爲承先啓後、︁世代子孫應依循蔣氏祖傳字輩起名、︁以利於尋根溯祖、︁今將祖傳字輩列於後、︁世代相傳。︁',
+    ' ',
+    '潼南雙江 蔣氏宗族祖傳字輩譜 入川字輩',
+    ' ',
+    '宗祖基德遠 以仁必愈昌 有能弘繼子 光先啓嗣芳',
+    '清賢謀尚策 安邦建樂堂 秉政定毅璽 擁軍獻榮春',
+    '寰宇結朋愛 九州同睦康 崇謹培後代 輝穎龍鳳生',
+  ])
+  console.log('CanvasContent re-render buttonToggle.f', buttonToggle.f)
+  /**
+   *
+   */
+  function Scene({ rotation, position, grp }: SceneProps) {
+    const [hovered, setHovered] = useState(false)
+    const debouncedHover = useCallback(debounce(setHovered, 30), [])
+    const over = (name) => (e) => (e.stopPropagation(), debouncedHover(name))
+    const mesh: THREE.Mesh[] = grp.children as THREE.Mesh[]
+    // for (let i = 0; i < mesh.length; i++) console.log('Scene', mesh[i].name)
+    const handlePointerOver = (e) => {
+      setHovered(true)
+      const mesh = e.object
+      const name = mesh.name
+      const aString = getAstring(name, map)
+      if (aString === null) {
+        setTextStrings([])
+      } else {
+        const B = aString.split('<br/>')
+        console.log('handlePointerOver mesh.name', name, B)
+        setTextStrings(B)
+      }
+    }
+    const handlePointerOut = (e) => {
+      setHovered(false)
+    }
+    const handleClick = (e) => {
+      console.log('handleClick', e)
+    }
+    const groupRef = useRef()
+    useCursor(hovered)
+    /**
+     *
+     */
+    return (
+      <>
+        <group ref={groupRef} {...rotation}>
+          <DragControls>
+            {mesh.map((m) => (
+              <mesh
+                ref={meshRef}
+                key={m.uuid}
+                geometry={m.geometry}
+                material={m.material}
+                name={m.name}
+                onDoubleClick={handlePointerOver}
+                onPointerOut={handlePointerOut}
+              />
+            ))}
+          </DragControls>
+        </group>
+      </>
+    )
+  } // end of Scene component
   /**
    *
    */
   function CameraControl() {
-    const { camera, invalidate } = useThree()
+    const { camera, gl, size } = useThree()
     useEffect(() => {
       if (canvasRef.current) {
         const handleWheel = (event) => {
-          console.log('CameraControl:', event.deltaY)
+          //console.log('CameraControl:', event.deltaY)
           event.preventDefault()
           const cameraPos = camera.position
           const zoom = event.deltaY < 0 ? 'in' : 'out'
-          console.log('CameraControl zoom', zoom)
+          //console.log('CameraControl zoom', zoom)
+          const oldPos = new THREE.Vector3()
+          oldPos.copy(camera.position)
           if (zoom == 'out') {
             camera.position.set(cameraPos.x, cameraPos.y, cameraPos.z + 1)
           } else {
             camera.position.set(cameraPos.x, cameraPos.y, cameraPos.z - 1)
           }
-          globalThis.updatePoutRef(camera)
         }
         canvasRef.current.addEventListener('wheel', handleWheel)
       }
@@ -650,33 +701,127 @@ function CanvasContent({ grp, pOut, pIn }: CanProps) {
         maxPolarAngle={Math.PI / 2} // Limit vertical rotation
         enableZoom={true}
         enablePan={true}
-        onChange={(e) => {
-          const cameraDirection = new THREE.Vector3()
-          camera.getWorldDirection(cameraDirection)
-          const dx = fixedScreenPos.pOut.x - fixedScreenPos.camera.x
-          const dy = fixedScreenPos.pOut.y - fixedScreenPos.camera.y
-          const dz = fixedScreenPos.pOut.z - fixedScreenPos.camera.z
-          const D = Math.sqrt(dx * dx + dy * dy + dz * dz)
-          // console.log('onChange pos, dir, distance', camera.position, cameraDirection, D)
-          // console.log('onChange camera pOut', camera.position, pOut?.position)
-          // pOut?.position.copy(camera.position).addScaledVector(cameraDirection, D)
-          const N = new THREE.Vector3()
-          N.copy(camera.position).addScaledVector(cameraDirection, D)
-          console.log('onChange', camera.position, N)
-          globalThis.updatePoutRef(N, camera)
-        }}
-        onEnd={(e) => {
-          // console.log('onEnd pOut', pOut?.position)
-          // invalidate()
-        }}
+        onChange={(e) => {}}
+        onEnd={(e) => {}}
       />
     )
   }
   /**
    *
    */
+  function CSSNodes(map) {
+    const xnodes: NodeObj[] = map.get('Nodes')
+  } // end of CSSNodes comonent
+  /**
+   *
+   */
+  function CSSPaths(map) {
+    const xpaths: PathObj[] = map.get('edgePaths')
+  } // end of CSSPaths component
+  /**
+   *
+   */
+  function ButtonScreen() {
+    //const [fullScreenState, setFullScreenState] = useState({ exited: false })
+    //const [buttonToggle, setButtonToggle] = useState({ f: true })
+    const buttonRef = useRef<HTMLButtonElement | null>(null)
+    const opacityFlag = getDataBlur() ? 'opacity-0' : 'opacity-100'
+    console.log('ButtonScreen rendering, buttonToggle.f', buttonToggle.f)
+    console.log('ButtonScreen rendering, fullScreenState.exited', fullScreenState.exited)
+    useEffect(() => {
+      if (buttonRef.current) {
+        /**
+         * Full Screen may exit by pressing Esc key
+         * We need to handle exitScreen as normal button clicking as well
+         */
+        document.addEventListener('fullscreenchange', (event) => {
+          if (document.fullscreenElement === null) {
+            //console.log('fullscreenchange:fullScreenStatea.exited', fullScreenState.exited)
+            console.log('fullscreenchange:buttonToggle.f', buttonToggle.f)
+            if (!fullScreenState.exited) {
+              // buttonToggle.f = !buttonToggle.f
+              fullScreenState.exited = true
+              setButtonToggle({ f: !buttonToggle.f })
+              console.log('fullscreenchange:buttonToggle.f out', buttonToggle.f)
+            }
+          } else {
+            console.log('Entered fullscreen!', fullScreenState)
+          }
+        })
+      }
+    }, [buttonToggle])
+    return (
+      <>
+        <div
+          style={{
+            position: 'absolute',
+            top: '10px',
+            left: '10px',
+            zIndex: 10, // Ensure it's on top of the canvas
+          }}
+          className={opacityFlag}
+        >
+          <button
+            ref={buttonRef}
+            className="flex items-center space-x-2 rounded-md px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            onClick={(e) => {
+              console.log('Button Clicked!', e)
+              if (buttonToggle.f) {
+                openFullScreen(container)
+                fullScreenState.exited = false
+              } else {
+                exitFullScreen()
+                fullScreenState.exited = true
+              }
+              console.log('onClick buttonToggle.f 1', buttonToggle.f)
+              // buttonToggle.f = !buttonToggle.f
+              console.log('onClick buttonToggle.f 2', buttonToggle.f)
+              setButtonToggle({ f: !buttonToggle.f })
+              //console.log('onClick fullScreenStatea.exited', fullScreenState.exited)
+              console.log('onClick buttonToggle.f 3', buttonToggle.f)
+            }}
+          >
+            {buttonToggle.f ? (
+              <ArrowsPointingOutIcon className="h-10 w-10" />
+            ) : (
+              <ArrowsPointingInIcon className="h-10 w-10" />
+            )}
+          </button>
+        </div>
+      </>
+    )
+  } // end of ButtonScreen component
+  /**
+   *
+   */
+  function TextTooltips() {
+    const opacityFlag = getDataBlur() ? 'opacity-0' : 'opacity-100'
+    return (
+      <>
+        <div
+          style={{
+            position: 'absolute',
+            top: '-400px',
+            left: '-500px',
+            zIndex: 15, // Ensure it's on top of the canvas
+          }}
+          className={opacityFlag}
+        >
+          {textStrings.map((s, index) => (
+            <div className="w-full text-2xl text-stone-500 dark:text-lime-500" key={index}>
+              {s}
+            </div>
+          ))}
+        </div>
+      </>
+    )
+  } // end of TextTooltips component
+
+  /**
+   *
+   */
   return (
-    <div className="h-857 border-2 border-blue-300">
+    <div className="w-full border-2 border-blue-300">
       <Canvas
         ref={canvasRef}
         flat
@@ -688,18 +833,23 @@ function CanvasContent({ grp, pOut, pIn }: CanProps) {
           near: 1,
           far: 200,
         }}
-        style={{ width: '100%', height: '856px' }}
+        style={{ width: '100%', height: '1400px' }}
       >
         <ambientLight intensity={1.5 * Math.PI} />
-        <Sky />
-        <DragControls>
-          <Scene rotation={[0, 0, 0]} position={[100, 0, -0.85]} grp={grp} pOut={pOut} pIn={pIn} />
-        </DragControls>
+        <Scene rotation={[0, 0, 0]} position={[100, 0, -0.85]} grp={grp} />
+        <Html style={{ width: '800px' }}>
+          <TextTooltips />
+        </Html>
         <CameraControl />
       </Canvas>
+      {/* Try to put CSS rendering componets to go with  Canvas */}
+      <ButtonScreen />
     </div>
   )
-}
+} // end of CanvasContent
+//
+//
+//
 interface UserData {
   node
   style
@@ -720,6 +870,16 @@ function openFullScreen(element) {
   } else if (element.msRequestFullscreen) {
     /* IE11 */
     element.msRequestFullscreen()
+  }
+}
+/**
+ *
+ */
+function exitFullScreen() {
+  if (document.exitFullscreen) {
+    document.exitFullscreen()
+  } else if (document.fullscreenElement) {
+    document.exitFullscreen()
   }
 }
 /**
@@ -815,9 +975,14 @@ function measureTextHeight(ctx, text) {
 function createTextCanvas(text, radius, color) {
   const canvas = document.createElement('canvas')
   const context = canvas.getContext('2d')
+  /*  
+  const parser = new DOMParser()
+  const htmlString = '<div id="myElement">Hello from a string!</div>'
+  const doc = parser.parseFromString(htmlString, 'text/html') // a HTMLElement
+  */
   if (context !== null) {
-    canvas.width = radius * 2 // 1.414
-    canvas.height = radius * 2 // 1.414
+    canvas.width = radius * 2 * 4
+    canvas.height = radius * 2 * 4
     canvas.style.display = 'block'
     const T = text.split('<br>')
     const desiredCanvasWidth = canvas.width
@@ -826,7 +991,14 @@ function createTextCanvas(text, radius, color) {
     const w = desiredCanvasWidth
     const h = desiredCanvasWidth
     context.beginPath()
-    context.arc(radius, radius, radius, 0, 2 * Math.PI, false) // Define the circle
+    context.arc(
+      canvas.width / 2, // radius,
+      canvas.height / 2, // radius,
+      canvas.width, // radius,
+      0,
+      2 * Math.PI,
+      false
+    ) // Define the circle
     context.fillStyle = color
     context.fill()
     context.textAlign = 'center'
@@ -847,7 +1019,24 @@ function createTextCanvas(text, radius, color) {
       context.fillText(txt, w / 2, startY + (textHeight + 1) * i)
     }
   }
-  return canvas
+  const sCanvas = document.createElement('canvas')
+  const sContext = sCanvas.getContext('2d')
+  if (sContext !== null) {
+    sCanvas.width = radius * 2 // 1.414
+    sCanvas.height = radius * 2 // 1.414
+    sContext.drawImage(
+      canvas,
+      0,
+      0,
+      canvas.width,
+      canvas.height,
+      0,
+      0,
+      sCanvas.width,
+      sCanvas.height
+    )
+  }
+  return sCanvas
 }
 /**
  *
@@ -855,8 +1044,8 @@ function createTextCanvas(text, radius, color) {
 function createTextLabel(text, position, radius, color) {
   const canvas = createTextCanvas(text, radius, color)
   const texture = new THREE.CanvasTexture(canvas)
+  texture.minFilter = THREE.LinearFilter
   texture.needsUpdate = true
-  // console.log('createTextlabel color', color)
   const material = new THREE.MeshBasicMaterial({
     map: texture,
     color: color,
@@ -865,8 +1054,6 @@ function createTextLabel(text, position, radius, color) {
     side: THREE.DoubleSide,
   })
   const beta = 1
-  const planeWidth = canvas.width / beta // Scale factor
-  const planeHeight = canvas.height / beta
   const geometry = new THREE.CircleGeometry(radius + 2, 32, 0, Math.PI * 2)
   const mesh = new THREE.Mesh(geometry, material)
   mesh.geometry.computeBoundingBox()
@@ -919,70 +1106,12 @@ const Mermaid = ({ chart, mDevice }) => {
   const [meshRoot, setMeshRoot] = useState<MeshRootProp>({
     inited: false,
     root: null,
-    pOut: null,
-    pIn: null,
   })
   const loader = new SVGLoader(THREE.DefaultLoadingManager)
   const group = new THREE.Group()
   /**
-   * add a button to toggle fullScreen
-   */
-  function createButton(): [THREE.Mesh | null, THREE.Mesh | null] {
-    const iconOut = ReactDOMServer.renderToString(
-      <ArrowsPointingOutIcon className="h-6 w-6 text-blue-500" />
-    )
-    const iconIn = ReactDOMServer.renderToString(
-      <ArrowsPointingInIcon className="h-6 w-6 text-blue-500" />
-    )
-    const makeMesh = (iconString) => {
-      const S = loader.parse(iconString)
-      const paths: ShapePathX[] = S.paths as ShapePathX[]
-      const O: THREE.ShapeGeometry[] = [] as THREE.ShapeGeometry[]
-      for (let i = 0; i < paths.length; i++) {
-        const path = paths[i].shape
-        const material = new THREE.MeshBasicMaterial({
-          color: 'red', // 'white', //path.color,
-          side: THREE.DoubleSide,
-          transparent: true,
-          opacity: 1,
-        })
-        material.needsUpdate = true
-        const shapes: THREE.Shape[] = SVGLoader.createShapes(path)
-        for (let j = 0; j < shapes.length; j++) {
-          console.log('createButton makeMesh', shapes)
-          const shape = shapes[j]
-          if (hasNaNValuesInShape(shape)) {
-            console.log('makeMesh:hasNanValuesInShape')
-            continue
-          }
-          const geometry = new THREE.ShapeGeometry(shape)
-          // const mesh = new THREE.Mesh(geometry, material)
-          // mesh.position.set(-500, 400, 0)
-          O.push(geometry)
-        }
-        const mergedG = mergeGeometries(O)
-        const mesh = new THREE.Mesh(mergedG, material)
-        return mesh
-      }
-    }
-    const pOut = makeMesh(iconOut)
-    const pIn = makeMesh(iconIn)
-    if (pOut && pIn) {
-      pOut.name = 'ArrowsOut'
-      pIn.name = 'ArrowsIn'
-      pOut.visible = true
-      pIn.visible = false
-      pOut.position.copy(fixedScreenPos.pOut)
-      pIn.position.copy(fixedScreenPos.pIn)
-      pOut.scale.set(2, 2, 2)
-      pIn.scale.set(2, 2, 2)
-      return [pOut, pIn]
-    } else {
-      return [null, null]
-    }
-  }
-  /**
    * handle Nodes
+   * generate meshes based on SVG nodes
    */
   const handleNodes = (xnodes) => {
     for (let k = 0; k < xnodes.length; k++) {
@@ -994,6 +1123,7 @@ const Mermaid = ({ chart, mDevice }) => {
         if (X.outerHTML.startsWith(aString)) {
           htmlString = X.outerHTML.replace(aString, nString)
         }
+        xnodes[k].aString = htmlString
         const D = loader.parse(htmlString)
         const paths: ShapePathX[] = D.paths as ShapePathX[]
         for (let i = 0; i < paths.length; i++) {
@@ -1019,10 +1149,10 @@ const Mermaid = ({ chart, mDevice }) => {
             if (mesh.geometry.boundingBox) {
               const C = new THREE.Vector3()
               mesh.geometry.boundingBox.getCenter(C)
-              console.log('boundingBox Center', mesh.name, C)
+              // console.log('boundingBox Center', mesh.name, C)
               const scaleMatrix = new THREE.Matrix4()
               scaleMatrix.makeScale(1, -1, 1)
-              mesh.geometry.translate(-500, -400, 0)
+              mesh.geometry.translate(-500, -700, 0)
               mesh.geometry.applyMatrix4(scaleMatrix)
               mesh.geometry.computeBoundingBox()
               mesh.geometry.computeBoundingSphere()
@@ -1042,7 +1172,7 @@ const Mermaid = ({ chart, mDevice }) => {
         }
       }
     }
-  }
+  } // end of handleNodes
   /**
    * handle edgePaths
    */
@@ -1061,10 +1191,6 @@ const Mermaid = ({ chart, mDevice }) => {
         const paths: ShapePathX[] = D.paths as ShapePathX[]
         for (let i = 0; i < paths.length; i++) {
           const path = paths[i].shape
-          const material = new THREE.MeshBasicMaterial({
-            color: path.color,
-            side: THREE.DoubleSide,
-          })
           const shapes: THREE.Shape[] = SVGLoader.createShapes(path)
           for (let j = 0; j < shapes.length; j++) {
             const shape = shapes[j]
@@ -1072,108 +1198,158 @@ const Mermaid = ({ chart, mDevice }) => {
               console.log('xpaths.hasNanValuesInShape')
               continue
             }
+            /**
+             *
+             */
             function collinearCheck(p1, p2, p3) {
               // Handle vertical lines
               if (p1.x === p2.x && p2.x === p3.x) {
                 return true // All points are on a vertical line
               }
-
               // Calculate slopes
               const slope12 = (p2.y - p1.y) / (p2.x - p1.x)
               const slope23 = (p3.y - p2.y) / (p3.x - p2.x)
-
               // Compare slopes (using a small epsilon for floating-point comparisons if necessary)
               return slope12 === slope23
             }
-            const shapeX = new THREE.Shape()
-            const points = getPathPointsV2(xpaths[k].path.node())
-            const len = Math.trunc(points.length / 3) * 3
-            let flag = false
-            for (let i = 0; i < len; i += 3) {
-              flag = collinearCheck(points[i], points[i + 1], points[i + 2])
-              if (!flag) break
+            /**
+             *
+             */
+            const formMeshShape = (shape) => {
+              const material = new THREE.MeshBasicMaterial({
+                color: path.color,
+                side: THREE.DoubleSide,
+              })
+              const geometry = new THREE.ShapeGeometry(shape)
+              const mesh = new THREE.Mesh(geometry, material)
+              mesh.material.color.setRGB(1, 0, 0)
+              return mesh
             }
-            if (flag) {
-              // modify points a little bit
-              console.log('modify points', xpaths[k].pathCmd)
-              const x1 = xpaths[k].pathCmd[0][1] as number
-              const y1 = xpaths[k].pathCmd[0][2] as number
-              const x2 = xpaths[k].pathCmd[xpaths[k].pathCmd.length - 1][1] as number
-              const y2 = xpaths[k].pathCmd[xpaths[k].pathCmd.length - 1][2] as number
-              const r = ((x2 - x1) / 2) * 2
-              const cx = (x1 + x2) / 2
-              const cy = y1 + ((x2 - x1) / 2) * Math.sqrt(3)
-              /**
-               * (y - cy)^2 + (x - cx)^2 = r^2
-               */
-              for (let i = 0; i < xpaths[k].pathCmd.length; i++) {
-                const cmd: Array<string | number> = xpaths[k].pathCmd[i] as Array<string | number>
-                switch (cmd[0]) {
-                  case 'M': {
-                    const x = cmd[1] as number
-                    const y = cmd[2] as number
-                    shapeX.moveTo(x, y)
-                    console.log('M', x, y, cx, cy)
-                    break
-                  }
-                  case 'L': {
-                    const x = cmd[1] as number
-                    const y = cmd[2] as number
-                    shapeX.lineTo(x, y)
-                    console.log('L', x, y, cx, cy)
-                    break
-                  }
-                  case 'C': {
-                    const xa = cmd[1] as number
-                    const xb = cmd[3] as number
-                    const xc = cmd[5] as number
-                    const ya = -Math.sqrt(r * r - (xa - cx) * (xa - cx)) + cy
-                    const yb = -Math.sqrt(r * r - (xb - cx) * (xb - cx)) + cy
-                    const yc = -Math.sqrt(r * r - (xc - cx) * (xc - cx)) + cy
-                    shapeX.bezierCurveTo(xa, ya, xb, yb, xc, yc)
-                    console.log('C a', xa, ya, cx, cy)
-                    console.log('C b', xb, yb, cx, cy)
-                    console.log('C c', xc, yc, cx, cy)
-                    break
+            /**
+             *
+             */
+            const formMeshShapeX = (points): THREE.Mesh => {
+              const shapeX = new THREE.Shape()
+              const len = Math.trunc(points.length / 3) * 3
+              let flag = false
+              for (let i = 0; i < len; i += 3) {
+                flag = collinearCheck(points[i], points[i + 1], points[i + 2])
+                if (!flag) break
+              }
+              if (flag) {
+                // modify points a little bit
+                const x1 = xpaths[k].pathCmd[0][1] as number
+                const y1 = xpaths[k].pathCmd[0][2] as number
+                const x2 = xpaths[k].pathCmd[xpaths[k].pathCmd.length - 1][1] as number
+                const y2 = xpaths[k].pathCmd[xpaths[k].pathCmd.length - 1][2] as number
+                const r = ((x2 - x1) / 2) * 2
+                const cx = (x1 + x2) / 2
+                const cy = y1 + ((x2 - x1) / 2) * Math.sqrt(3)
+                /**
+                 * (y - cy)^2 + (x - cx)^2 = r^2
+                 */
+                for (let i = 0; i < xpaths[k].pathCmd.length; i++) {
+                  const cmd: Array<string | number> = xpaths[k].pathCmd[i] as Array<string | number>
+                  switch (cmd[0]) {
+                    case 'M': {
+                      const x = cmd[1] as number
+                      const y = cmd[2] as number
+                      shapeX.moveTo(x, y)
+                      // console.log('M', x, y, cx, cy)
+                      break
+                    }
+                    case 'L': {
+                      const x = cmd[1] as number
+                      const y = cmd[2] as number
+                      shapeX.lineTo(x, y)
+                      break
+                    }
+                    case 'C': {
+                      const xa = cmd[1] as number
+                      const xb = cmd[3] as number
+                      const xc = cmd[5] as number
+                      const ya = -Math.sqrt(r * r - (xa - cx) * (xa - cx)) + cy
+                      const yb = -Math.sqrt(r * r - (xb - cx) * (xb - cx)) + cy
+                      const yc = -Math.sqrt(r * r - (xc - cx) * (xc - cx)) + cy
+                      shapeX.bezierCurveTo(xa, ya, xb, yb, xc, yc)
+                      break
+                    }
                   }
                 }
+              } else {
+                shapeX.setFromPoints(points)
               }
-            } else {
-              shapeX.setFromPoints(points)
-            }
-            /*
-            const geometryX = new MeshLineGeometry()
-            geometryX.setPoints(points)
-            const materialX = new MeshLineMaterial({
-              color: path.color,
-              resolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
-            })
-            const mesh = new THREE.Mesh(geometryX, materialX)
-            */
-            //const geometry = new THREE.ShapeGeometry(shape)
-            const geometry = new THREE.ShapeGeometry(shapeX)
-            const mesh = new THREE.Mesh(geometry, material)
+              const material = new THREE.MeshBasicMaterial({
+                color: path.color,
+                side: THREE.DoubleSide,
+              })
+              const geometry = new THREE.ShapeGeometry(shapeX)
+              const mesh = new THREE.Mesh(geometry, material)
+              mesh.material.color.setRGB(1, 0, 0)
+              return mesh
+            } // end of formMeshShapeX
+            /**
+             *
+             */
+            const formMeshLine = (points: THREE.Vector2[]): THREE.Mesh => {
+              const points3D: THREE.Vector3[] = [] as THREE.Vector3[]
+              const lineGeometry = new THREE.BufferGeometry().setFromPoints(points)
+              const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff })
+              const line = new THREE.Line(lineGeometry, lineMaterial)
+              const linePoints = line.geometry.attributes.position.array
+              const f = true
+              if (f) {
+                for (let i = 0; i < points.length; i++) {
+                  points3D.push(
+                    new THREE.Vector3(points[i].x || points[i][0], points[i].y || points[i][1], 0)
+                  )
+                }
+              } else {
+                for (let i = 0; i < linePoints.length; i += 3) {
+                  const x = linePoints[i]
+                  const y = linePoints[i + 1]
+                  const z = linePoints[i + 2]
+                  points3D.push(new THREE.Vector3(x, y, z))
+                }
+              }
+              const meshLineGeometry = new MeshLineGeometry()
+              const meshLineMaterial = new MeshLineMaterial({
+                color: new THREE.Color(0xff0000), // Red color
+                lineWidth: 2,
+                resolution: new THREE.Vector2(window.innerWidth, window.innerHeight), // Required for correct width calculation
+              })
+              meshLineGeometry.setPoints(points3D)
+              const mesh = new THREE.Mesh(meshLineGeometry, meshLineMaterial)
+              return mesh
+            } // end of formMeshLine
+            const points = getPathPointsV2(xpaths[k].path.node())
+            if (xpaths[k].id === 'L_G2_S0_0') console.log(points)
+            // const mesh = formMeshShapeX(points)
+            const mesh = formMeshLine(points)
             mesh.geometry.computeBoundingBox()
             if (mesh.geometry.boundingBox) {
               const C = new THREE.Vector3()
               mesh.geometry.boundingBox.getCenter(C)
               const scaleMatrix = new THREE.Matrix4()
               scaleMatrix.makeScale(1, -1, 1)
-              mesh.geometry.translate(-500, -400, 0)
+              mesh.geometry.translate(-500, -700, 0)
               mesh.geometry.applyMatrix4(scaleMatrix)
               mesh.geometry.computeBoundingBox()
               mesh.geometry.computeBoundingSphere()
             }
-            mesh.material.color.setRGB(1, 0, 0)
             mesh.name = xpaths[k].id
             group.add(mesh)
           }
         }
       }
     }
-  }
+  } // end of handleEdgePaths
   useEffect(() => {
-    const threeSVG = (svg) => {
+    /**
+     * threeSVG
+     * main function to handle THREE
+     */
+    const threeSVG = (svg, map) => {
       const xnodes: NodeObj[] = map.get('Nodes')
       const xpaths: PathObj[] = map.get('edgePaths')
       handleNodes(xnodes)
@@ -1184,27 +1360,23 @@ const Mermaid = ({ chart, mDevice }) => {
       })
       const container = document.getElementById('ThreeCanvas')
       if (meshRoot.inited === false && container) {
-        const [pOut, pIn] = createButton()
         const root = createRoot(container) // createRoot(container!) if you use TypeScript
-        root.render(<CanvasContent grp={group} pOut={pOut} pIn={pIn} />)
+        root.render(<CanvasContent grp={group} map={map} container={container} />)
         meshRoot.inited = true
         meshRoot.root = root
-        meshRoot.pOut = pOut
-        meshRoot.pIn = pIn
         // openFullScreen(container)
       } else if (meshRoot.inited) {
-        meshRoot.root.render(<CanvasContent grp={group} pOut={meshRoot.pOut} pIn={meshRoot.pIn} />)
+        meshRoot.root.render(<CanvasContent grp={group} map={map} container={container} />)
       }
-    }
+    } // end of threeSVG function
     /*
      * generate svg chart
      */
     if (mermaidRef.current) {
+      /**
+       * Entry point for generating SVG and rendering it
+       */
       const renderChart = async () => {
-        //mermaid.initialize({
-        //  logLevel: 'trace', // or 'debug', 'info', 'warn', 'fatal', or their corresponding numeric values (1-5)
-        //})
-        // Generate a unique ID for the diagram
         const diagramId = `mermaid-diagram-${Math.random().toString(36).substring(7)}`
         console.log('rerendering', diagramId)
         try {
@@ -1215,7 +1387,7 @@ const Mermaid = ({ chart, mDevice }) => {
             bindFunctions?.(mermaidRef.current)
             d3HandleEdgeLabel(diagramId, map)
             findRelations(diagramId, map)
-            threeSVG(svg)
+            threeSVG(svg, map)
           }
         } catch (error) {
           console.error('Mermaid render error:', error)
@@ -1223,12 +1395,32 @@ const Mermaid = ({ chart, mDevice }) => {
             mermaidRef.current.innerHTML = `<div style="color: red">Error rendering diagram.</div>`
           }
         }
-      }
+      } // end of renderChrt function
       renderChart()
     }
   }, [chart, mDevice, map, meshRoot]) // Re-render if the chart code changes
-
-  return <div ref={mermaidRef}></div>
+  /**
+   * To wait for DialogFamily closing and re-render Canvas
+   */
+  function handleDialogClosed(data: string) {
+    console.log('handleDialogClosed', data)
+    if (data === 'DialogRadio Closed') {
+      console.log('meshRoot to rerender Canvas')
+      const container = document.getElementById('ThreeCanvas')
+      meshRoot.root.render(<CanvasContent grp={group} map={map} container={container} />)
+    }
+  }
+  /**
+   * return the entire contents
+   * DiaglogFamily floats on top of Canvas and blur underneath Canvas while a user logs in
+   * and plays Q&A
+   */
+  return (
+    <>
+      <div ref={mermaidRef}></div>
+      <DialogFamily onDialogClosed={handleDialogClosed} />
+    </>
+  )
 }
 
 export default Mermaid

@@ -176,8 +176,10 @@ interface RidxProp {
   index: number
   option: string
 }
-
-const DialogFamily = () => {
+interface DialogFamilyProps {
+  onDialogClosed: (data: string) => void
+}
+const DialogFamily: React.FC<DialogFamilyProps> = ({ onDialogClosed }) => {
   /* consts */
   const [openRadio, setOpenRadio] = useState(getDataBlur())
   const [openLogIn, setOpenLogIn] = useState(getDataBlur())
@@ -200,7 +202,7 @@ const DialogFamily = () => {
   const [prompt, setPrompt] = useState('')
   const curGroups: CellObj =
     shuffledQArray.array.length > 0 ? shuffledQArray.array[ridx.index] : QArray[ridx.index]
-  console.log('DialogFamily IN. ridx.index', ridx.index)
+  // console.log('DialogFamily IN. ridx.index callback', ridx.index, onDialogClosed)
   /** functions */
   const handleNextButton = () => {
     setQStart(true)
@@ -281,23 +283,17 @@ const DialogFamily = () => {
     if (password === pswdString) {
       setOpenLogIn(false)
       setPswdWrong(false)
+      onDialogClosed('DialogLogIn Closed')
     } else {
       setPswdWrong(true)
     }
   }
 
   const handleExitButton = async () => {
-    //gsap.set('#dialog-group-option', { opacity: 1 })
-    //gsap.to('#dialog-group-option', {
-    //  duration: 1,
-    //  opacity: 0,
-    //  ease: 'sine.inOut',
-    //  onComplete: () => {
     setOpenRadio(false)
     removeBlur()
     fadeOutMainPage()
-    //  },
-    //})
+    onDialogClosed('DialogRadio Closed')
   }
 
   function ResultLogIn() {
@@ -461,7 +457,9 @@ const DialogFamily = () => {
       <>
         <Dialog
           open={openLogIn}
-          onClose={() => console.log('onClose')} // escape or click out side of panel
+          onClose={(e) => {
+            console.log('DialogLogIn onClose')
+          }} // escape or click out side of panel
           id="dialog-logging"
           aria-labelledby="dialog-title"
           className="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent"
@@ -521,7 +519,9 @@ const DialogFamily = () => {
       <>
         <Dialog
           open={openRadio}
-          onClose={() => console.log('onClose')} // escape or click out side of panel
+          onClose={(e) => {
+            console.log('DialogRadio onClose', e)
+          }} // escape or click out side of panel
           id="dialog-group-option"
           aria-labelledby="dialog-title"
           className="fixed inset-0 size-auto max-h-none max-w-none overflow-y-auto bg-transparent backdrop:bg-transparent"

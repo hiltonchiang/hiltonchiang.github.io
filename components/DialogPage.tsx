@@ -5,7 +5,7 @@ const DialogFamily = dynamic(() => import('@/components/DialogFamily'), {
   ssr: false,
 })
 
-const DialogPage = () => {
-  return <DialogFamily />
+const DialogPage = (onDialogClosed) => {
+  return <DialogFamily onDialogClosed={onDialogClosed} />
 }
 export default DialogPage

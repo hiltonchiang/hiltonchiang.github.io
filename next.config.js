@@ -57,6 +57,9 @@ const withBundleAnalyzer = bundleAnalyzer({ enabled: process.env.ANALYZE === 'tr
  * @type {import('next/dist/next-server/server/config').NextConfig}
  **/
 const baseConfig = {
+  turbopack: {
+    // ...
+  },
   output,
   basePath,
   reactStrictMode: true,

@@ -11764,7 +11764,6 @@ __metadata:
     tailwind-merge: ^2.6.0
     tailwindcss: ^3.4.14
     three: ^0.181.0
-    three.meshline: ^1.4.0
     troika-three-text: ^0.52.4
     typescript: ^5.1.3
     unist-util-visit: ^5.0.0
@@ -18280,13 +18279,6 @@ __metadata:
   peerDependencies:
     three: ">=0.128.0"
   checksum: 5ca0cdcb7a24f5426503bc27665e1b2721effd6e36a83d93c313d5f504ffcdee2d1ea6c3c6061f898f7aa4692254079d95b84f58397e64b8955a4b1f00b02b65
-  languageName: node
-  linkType: hard
-
-"three.meshline@npm:^1.4.0":
-  version: 1.4.0
-  resolution: "three.meshline@npm:1.4.0"
-  checksum: 9cf09a4a5c6eb7ca9df493b5337ce21fabe0fb62875535ed7bb51c4aab0560c2153c1a503479d3d2a58288c143d782fbdc1b420ed748d8c784518efa50716d15
   languageName: node
   linkType: hard
 

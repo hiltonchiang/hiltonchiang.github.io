@@ -36,11 +36,13 @@ title: 玉萍家譜樹
         玉萍家 e33@--長女--> 李潔((李潔)) e34@--- Camegla((Camegla<br />Family)):::blue
         Arthur((Arthur<br />Camegla)) --- Camegla
         Camegla e35@--長子--> River((科李恩<br />River))
+        Camegla e36@--次子--> Caleb((科李迦<br />Caleb))
                 
         e32@{ animate: true } 
         e33@{ animate: true } 
         e34@{ animate: true } 
-        e35@{ animate: true } 
+        e35@{ animate: true }
+        e36@{ animate: true }
 `
   return <Mermaid chart={familyTreeCode} mDevice={true} />
 }

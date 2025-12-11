@@ -202,7 +202,7 @@ const DialogFamily: React.FC<DialogFamilyProps> = ({ onDialogClosed }) => {
   const [prompt, setPrompt] = useState('')
   const curGroups: CellObj =
     shuffledQArray.array.length > 0 ? shuffledQArray.array[ridx.index] : QArray[ridx.index]
-  // console.log('DialogFamily IN. ridx.index callback', ridx.index, onDialogClosed)
+  console.log('DialogFamily IN. ridx.index callback', ridx.index, onDialogClosed)
   /** functions */
   const handleNextButton = () => {
     setQStart(true)
@@ -283,7 +283,7 @@ const DialogFamily: React.FC<DialogFamilyProps> = ({ onDialogClosed }) => {
     if (password === pswdString) {
       setOpenLogIn(false)
       setPswdWrong(false)
-      onDialogClosed('DialogLogIn Closed')
+      if (typeof onDialogClosed === 'function') onDialogClosed('DialogLogIn Closed')
     } else {
       setPswdWrong(true)
     }
@@ -293,7 +293,7 @@ const DialogFamily: React.FC<DialogFamilyProps> = ({ onDialogClosed }) => {
     setOpenRadio(false)
     removeBlur()
     fadeOutMainPage()
-    onDialogClosed('DialogRadio Closed')
+    if (typeof onDialogClosed === 'function') onDialogClosed('DialogRadio Closed')
   }
 
   function ResultLogIn() {

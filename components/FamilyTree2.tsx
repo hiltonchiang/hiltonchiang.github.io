@@ -60,7 +60,7 @@ title: 文彬家譜樹
         玉萍家 L_玉萍家_李潔_0@--長女--> 李潔((李潔)) L_李潔_Camegla_0@--> Camegla((Camegla<br />Family)):::blue
         Arthur((Arthur<br />Camegla)) --- Camegla
         Camegla L_Camegla_River_0@--長子--> River((科李恩<br />River))
-        Camegla L_Camegla_River_0@--次子--> xx((科李仁))
+        Camegla L_Camegla_Caleb_0@--次子--> Caleb((科李迦<br />Caleb))
         %% Third Daughter %%
         G1 L_G1_蔣玉遐_0@--> 蔣玉遐
         蔣玉遐((蔣玉遐)) L_蔣玉遐_玉遐家_0@--> 玉遐家((玉遐家<br />入臺第二代)):::blue
@@ -112,6 +112,7 @@ title: 文彬家譜樹
         L_玉萍家_李潔_0@{ animate: true } 
         L_李潔_Camegla_0@{ animate: true } 
         L_Camegla_River_0@{ animate: true } 
+        L_Camegla_Caleb_0@{ animate: true } 
         L_G1_蔣玉遐_0@{ animate: true } 
         L_蔣玉遐_玉遐家_0@{ animate: true } 
         L_玉遐家_莊詩詠_0@{ animate: true } 

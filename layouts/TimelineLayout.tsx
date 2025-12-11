@@ -155,16 +155,19 @@ export default function ListLayout({
             </svg>
           </div>
         </div>
-        <ul>
+        <ul className='relative'>
+          <div className="absolute md:left-[170px] md:w-1 md:bg-blue-300 md:h-full md:-ml-0.5"></div>
           {!filteredBlogPosts.length && 'No posts found.'}
           {displayPosts.map((post) => {
             const { path, date, duration, title, summary, tags } = post
             return (
               <li key={path} className="py-4">
                 <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
+                <div className="size-6 rounded-full bg-slate-500 absolute left-[170px] transform -translate-x-1/2 translate-y-[4px]"></div>
+                <div className="size-3 rounded-full bg-red-500 absolute left-[170px] transform -translate-x-1/2 translate-y-[11px]"></div>
                   <dl>
                     <dt className="sr-only">Published on</dt>
-                    <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                    <dd className="text-base font-medium leading-6 pl-6 text-gray-500 dark:text-gray-400">
                       <time dateTime={date}>{duration}</time>
                     </dd>
                   </dl>

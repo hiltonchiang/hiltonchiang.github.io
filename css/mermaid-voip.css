@@ -1,0 +1,156 @@
+/*
+  Based on TailwindCSS recommendations,
+  consider using classes instead of the `@apply` directive
+  @see https://tailwindcss.com/docs/reusing-styles#avoiding-premature-abstraction
+*/
+#mermaid-diagram-g7mgna {
+  @apply text-base fill-black;
+  font-family: "trebuchet ms", verdana, arial, sans-serif;
+}
+@keyframes edge-animation-frame {
+  from {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes dash {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+#mermaid-diagram-g7mgna .edge-animation-slow {
+  @apply animate-[dash_50s_linear_infinite];
+  stroke-dasharray: 9, 5 !important;
+  stroke-dashoffset: 900;
+  stroke-linecap: round;
+}
+#mermaid-diagram-g7mgna .edge-animation-fast {
+  @apply animate-[dash_20s_linear_infinite];
+  stroke-dasharray: 9, 5 !important;
+  stroke-dashoffset: 900;
+  stroke-linecap: round;
+}
+#mermaid-diagram-g7mgna .error-icon {
+  @apply fill-[#552222];
+}
+#mermaid-diagram-g7mgna .error-text {
+  @apply fill-[#552222] stroke-[#552222];
+}
+#mermaid-diagram-g7mgna .edge-thickness-normal {
+  @apply stroke-[1px];
+}
+#mermaid-diagram-g7mgna .edge-thickness-thick {
+  @apply stroke-[3.5px];
+}
+#mermaid-diagram-g7mgna .edge-pattern-solid {
+  stroke-dasharray: 0;
+}
+#mermaid-diagram-g7mgna .edge-thickness-invisible {
+  @apply stroke-0 fill-none;
+}
+#mermaid-diagram-g7mgna .edge-pattern-dashed {
+  stroke-dasharray: 3;
+}
+#mermaid-diagram-g7mgna .edge-pattern-dotted {
+  stroke-dasharray: 2;
+}
+#mermaid-diagram-g7mgna .marker {
+  @apply fill-[#F8B229] stroke-[#F8B229];
+}
+#mermaid-diagram-g7mgna .marker.cross {
+  @apply stroke-[#F8B229];
+}
+#mermaid-diagram-g7mgna svg {
+  @apply text-base;
+  font-family: "trebuchet ms", verdana, arial, sans-serif;
+}
+#mermaid-diagram-g7mgna p {
+  @apply m-0;
+}
+#mermaid-diagram-g7mgna .actor {
+  @apply stroke-[hsl(78.1578947368,58.4615384615%,54.5098039216%)] fill-[#cde498];
+}
+tspan {
+  @apply fill-[black] stroke-none fill-[black] stroke-none fill-[black] stroke-none fill-[black] stroke-none;
+}
+#mermaid-diagram-g7mgna .actor-line {
+  @apply stroke-[hsl(78.1578947368,58.4615384615%,54.5098039216%)];
+}
+#mermaid-diagram-g7mgna .innerArc {
+  @apply stroke-[1.5];
+  stroke-dasharray: none;
+}
+#mermaid-diagram-g7mgna .messageLine0 {
+  @apply stroke-[1.5] stroke-[#333];
+  stroke-dasharray: none;
+}
+#mermaid-diagram-g7mgna .messageLine1 {
+  @apply stroke-[1.5] stroke-[#333];
+  stroke-dasharray: 2, 2;
+}
+#mermaid-diagram-g7mgna #arrowhead path {
+  @apply fill-[#333] stroke-[#333] stroke-[blue] fill-[red];
+}
+#mermaid-diagram-g7mgna .sequenceNumber {
+  @apply fill-[white];
+}
+#mermaid-diagram-g7mgna #sequencenumber {
+  @apply fill-[#333];
+}
+#mermaid-diagram-g7mgna #crosshead path {
+  @apply fill-[#333] stroke-[#333];
+}
+#mermaid-diagram-g7mgna .messageText {
+  @apply fill-[#333] stroke-none;
+}
+#mermaid-diagram-g7mgna .labelBox {
+  @apply stroke-[#326932] fill-[#cde498];
+}
+#mermaid-diagram-g7mgna .loopLine {
+  @apply stroke-[2px] stroke-[#326932] fill-[#326932];
+  stroke-dasharray: 2, 2;
+}
+#mermaid-diagram-g7mgna .note {
+  @apply stroke-[#6eaa49] fill-[#fff5ad];
+}
+#mermaid-diagram-g7mgna .activation0 {
+  @apply fill-[#f4f4f4] stroke-[#666];
+}
+#mermaid-diagram-g7mgna .activation1 {
+  @apply fill-[#f4f4f4] stroke-[#666];
+}
+#mermaid-diagram-g7mgna .activation2 {
+  @apply fill-[#f4f4f4] stroke-[#666];
+}
+#mermaid-diagram-g7mgna .actorPopupMenu {
+  @apply absolute;
+}
+#mermaid-diagram-g7mgna .actorPopupMenuPanel {
+  @apply absolute fill-[#cde498] shadow-[0px_8px_16px_0px_rgba(0,0,0,0.2)];
+  filter: drop-shadow(3px 5px 2px rgb(0 0 0 / 0.4));
+}
+#mermaid-diagram-g7mgna .actor-man line {
+  @apply stroke-[hsl(78.1578947368,58.4615384615%,54.5098039216%)] fill-[#cde498];
+}
+#mermaid-diagram-g7mgna .actor-man circle,
+#mermaid-diagram-g7mgna line {
+  @apply stroke-[hsl(78.1578947368,58.4615384615%,54.5098039216%)] fill-[#cde498] stroke-[2px];
+}
+#mermaid-diagram-g7mgna .messageLine0:nth-of-type(2) {
+  @apply stroke-[red];
+}
+#mermaid-diagram-g7mgna .messageLine1:nth-of-type(2) {
+  @apply stroke-[red];
+}
+#mermaid-diagram-g7mgna .messageText:nth-of-type(1) {
+  @apply fill-[green] text-3xl;
+}
+#mermaid-diagram-g7mgna g:nth-of-type(3) rect.actor {
+  @apply stroke-[blue] fill-[pink];
+}
+#mermaid-diagram-g7mgna g:nth-of-type(5) .note {
+  @apply stroke-[blue] fill-[crimson];
+}
+#mermaid-diagram-g7mgna :root {
+  --mermaid-font-family: "trebuchet ms", verdana, arial, sans-serif;
+}
+

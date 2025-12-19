@@ -57,17 +57,14 @@ const withBundleAnalyzer = bundleAnalyzer({ enabled: process.env.ANALYZE === 'tr
  * @type {import('next/dist/next-server/server/config').NextConfig}
  **/
 const baseConfig = {
-  turbopack: {
-    // ...
-  },
   output,
   basePath,
   reactStrictMode: true,
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
   eslint: {
     dirs: ['app', 'components', 'layouts', 'scripts'],
- },
-    images: {
+  },
+  images: {
     remotePatterns: [
       {
         protocol: 'https',

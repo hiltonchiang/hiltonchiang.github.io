@@ -3,24 +3,53 @@ import { WheelEvent } from 'react'
 import dynamic from 'next/dynamic'
 import { useTheme } from 'next-themes'
 
-const Mermaid = dynamic(() => import('@/components/Mermaid'), {
+const Mermaid = dynamic(() => import('@/components/MermaidVoip'), {
   ssr: false,
 })
 
 const VoIPComponent = () => {
+  const { theme, setTheme, resolvedTheme } = useTheme()
+  const textColor = resolvedTheme === 'dark' ? '#777' : '#777'
+  const actorColor = resolvedTheme === 'dark' ? '#cde498' : '#94a3b8'
+  const sequenceColor = resolvedTheme === 'dark' ? '#777' : '#777'
   const voipCode_1 = `---
 config:
     theme: 'forest'
     securityLevel: 'loose'
     themeVariables:
         primaryColor: '#BB2528'
-        primaryTextColor: '#000000'
+        primaryTextColor: '${textColor}'
         primaryBorderColor: '#7C0000'
         lineColor: '#F8B229'
         secondaryColor: '#006100'
         tertiaryColor: '#fff'
+    themeCSS: |
+        .messageLine1:nth-of-type(1) { stroke: red; }; 
+        .messageLine0:nth-of-type(2) { stroke: red; }; 
+        .messageLine0:nth-of-type(3) { stroke: red; }; 
+        .messageLine0:nth-of-type(4) { stroke: red; }; 
+        .messageLine0:nth-of-type(5) { stroke: red; }; 
+        .messageLine0:nth-of-type(6) { stroke: red; }; 
+        .messageLine0:nth-of-type(7) { stroke: red; }; 
+        .messageLine0:nth-of-type(8) { stroke: red; }; 
+        .messageText:nth-of-type(1) { fill: green; font-size: 30px !important;};
+        .messageText:nth-of-type(3) { fill: red; !important;};
+        .messageText:nth-of-type(5) { fill: red; !important;};
+        .messageText:nth-of-type(7) { fill: red; !important;};
+        g:nth-of-type(1) text.actor.actor-box tspan { fill: ${textColor}; !important;};
+        g:nth-of-type(3) text.actor.actor-box tspan { fill: ${textColor}; !important;};
+        g:nth-of-type(5) text.actor.actor-box tspan { fill: ${textColor}; !important;};
+        g:nth-of-type(7) text.actor.actor-box tspan { fill: ${textColor}; !important;};
+        .sequenceNumber:nth-of-type(2) { fill: ${textColor}; !important; };
+        .sequenceNumber:nth-of-type(4) { fill: ${textColor}; !important; };
+        .sequenceNumber:nth-of-type(6) { fill: ${textColor}; !important; };
+        .sequenceNumber:nth-of-type(8) { fill: ${textColor}; !important; };
+        g:nth-of-type(10) text.noteText tspan { fill: ${textColor}; !important;};
+        text:nth-of-type(9) { fill: ${textColor}; !important;};
+        g:nth-of-type(5) .note { stroke:blue;fill: crimson; }; #arrowhead path {stroke: blue; fill:red;};
 ---
 sequenceDiagram
+    autonumber
     title Fig. 1 - Port Forwarding
     participant A as Alice <br/> 192.168.0.100
     participant B as NAT-1 <br/> 1.1.1.1
@@ -43,8 +72,19 @@ config:
         lineColor: '#F8B229'
         secondaryColor: '#006100'
         tertiaryColor: '#fff'
+    themeCSS: |
+        .messageLine0:nth-of-type(1) { stroke: red; }; 
+        .messageLine0:nth-of-type(3) { stroke: red; }; 
+        .messageLine0:nth-of-type(5) { stroke: red; }; 
+        .messageLine0:nth-of-type(7) { stroke: red; }; 
+        .messageLine0:nth-of-type(9) { stroke: red; }; 
+        .messageLine0:nth-of-type(11) { stroke: red; }; 
+        .messageLine0:nth-of-type(13) { stroke: red; }; 
+        .messageLine0:nth-of-type(15) { stroke: red; }; 
+
 ---
 sequenceDiagram
+    autonumber
     title Fig. 2 - private-to-public
     participant A as Alice <br/> 192.168.0.100
     participant B as Bob <br/> 192.168.0.101
@@ -74,8 +114,23 @@ config:
         lineColor: '#F8B229'
         secondaryColor: '#006100'
         tertiaryColor: '#fff'
+    themeCSS: |
+        .messageLine0:nth-of-type(1) { stroke: red; }; 
+        .messageLine0:nth-of-type(3) { stroke: red; }; 
+        .messageLine0:nth-of-type(5) { stroke: red; }; 
+        .messageLine0:nth-of-type(7) { stroke: red; }; 
+        .messageLine0:nth-of-type(9) { stroke: red; }; 
+        .messageLine0:nth-of-type(11) { stroke: red; }; 
+        .messageLine0:nth-of-type(13) { stroke: red; }; 
+
+        .messageLine1:nth-of-type(1) { stroke: red; }; 
+        .messageLine1:nth-of-type(3) { stroke: red; }; 
+        .messageLine1:nth-of-type(5) { stroke: red; }; 
+        .messageLine1:nth-of-type(7) { stroke: red; }; 
+
 ---
 sequenceDiagram
+    autonumber
     title Fig. 3 - Port Predicition & Hole Punching
     participant A as Alice <br/> 192.168.0.100
     participant B as NAT-1 <br/> 1.1.1.1
@@ -150,7 +205,7 @@ sequenceDiagram
           Destination Port) for identifying the address and application for the packet. It's better
           to see a sequence diagram as depicted in the figure below.
         </p>
-        <div className="md max-w-[1088px] transform-gpu p-4 hover:scale-150 md:w-full">
+        <div id="figure1" className="md max-w-[1088px] transform-gpu p-4 hover:scale-150 md:w-full">
           <span id="figure1"></span>
           <div className="relative">
             <Mermaid chart={voipCode_1} />
@@ -164,7 +219,7 @@ sequenceDiagram
           , Alice has a private local IP address, 192.168.0.100; NAT-1 changes two tuples (Source
           Address, Source Port) of the packet before sending out, the packet reaches NAT-2, and
           NAT-2 can check (Destination Port) to see if is is a well-know port number and forwards
-          the packet to its pre-assigned destination. This scenario is called
+          the packet to its pre-assigned destination. This scenario is called{' '}
           <a
             className="break-words"
             target="_blank"
@@ -200,14 +255,16 @@ sequenceDiagram
         </p>
         <div className="md max-w-[1088px] transform-gpu p-4 hover:scale-150 md:w-full">
           <span id="figure2"></span>
-          <div className="relative"></div>
+          <div className="relative">
+            <Mermaid chart={voipCode_2} />
+          </div>
         </div>
         <p>
           As can be seen in the{' '}
           <a className="break-words" href="#figure2">
             Figure 2
           </a>
-          NAT assigns two different Source Port, SPx and SPy for each packets. The reason is simple
+          , NAT assigns two different Source Port, SPx and SPy for each packet. The reason is simple
           , NAT needs to send replied packets back to the source. NAT needs to keep track of the
           session, translated source port is the key.
         </p>

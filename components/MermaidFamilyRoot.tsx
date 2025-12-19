@@ -809,7 +809,8 @@ function CanvasContent({ grp, map, container }: CanProps) {
         >
           {textStrings.map((s, index) => (
             <div className="w-full text-2xl text-stone-500 dark:text-lime-500" key={index}>
-              {s}<br/>
+              {s}
+              <br />
             </div>
           ))}
         </div>

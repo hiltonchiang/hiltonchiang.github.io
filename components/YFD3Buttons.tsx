@@ -1,0 +1,311 @@
+import * as d3 from 'd3'
+import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { updateButton } from '@/lib/actions'
+import { YFProps } from '@/components/YahooFinance'
+import { CandlestickChartProps } from '@/components/ApexCharts'
+import {
+  ChartResultArray,
+  ChartResultArrayQuote,
+  ChartOptionsWithReturnArray,
+} from 'yahoo-finance2/esm/src/modules/chart.js'
+
+/*
+params: {
+  enum: [
+    '1m',  '2m',  '5m',
+    '15m', '30m', '60m',
+    '90m', '1h',  '1d',
+    '5d',  '1wk', '1mo',
+    '3mo'
+  ]
+}
+*/
+function getMarketOpenTime(date) {
+  const year = date.toLocaleString('en-US', { timeZone: 'America/New_York', year: 'numeric' })
+  const month = date.toLocaleString('en-US', { timeZone: 'America/New_York', month: 'numeric' })
+  const day = date.toLocaleString('en-US', { timeZone: 'America/New_York', day: 'numeric' })
+  const openTimeString = `${year}-${month}-${day}T04:00:00-05:00`
+  return new Date(openTimeString)
+}
+
+function getMarketCloseTime(date) {
+  const year = date.toLocaleString('en-US', { timeZone: 'America/New_York', year: 'numeric' })
+  const month = date.toLocaleString('en-US', { timeZone: 'America/New_York', month: 'numeric' })
+  const day = date.toLocaleString('en-US', { timeZone: 'America/New_York', day: 'numeric' })
+
+  const closeTimeString = `${year}-${month}-${day}T20:00:00-05:00` // 4:00 PM is 16:00 in 24-hour format
+  return new Date(closeTimeString)
+}
+
+async function handleButton1D(name, callback) {
+  console.log('button1D clicked')
+  const today = new Date()
+  const estTime1 = getMarketOpenTime(today)
+  const estTime2 = getMarketCloseTime(today)
+  const queryOptions: ChartOptionsWithReturnArray = {
+    period1: estTime1,
+    period2: estTime2,
+    interval: '5m',
+  }
+  const O: YFProps = { symbol: name, options: queryOptions }
+  const results = await updateButton(O)
+  console.log('YFD3Buttons actions replied results', results)
+  if (results !== null) {
+    const R: CandlestickChartProps = { title: name, D: results }
+    callback(R)
+  }
+}
+async function handleButton5D(name, callback) {
+  console.log('button5D clicked')
+  const interval = 30 * 60 * 1000
+  const today = new Date()
+  let estTime1 = getMarketOpenTime(today)
+  const estTime2 = getMarketCloseTime(today)
+  estTime1 = new Date(estTime1.getTime() - 5 * 24 * 60 * 60 * 1000)
+  const queryOptions: ChartOptionsWithReturnArray = {
+    period1: estTime1,
+    period2: estTime2,
+    interval: '30m',
+  }
+  const O: YFProps = { symbol: name, options: queryOptions }
+  const results: ChartResultArray = (await updateButton(O)) as ChartResultArray
+  if (results !== null) {
+    const Quotes: ChartResultArrayQuote[] = [] as ChartResultArrayQuote[]
+    let preDate: Date = new Date()
+    for (let i = 0; i < results.quotes.length; i++) {
+      const Q = results.quotes[i]
+      if (i == 0) {
+        preDate = Q.date
+      }
+      /*
+      if (Q.date.getTime() - preDate.getTime() > interval) {
+        Quotes.push({
+          date: new Date(preDate.getTime() + interval),
+          high: null,
+          low: null,
+          open: null,
+          close: null,
+          volume: null,
+        })
+      }
+      Quotes.push(Q)
+      preDate = Q.date
+      */
+      if (Q.volume !== 0) {
+        Quotes.push(Q)
+      }
+    }
+    console.log('button5D imputioned data', Quotes)
+    results.quotes = Quotes
+    const R: CandlestickChartProps = { title: name, D: results }
+    callback(R)
+  }
+}
+async function handleButton1M(name, callback) {
+  console.log('button1M clicked')
+  const estTime1 = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
+  const estTime2 = new Date(Date.now())
+  const queryOptions: ChartOptionsWithReturnArray = {
+    period1: new Date(estTime1),
+    period2: new Date(estTime2),
+    interval: '1d',
+  }
+  const O: YFProps = { symbol: name, options: queryOptions }
+  const results = await updateButton(O)
+  console.log('YFD3Buttons actions replied results', results)
+  if (results !== null) {
+    const R: CandlestickChartProps = { title: name, D: results }
+    callback(R)
+  }
+}
+async function handleButton6M(name, callback) {
+  console.log('button6M clicked')
+  const estTime1 = new Date(Date.now() - 180 * (24 + 5) * 60 * 60 * 1000)
+  const estTime2 = new Date(Date.now() - 5 * 60 * 60 * 1000)
+  const queryOptions: ChartOptionsWithReturnArray = {
+    period1: new Date(estTime1),
+    period2: new Date(estTime2),
+    interval: '5d',
+  }
+  const O: YFProps = { symbol: name, options: queryOptions }
+  const results = await updateButton(O)
+  console.log('YFD3Buttons actions replied results', results)
+  if (results !== null) {
+    const R: CandlestickChartProps = { title: name, D: results }
+    callback(R)
+  }
+}
+async function handleButtonYTD(name, callback) {
+  console.log('buttonYTD clicked')
+  const year = new Date().getFullYear()
+  console.log('year', year)
+  const estTime1 = new Date(year + '-01-01')
+  const estTime2 = new Date()
+  const queryOptions: ChartOptionsWithReturnArray = {
+    period1: new Date(estTime1),
+    period2: new Date(estTime2),
+    interval: '5d',
+  }
+  const O: YFProps = { symbol: name, options: queryOptions }
+  const results = await updateButton(O)
+  console.log('YFD3Buttons actions replied results', results)
+  if (results !== null) {
+    const R: CandlestickChartProps = { title: name, D: results }
+    callback(R)
+  }
+}
+async function handleButton1Y(name, callback) {
+  console.log('button1Y clicked')
+  const estTime1 = new Date(Date.now() - 365 * (24 + 5) * 60 * 60 * 1000)
+  const estTime2 = new Date(Date.now() - 5 * 60 * 60 * 1000)
+  const queryOptions: ChartOptionsWithReturnArray = {
+    period1: new Date(estTime1),
+    period2: new Date(estTime2),
+    interval: '1wk',
+  }
+  const O: YFProps = { symbol: name, options: queryOptions }
+  const results = await updateButton(O)
+  console.log('YFD3Buttons actions replied results', results)
+  if (results !== null) {
+    const R: CandlestickChartProps = { title: name, D: results }
+    callback(R)
+  }
+}
+async function handleButton5Y(name, callback) {
+  console.log('button5Y clicked')
+  const estTime1 = new Date(Date.now() - 5 * 365 * (24 + 5) * 60 * 60 * 1000)
+  const estTime2 = new Date(Date.now() - 5 * 60 * 60 * 1000)
+  const queryOptions: ChartOptionsWithReturnArray = {
+    period1: new Date(estTime1),
+    period2: new Date(estTime2),
+    interval: '1mo',
+  }
+  const O: YFProps = { symbol: name, options: queryOptions }
+  const results = await updateButton(O)
+  console.log('YFD3Buttons actions replied results', results)
+  if (results !== null) {
+    const R: CandlestickChartProps = { title: name, D: results }
+    callback(R)
+  }
+}
+interface YFD3ButtonsProps {
+  onButtonClicked: (O: CandlestickChartProps) => void
+}
+const YFD3Buttons: React.FC<YFD3ButtonsProps> = ({ onButtonClicked }) => {
+  const [buttonClicked, setButtonClicked] = useState('button-1D')
+  const router = useRouter()
+  const buttons = d3.selectAll('main').selectAll('button')
+  const nodes = buttons.nodes()
+  const cls = 'rounded-md bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700'
+  const clsH = 'rounded-md bg-pink-500 px-4 py-2 font-bold text-white hover:bg-pink-700'
+  for (let i = 0; i < nodes.length; i++) {
+    const id = d3.select(nodes[i]).attr('id')
+    switch (id) {
+      case 'button-1D':
+        d3.select(nodes[i]).on('click', function (event, d) {
+          const name = d3.select(this).attr('data-name')
+          handleButton1D(name, onButtonClicked)
+          d3.select(this).attr('class', clsH)
+          setButtonClicked('button-1D')
+          router.refresh()
+          d3.select(this).attr('class', clsH)
+        })
+        if (buttonClicked === 'button-1D') {
+          d3.select(nodes[i]).attr('class', clsH)
+        } else {
+          d3.select(nodes[i]).attr('class', cls)
+        }
+        break
+      case 'button-5D':
+        d3.select(nodes[i]).on('click', function (event, d) {
+          const name = d3.select(this).attr('data-name')
+          handleButton5D(name, onButtonClicked)
+          d3.select(this).attr('class', clsH)
+          setButtonClicked('button-5D')
+          router.refresh()
+        })
+        if (buttonClicked === 'button-5D') {
+          d3.select(nodes[i]).attr('class', clsH)
+        } else {
+          d3.select(nodes[i]).attr('class', cls)
+        }
+        break
+      case 'button-1M':
+        d3.select(nodes[i]).on('click', function (event, d) {
+          const name = d3.select(this).attr('data-name')
+          handleButton1M(name, onButtonClicked)
+          d3.select(this).attr('class', clsH)
+          setButtonClicked('button-1M')
+          router.refresh()
+        })
+        if (buttonClicked === 'button-1M') {
+          d3.select(nodes[i]).attr('class', clsH)
+        } else {
+          d3.select(nodes[i]).attr('class', cls)
+        }
+        break
+      case 'button-6M':
+        d3.select(nodes[i]).on('click', function (event, d) {
+          const name = d3.select(this).attr('data-name')
+          handleButton6M(name, onButtonClicked)
+          d3.select(this).attr('class', clsH)
+          setButtonClicked('button-6M')
+          router.refresh()
+        })
+        if (buttonClicked === 'button-6M') {
+          d3.select(nodes[i]).attr('class', clsH)
+        } else {
+          d3.select(nodes[i]).attr('class', cls)
+        }
+        break
+      case 'button-YTD':
+        d3.select(nodes[i]).on('click', function (event, d) {
+          const name = d3.select(this).attr('data-name')
+          handleButtonYTD(name, onButtonClicked)
+          d3.select(this).attr('class', clsH)
+          setButtonClicked('button-YTD')
+          router.refresh()
+        })
+        if (buttonClicked === 'button-YTD') {
+          d3.select(nodes[i]).attr('class', clsH)
+        } else {
+          d3.select(nodes[i]).attr('class', cls)
+        }
+        break
+      case 'button-1Y':
+        d3.select(nodes[i]).on('click', function (event, d) {
+          const name = d3.select(this).attr('data-name')
+          handleButton1Y(name, onButtonClicked)
+          d3.select(this).attr('class', clsH)
+          setButtonClicked('button-1Y')
+          router.refresh()
+        })
+        if (buttonClicked === 'button-1Y') {
+          d3.select(nodes[i]).attr('class', clsH)
+        } else {
+          d3.select(nodes[i]).attr('class', cls)
+        }
+        break
+      case 'button-5Y':
+        d3.select(nodes[i]).on('click', function (event, d) {
+          const name = d3.select(this).attr('data-name')
+          handleButton5Y(name, onButtonClicked)
+          d3.select(this).attr('class', clsH)
+          setButtonClicked('button-5Y')
+          router.refresh()
+        })
+        if (buttonClicked === 'button-5Y') {
+          d3.select(nodes[i]).attr('class', clsH)
+        } else {
+          d3.select(nodes[i]).attr('class', cls)
+        }
+        break
+      default:
+        break
+    }
+  }
+  return <></>
+}
+
+export default YFD3Buttons

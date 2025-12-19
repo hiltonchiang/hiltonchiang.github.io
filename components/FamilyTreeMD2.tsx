@@ -8,7 +8,7 @@ const Mermaid = dynamic(() => import('@/components/MermaidFamily'), {
 
 const FamilyTreeMD2 = () => {
   const { theme, setTheme, resolvedTheme } = useTheme()
-  const textColor = resolvedTheme === 'dark' ? 'fill-lime-300' : 'fill-stone-500'
+  const textColor = resolvedTheme === 'dark' ? '#bef264' : '#78716c'
   const familyTreeCode = `---
 config:
     theme: 'forest'

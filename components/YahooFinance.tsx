@@ -24,49 +24,49 @@ const YF = async ({ symbol, options }: YFProps) => {
           <button
             id="button-1D"
             data-name={symbol}
-            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
+            className="flex-shrink-0 snap-center rounded-md bg-slate-50 px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
           >
             1 D
           </button>
           <button
             id="button-5D"
             data-name={symbol}
-            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
+            className="flex-shrink-0 snap-center rounded-md bg-slate-50 px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
           >
             5 D
           </button>
           <button
             id="button-1M"
             data-name={symbol}
-            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
+            className="flex-shrink-0 snap-center rounded-md bg-slate-50 px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
           >
             1 M
           </button>
           <button
             id="button-6M"
             data-name={symbol}
-            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
+            className="flex-shrink-0 snap-center rounded-md bg-slate-50 px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
           >
             6 M
           </button>
           <button
             id="button-YTD"
             data-name={symbol}
-            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
+            className="flex-shrink-0 snap-center rounded-md bg-slate-50 px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
           >
             YTD
           </button>
           <button
             id="button-1Y"
             data-name={symbol}
-            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
+            className="flex-shrink-0 snap-center rounded-md bg-slate-50 px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
           >
             1 Y
           </button>
           <button
             id="button-5Y"
             data-name={symbol}
-            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
+            className="flex-shrink-0 snap-center rounded-md bg-slate-50 px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
           >
             5 Y
           </button>

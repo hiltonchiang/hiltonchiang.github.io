@@ -228,7 +228,7 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ title, D }) => {
           },
           formatter: function (val) {
             if (val && val > 1000000) val = val / 10000000
-            return val?.toFixed(0)
+            return val?.toFixed(2)
           },
         },
         title: {
@@ -306,64 +306,6 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ title, D }) => {
       ]
       setOptions3(opt)
     }
-  }
-  const Buttons = () => {
-    return (
-      <div className="md:max-w-1xl mx-auto flex items-center justify-center px-4 scrollbar-hide sm:px-6 lg:px-8">
-        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto scrollbar-hide md:grid md:grid-cols-7">
-          {/*<div className="flex justify-center space-x-4">*/}
-          <button
-            id="button-1D"
-            data-name={title}
-            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
-          >
-            1 D
-          </button>
-          <button
-            id="button-5D"
-            data-name={title}
-            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
-          >
-            5 D
-          </button>
-          <button
-            id="button-1M"
-            data-name={title}
-            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
-          >
-            1 M
-          </button>
-          <button
-            id="button-6M"
-            data-name={title}
-            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
-          >
-            6 M
-          </button>
-          <button
-            id="button-YTD"
-            data-name={title}
-            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
-          >
-            YTD
-          </button>
-          <button
-            id="button-1Y"
-            data-name={title}
-            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
-          >
-            1 Y
-          </button>
-          <button
-            id="button-5Y"
-            data-name={title}
-            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
-          >
-            5 Y
-          </button>
-        </div>
-      </div>
-    )
   }
   /**
    *

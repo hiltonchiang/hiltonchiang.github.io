@@ -18,8 +18,8 @@ const YF = async ({ symbol, options }: YFProps) => {
    */
   const Buttons = () => {
     return (
-      <div className="md:max-w-1xl mx-auto flex items-center justify-center px-4 scrollbar-hide sm:px-6 lg:px-8">
-        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto scrollbar-hide md:grid md:grid-cols-7">
+      <div className="md:max-w-1xl mx-auto flex items-center justify-center px-4 sm:px-6 lg:px-8">
+        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto md:grid md:grid-cols-7">
           {/*<div className="flex justify-center space-x-4">*/}
           <button
             id="button-1D"

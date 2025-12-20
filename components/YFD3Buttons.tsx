@@ -1,7 +1,7 @@
 import * as d3 from 'd3'
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { updateButton } from '@/lib/actions'
+import { getOpenCloseTime, updateButton } from '@/lib/actions'
 import { YFProps } from '@/components/YahooFinance'
 import { CandlestickChartProps } from '@/components/ApexCharts'
 import {
@@ -21,28 +21,10 @@ params: {
   ]
 }
 */
-function getMarketOpenTime(date) {
-  const year = date.toLocaleString('en-US', { timeZone: 'America/New_York', year: 'numeric' })
-  const month = date.toLocaleString('en-US', { timeZone: 'America/New_York', month: 'numeric' })
-  const day = date.toLocaleString('en-US', { timeZone: 'America/New_York', day: 'numeric' })
-  const openTimeString = `${year}-${month}-${day}T04:00:00-05:00`
-  return new Date(openTimeString)
-}
-
-function getMarketCloseTime(date) {
-  const year = date.toLocaleString('en-US', { timeZone: 'America/New_York', year: 'numeric' })
-  const month = date.toLocaleString('en-US', { timeZone: 'America/New_York', month: 'numeric' })
-  const day = date.toLocaleString('en-US', { timeZone: 'America/New_York', day: 'numeric' })
-
-  const closeTimeString = `${year}-${month}-${day}T20:00:00-05:00` // 4:00 PM is 16:00 in 24-hour format
-  return new Date(closeTimeString)
-}
-
 async function handleButton1D(name, callback) {
   console.log('button1D clicked')
   const today = new Date()
-  const estTime1 = getMarketOpenTime(today)
-  const estTime2 = getMarketCloseTime(today)
+  const [estTime1, estTime2] = await getOpenCloseTime()
   const queryOptions: ChartOptionsWithReturnArray = {
     period1: estTime1,
     period2: estTime2,
@@ -59,10 +41,8 @@ async function handleButton1D(name, callback) {
 async function handleButton5D(name, callback) {
   console.log('button5D clicked')
   const interval = 30 * 60 * 1000
-  const today = new Date()
-  let estTime1 = getMarketOpenTime(today)
-  const estTime2 = getMarketCloseTime(today)
-  estTime1 = new Date(estTime1.getTime() - 5 * 24 * 60 * 60 * 1000)
+  const [tmp, estTime2] = await getOpenCloseTime()
+  const estTime1 = new Date(tmp.getTime() - 4 * 24 * 60 * 60 * 1000)
   const queryOptions: ChartOptionsWithReturnArray = {
     period1: estTime1,
     period2: estTime2,
@@ -104,11 +84,11 @@ async function handleButton5D(name, callback) {
 }
 async function handleButton1M(name, callback) {
   console.log('button1M clicked')
-  const estTime1 = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000)
-  const estTime2 = new Date(Date.now())
+  const [tmp, estTime2] = await getOpenCloseTime()
+  const estTime1 = new Date(tmp.getTime() - 30 * 24 * 60 * 60 * 1000)
   const queryOptions: ChartOptionsWithReturnArray = {
-    period1: new Date(estTime1),
-    period2: new Date(estTime2),
+    period1: estTime1,
+    period2: estTime2,
     interval: '1d',
   }
   const O: YFProps = { symbol: name, options: queryOptions }
@@ -121,11 +101,11 @@ async function handleButton1M(name, callback) {
 }
 async function handleButton6M(name, callback) {
   console.log('button6M clicked')
-  const estTime1 = new Date(Date.now() - 180 * (24 + 5) * 60 * 60 * 1000)
-  const estTime2 = new Date(Date.now() - 5 * 60 * 60 * 1000)
+  const [tmp, estTime2] = await getOpenCloseTime()
+  const estTime1 = new Date(tmp.getTime() - 180 * 24 * 60 * 60 * 1000)
   const queryOptions: ChartOptionsWithReturnArray = {
-    period1: new Date(estTime1),
-    period2: new Date(estTime2),
+    period1: estTime1,
+    period2: estTime2,
     interval: '5d',
   }
   const O: YFProps = { symbol: name, options: queryOptions }
@@ -139,12 +119,11 @@ async function handleButton6M(name, callback) {
 async function handleButtonYTD(name, callback) {
   console.log('buttonYTD clicked')
   const year = new Date().getFullYear()
-  console.log('year', year)
+  const [tmp, estTime2] = await getOpenCloseTime()
   const estTime1 = new Date(year + '-01-01')
-  const estTime2 = new Date()
   const queryOptions: ChartOptionsWithReturnArray = {
-    period1: new Date(estTime1),
-    period2: new Date(estTime2),
+    period1: estTime1,
+    period2: estTime2,
     interval: '5d',
   }
   const O: YFProps = { symbol: name, options: queryOptions }
@@ -157,11 +136,11 @@ async function handleButtonYTD(name, callback) {
 }
 async function handleButton1Y(name, callback) {
   console.log('button1Y clicked')
-  const estTime1 = new Date(Date.now() - 365 * (24 + 5) * 60 * 60 * 1000)
-  const estTime2 = new Date(Date.now() - 5 * 60 * 60 * 1000)
+  const [tmp, estTime2] = await getOpenCloseTime()
+  const estTime1 = new Date(tmp.getTime() - 365 * 24 * 60 * 60 * 1000)
   const queryOptions: ChartOptionsWithReturnArray = {
-    period1: new Date(estTime1),
-    period2: new Date(estTime2),
+    period1: estTime1,
+    period2: estTime2,
     interval: '1wk',
   }
   const O: YFProps = { symbol: name, options: queryOptions }
@@ -174,11 +153,11 @@ async function handleButton1Y(name, callback) {
 }
 async function handleButton5Y(name, callback) {
   console.log('button5Y clicked')
-  const estTime1 = new Date(Date.now() - 5 * 365 * (24 + 5) * 60 * 60 * 1000)
-  const estTime2 = new Date(Date.now() - 5 * 60 * 60 * 1000)
+  const [tmp, estTime2] = await getOpenCloseTime()
+  const estTime1 = new Date(tmp.getTime() - 5 * 365 * (24 + 5) * 60 * 60 * 1000)
   const queryOptions: ChartOptionsWithReturnArray = {
-    period1: new Date(estTime1),
-    period2: new Date(estTime2),
+    period1: estTime1,
+    period2: estTime2,
     interval: '1mo',
   }
   const O: YFProps = { symbol: name, options: queryOptions }
@@ -197,8 +176,10 @@ const YFD3Buttons: React.FC<YFD3ButtonsProps> = ({ onButtonClicked }) => {
   const router = useRouter()
   const buttons = d3.selectAll('main').selectAll('button')
   const nodes = buttons.nodes()
-  const cls = 'rounded-md bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700'
-  const clsH = 'rounded-md bg-pink-500 px-4 py-2 font-bold text-white hover:bg-pink-700'
+  const cls =
+    'flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700'
+  const clsH =
+    'flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white underline md:no-underline md:w-full md:bg-pink-500 md:hover:bg-pink-700'
   for (let i = 0; i < nodes.length; i++) {
     const id = d3.select(nodes[i]).attr('id')
     switch (id) {

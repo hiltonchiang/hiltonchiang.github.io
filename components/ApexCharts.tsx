@@ -5,6 +5,7 @@ import YahooFinance from 'yahoo-finance2'
 import React, { useState } from 'react'
 import { ApexOptions } from 'apexcharts'
 import { ChartResultArray } from 'yahoo-finance2/esm/src/modules/chart.js'
+import useWindowDimensions from '@/components/WindowDimension'
 
 const ReactApexChart = dynamic(() => import('react-apexcharts'), {
   ssr: false,
@@ -45,6 +46,9 @@ export interface CandlestickChartProps {
 }
 
 const CandlestickChart: React.FC<CandlestickChartProps> = ({ title, D }) => {
+  const { height, width } = useWindowDimensions()
+  const breakpoint = 768 // Example breakpoint for mobile/desktop
+  const isMobile = width && width <= breakpoint ? true : false
   const [buttonClicked, setButtonClicked] = useState(false)
   const { theme, setTheme, resolvedTheme } = useTheme()
   // console.log('ApexChart', title, 'data', D)
@@ -54,7 +58,7 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ title, D }) => {
   console.log('CandlestickChart theme', resolvedTheme)
   for (let i = 0; i < D.quotes.length; i++) {
     const Q = D.quotes[i]
-    const X = new Date(Q.date.getTime() - 5 * 60 * 60 * 1000) // US ET
+    const X = new Date(Q.date.getTime() - 13 * 60 * 60 * 1000) // US ET
     const open = Q && Q.open ? Math.round(Q.open * 100) / 100 : null
     const high = Q && Q.high ? Math.round(Q.high * 100) / 100 : null
     const low = Q && Q.low ? Math.round(Q.low * 100) / 100 : null
@@ -144,7 +148,7 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ title, D }) => {
   })
   const [options3, setOptions3] = useState<ApexOptions>({
     chart: {
-      height: 600,
+      height: 'auto',
       type: 'line', // Default type, can be overridden in series
       stacked: false,
     },
@@ -168,17 +172,25 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ title, D }) => {
       width: [2, 0], // Line width for price series, 0 for volume series
     },
     title: {
-      text: 'Stock Price and Volume',
+      text: title,
       align: 'left',
+    },
+    subtitle: {
+      text: D.meta.longName,
+      align: 'center',
     },
     xaxis: {
       type: 'datetime', // X-axis is time-series
       labels: {
         datetimeUTC: false, // Set to false to use local time zone
       },
+      title: {
+        text: 'US East Time',
+      },
     },
     yaxis: [
       {
+        show: !isMobile,
         axisTicks: {
           show: true,
         },
@@ -202,6 +214,7 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ title, D }) => {
         },
       },
       {
+        show: !isMobile,
         axisTicks: {
           show: true,
         },
@@ -214,11 +227,12 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ title, D }) => {
             colors: '#00E396',
           },
           formatter: function (val) {
+            if (val && val > 1000000) val = val / 10000000
             return val?.toFixed(0)
           },
         },
         title: {
-          text: 'Volume',
+          text: 'Volume (M)',
           style: {
             color: '#00E396',
           },
@@ -259,7 +273,7 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ title, D }) => {
     const lineVolumeData: LineVolumePoint[] = [] as LineVolumePoint[]
     for (let i = 0; i < O.D.quotes.length; i++) {
       const Q = O.D.quotes[i]
-      const X = new Date(Q.date.getTime() - 5 * 60 * 60 * 1000)
+      const X = new Date(Q.date.getTime() - 13 * 60 * 60 * 1000)
       const close = Q && Q.close ? Math.round(Q.close * 100) / 100 : null
       const volume = Q && Q.volume ? Math.round(Q.volume * 100) / 100 : null
       lineVolumeData.push({ x: X, y: close, v: volume })
@@ -293,6 +307,64 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ title, D }) => {
       setOptions3(opt)
     }
   }
+  const Buttons = () => {
+    return (
+      <div className="md:max-w-1xl mx-auto flex items-center justify-center px-4 scrollbar-hide sm:px-6 lg:px-8">
+        <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto scrollbar-hide md:grid md:grid-cols-7">
+          {/*<div className="flex justify-center space-x-4">*/}
+          <button
+            id="button-1D"
+            data-name={title}
+            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
+          >
+            1 D
+          </button>
+          <button
+            id="button-5D"
+            data-name={title}
+            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
+          >
+            5 D
+          </button>
+          <button
+            id="button-1M"
+            data-name={title}
+            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
+          >
+            1 M
+          </button>
+          <button
+            id="button-6M"
+            data-name={title}
+            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
+          >
+            6 M
+          </button>
+          <button
+            id="button-YTD"
+            data-name={title}
+            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
+          >
+            YTD
+          </button>
+          <button
+            id="button-1Y"
+            data-name={title}
+            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
+          >
+            1 Y
+          </button>
+          <button
+            id="button-5Y"
+            data-name={title}
+            className="flex-shrink-0 snap-center rounded-md px-4 py-2 font-bold text-white md:w-full md:bg-blue-500 md:hover:bg-blue-700"
+          >
+            5 Y
+          </button>
+        </div>
+      </div>
+    )
+  }
   /**
    *
    */
@@ -300,7 +372,8 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ title, D }) => {
     <div id="chart">
       {/*<ReactApexChart options={options1} series={series1} type="candlestick" height={600} />*/}
       {/*<ReactApexChart options={options2} series={series2} type="line" height={600} /> */}
-      <ReactApexChart options={options3} series={options3.series} type="line" height={600} />
+      <ReactApexChart options={options3} series={options3.series} type="line" />
+      {/*<Buttons />*/}
       <YFD3Buttons onButtonClicked={handleButtonClicked} />
     </div>
   )

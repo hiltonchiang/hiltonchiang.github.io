@@ -72,5 +72,10 @@ module.exports = {
       }),
     },
   },
-  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography'),'@tailwindcss/aspect-ratio'],
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    '@tailwindcss/aspect-ratio',
+    require('tailwind-scrollbar-hide'),
+  ],
 }

@@ -10,12 +10,25 @@ const all_tickers_string =
 
 
 export async function getOpenCloseTime() {
-  const date = new Date() // UTC time
+  let date = new Date() // UTC time
+  for (let i = 0;i < 7; i ++) {
+    const year = date.toLocaleString('en-US', { timeZone: 'America/New_York', year: 'numeric' })
+    const month = date.toLocaleString('en-US', { timeZone: 'America/New_York', month: 'numeric' })
+    const day = date.toLocaleString('en-US', { timeZone: 'America/New_York', day: 'numeric' })
+    const hour = date.toLocaleString('en-US', { timeZone: 'America/New_York', hour: 'numeric' })
+    date = new Date(`${year}-${month}-${day}T04:00:00-05:00`)
+    if (date.getDay() === 0 || date.getDay() === 6) {
+      date = new Date(date.getTime() - 24 * 60 * 60 * 1000)
+      continue
+    } else {
+      break  
+    }
+  }
   const year = date.toLocaleString('en-US', { timeZone: 'America/New_York', year: 'numeric' })
   const month = date.toLocaleString('en-US', { timeZone: 'America/New_York', month: 'numeric' })
   const day = date.toLocaleString('en-US', { timeZone: 'America/New_York', day: 'numeric' })
   const hour = date.toLocaleString('en-US', { timeZone: 'America/New_York', hour: 'numeric' })
-  console.log('date', date, 'year mm dd hh', year, month, day, hour)
+  const DOW = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
   let openTime = new Date()
   let closeTime = new Date()
   if (Number(hour) < 4) {
@@ -29,6 +42,33 @@ export async function getOpenCloseTime() {
   } else {
     openTime = new Date(`${year}-${month}-${day}T04:00:00-05:00`)
     closeTime = new Date(date.getTime() + 5 * 60 * 60 * 1000)
+  }
+  for (let i = 0; i < 7; i++) {
+    const towOpen = openTime.getDay()
+    console.log('dow open', DOW[towOpen])
+    const towClose = closeTime.getDay()
+    console.log('dow close', DOW[towClose])
+    if (towOpen === 0 || towOpen === 6 || towClose === 0 || towClose === 6) {
+      openTime = new Date(openTime.getTime() - 24 * 60 * 60 * 1000)
+      closeTime = new Date(closeTime.getTime() - 24 * 60 * 60 * 1000)
+      const year = closeTime.toLocaleString('en-US', {
+        timeZone: 'America/New_York',
+        year: 'numeric'
+      })
+      const month = closeTime.toLocaleString('en-US', {
+        timeZone: 'America/New_York',
+        month: 'numeric',
+      })
+      const day = closeTime.toLocaleString('en-US', {
+        timeZone: 'America/New_York',
+        day: 'numeric',
+      })
+      closeTime = new Date(`${year}-${month}-${day}T20:00:00-05:00`)
+      continue
+    } else {
+      break   
+    }
+      
   }
   return [openTime, closeTime]
 }

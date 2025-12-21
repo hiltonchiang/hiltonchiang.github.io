@@ -184,13 +184,9 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ title, D }) => {
       labels: {
         datetimeUTC: false, // Set to false to use local time zone
       },
-      title: {
-        text: 'US East Time',
-      },
     },
     yaxis: [
       {
-        show: !isMobile,
         axisTicks: {
           show: true,
         },
@@ -214,7 +210,6 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ title, D }) => {
         },
       },
       {
-        show: !isMobile,
         axisTicks: {
           show: true,
         },
@@ -262,6 +257,64 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ title, D }) => {
       horizontalAlign: 'left',
       offsetX: 40,
     },
+    responsive: [
+      {
+        breakpoint: 768, // Adjust options when screen width is 480px or less
+        options: {
+          chart: {
+            height: 300, // New height for mobile devices
+            width: '100%', // Ensure it takes the full width of its container
+            toolbar: {
+              show: false,
+            },
+          },
+          series: [
+            {
+              name: '',
+            },
+            {
+              name: '',
+            },
+          ],
+          subtitle: {
+            text: undefined,
+          },
+          yaxis: [
+            {
+              title: {
+                text: undefined,
+              },
+              labels: {
+                show: false,
+              },
+            },
+            {
+              title: {
+                text: undefined,
+              },
+              labels: {
+                show: false,
+              },
+            },
+          ],
+          dataLabels: {
+            enabled: false, // Hide data labels (names/values)
+          },
+          markers: {
+            size: 0, // Hide markers (dots)
+          },
+          legend: {
+            show: false,
+            formatter: function (seriesName, opts) {
+              if (seriesName === 'Stock Price' || seriesName === 'Volume') {
+                return null
+              }
+              return seriesName
+            },
+          },
+        },
+      },
+    ],
   })
   /**
    *
@@ -312,10 +365,7 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ title, D }) => {
    */
   return (
     <div id="chart">
-      {/*<ReactApexChart options={options1} series={series1} type="candlestick" height={600} />*/}
-      {/*<ReactApexChart options={options2} series={series2} type="line" height={600} /> */}
       <ReactApexChart options={options3} series={options3.series} type="line" />
-      {/*<Buttons />*/}
       <YFD3Buttons onButtonClicked={handleButtonClicked} />
     </div>
   )

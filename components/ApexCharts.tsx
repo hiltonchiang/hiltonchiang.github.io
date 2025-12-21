@@ -237,6 +237,7 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ title, D }) => {
     ],
     tooltip: {
       theme: resolvedTheme,
+      fillSeriesColor: true,
       fixed: {
         enabled: true,
         position: 'topLeft', // or 'topRight', 'bottomLeft', 'bottomRight'
@@ -267,6 +268,9 @@ const CandlestickChart: React.FC<CandlestickChartProps> = ({ title, D }) => {
             toolbar: {
               show: false,
             },
+          },
+          tooltip: {
+            enabled: false,
           },
           series: [
             {

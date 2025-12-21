@@ -177,9 +177,9 @@ const YFD3Buttons: React.FC<YFD3ButtonsProps> = ({ onButtonClicked }) => {
   const buttons = d3.selectAll('main').selectAll('button')
   const nodes = buttons.nodes()
   const cls =
-    'flex-shrink-0 snap-center rounded-md bg-slate-50 px-4 py-2 font-bold text-black text-xs md:text-base md:w-full md:bg-blue-500 md-text-white md:hover:bg-blue-700'
+    'flex-shrink-0 snap-center rounded-md bg-slate-50 px-1 py-0 md:px-2 md:py-1 font-bold text-black text-xs md:text-base md:w-full md:bg-blue-500 md-text-white md:hover:bg-blue-700'
   const clsH =
-    'flex-shrink-0 snap-center rounded-md bg-slate-50 px-4 py-2 font-bold text-black text-xs md:text-base underline md:no-underline md:w-full md:bg-pink-500 md-text-white md:hover:bg-pink-700'
+    'flex-shrink-0 snap-center rounded-md bg-slate-50 px-1 py-0 md:px-2 md:py-1 font-bold text-red-500 text-xs md:text-base underline md:no-underline md:w-full md:bg-pink-500 md-text-white md:hover:bg-pink-700'
   for (let i = 0; i < nodes.length; i++) {
     const id = d3.select(nodes[i]).attr('id')
     switch (id) {

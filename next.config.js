@@ -64,6 +64,7 @@ const baseConfig = {
   eslint: {
     dirs: ['app', 'components', 'layouts', 'scripts'],
   },
+  serverComponentsExternalPackages: ['onnxruntime-node'],
   images: {
     remotePatterns: [
       {

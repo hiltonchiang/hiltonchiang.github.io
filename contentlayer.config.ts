@@ -120,6 +120,7 @@ function createSearchIndex(allBlogs, allChronicles) {
         tags: Array.isArray(doc.tags) ? doc.tags.map(String) : [],
         authors: Array.isArray(doc.authors) ? doc.authors.map(String) : [],
         image: Array.isArray(doc.images) && doc.images.length ? String(doc.images[0]) : siteMetadata.socialBanner || '',
+        path: String(doc.path),
       }
     })
     const outPath = path.basename(siteMetadata.search.kbarConfig.searchDocumentsPath)

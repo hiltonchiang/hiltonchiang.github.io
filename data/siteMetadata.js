@@ -106,6 +106,20 @@ const siteMetadata = {
     kbarConfig: {
       searchDocumentsPath: `${process.env.BASE_PATH || ''}/search.json`, // path to load documents to search
     },
+    onSearchDocumentsLoad: (D) => {
+      const myActions = []
+      for (let i = 0; i < D.length; i++) {
+        const A = {
+          id: i.toString(),
+          name: D[i].summary,
+          perform: () => {
+            window.location.pathname = D[i].path
+          },
+        }
+        myActions.push(A)
+      }
+      return myActions
+    }
     // provider: 'algolia',
     // algoliaConfig: {
     //   // The application ID provided by Algolia

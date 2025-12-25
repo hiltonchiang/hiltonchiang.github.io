@@ -7,7 +7,6 @@ const headerNavLinks = [
   { href: '/tags', title: 'Tags', tip: 'Tags' , icon: <TagIcon />   },
   { href: '/projects', title: 'Projects', tip:'Projects', icon: <LayersIcon /> },
   { href: '/chronicle', title: 'Profile', tip:'Timeline', icon: <TimelineIcon /> },
-  { href: '/blog/family-root', title: 'FamilyTree', tip:'FamilyTree', icon: <FamilyIcon /> },
   { href: '/about', title: 'About',tip:'About' , icon: < UserIcon /> },
 ]
 

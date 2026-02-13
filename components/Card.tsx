@@ -2,11 +2,11 @@ import Image from './Image'
 import Link from './Link'
 import { SymbolArrow, Symbol1f517 } from './ExtLink'
 const Card = ({ title, description, imgSrc, href }) => (
-  <div className="md max-w-[544px] p-4 md:w-1/2">
+  <div className="md grid gap-x-4 gap-y-8 relative max-w-[544px] p-4 before:absolute before:-inset-1 before:z-[-1] before:skew-x-1 before:skew-y-2 before:bg-[#030a2e] before:bg-[linear-gradient(-45deg,_#687bdd_0%,_#221e22_50%,_#e90e45_100%)] before:content-[''] after:absolute after:-inset-1 after:z-[-1] after:skew-x-1 after:skew-y-2 after:bg-[#030a2e] after:bg-[linear-gradient(-45deg,_#687bdd_0%,_#221e22_50%,_#e90e45_100%)] after:blur-[50px] after:content-[''] md:w-1/2">
     <div
       className={`${
         imgSrc && 'h-full'
-      }  overflow-hidden rounded-md border-2 border-gray-200 border-opacity-60 dark:border-gray-700`}
+      }  hover:scale-125 overflow-hidden rounded-md border-2 border-gray-200 border-opacity-60dark:border-gray-700`}
     >
       {imgSrc &&
         (href ? (

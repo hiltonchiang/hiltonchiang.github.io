@@ -16,7 +16,7 @@ const ImgVert = ({ texts, imgSrc, imgAlt, height = '60' }: Props) => {
       <div className="w-full transform-gpu overflow-hidden px-2 hover:scale-125 xl:my-1 xl:w-1/2 xl:px-2">
         <img alt={imgAlt} src={imgSrc} className={clsString} />
       </div>
-      <div className="prose max-w-none translate-x-16 border border-stone-300 p-10 align-middle text-2xl text-stone-500 [text-orientation:upright] [writing-mode:vertical-rl] dark:prose-invert dark:border-slate-500 dark:text-red-400 xl:col-span-2">
+      <div className="prose max-w-none translate-x-16 border border-stone-300 p-4 align-middle text-2xl text-stone-500 [text-orientation:upright] [writing-mode:vertical-rl] dark:prose-invert dark:border-slate-500 dark:text-red-400 md:p-10 xl:col-span-2">
         {texts.map((t) => (
           <p key={t}> {t} </p>
         ))}

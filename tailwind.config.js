@@ -23,6 +23,7 @@ module.exports = {
       },
       fontFamily: {
         sans: ['var(--font-space-grotesk)', ...fontFamily.sans],
+        ming: ['var(--font-zen-old-mincho)', ...fontFamily.serif],
       },
       colors: {
         primary: colors.pink,

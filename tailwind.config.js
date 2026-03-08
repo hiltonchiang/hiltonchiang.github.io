@@ -22,8 +22,9 @@ module.exports = {
         14: '3.5rem',
       },
       fontFamily: {
-        sans: ['var(--font-space-grotesk)', ...fontFamily.sans],
-        ming: ['var(--font-zen-old-mincho)', ...fontFamily.serif],
+        sans: ['var(--font-space-grotesk)', 'var(--font-tw-ming)',  ...fontFamily.sans],
+        ming: ['var(--font-tw-ming)', ...fontFamily.serif],
+        sung: ['var(--font-tw-sung)', ...fontFamily.serif],
       },
       colors: {
         primary: colors.pink,

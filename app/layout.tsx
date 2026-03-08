@@ -2,7 +2,8 @@ import 'css/tailwind.css'
 import 'pliny/search/algolia.css'
 import 'remark-github-blockquote-alert/alert.css'
 
-import { Space_Grotesk, Zen_Old_Mincho } from 'next/font/google'
+import localFont from 'next/font/local'
+import { Space_Grotesk } from 'next/font/google'
 import { Analytics, AnalyticsConfig } from 'pliny/analytics'
 import { SearchProvider, SearchConfig } from 'pliny/search'
 import Header from '@/components/Header'
@@ -19,11 +20,39 @@ const space_grotesk = Space_Grotesk({
   variable: '--font-space-grotesk',
 })
 
-const zen_old_mincho = Zen_Old_Mincho({
-  subsets: ['latin'],
-  display: 'swap',
-  weight: ['700'],
-  variable: '--font-zen-old-mincho',
+const sung = localFont({
+  src: [
+    { path: './fonts/TW-Sung-98_1.ttf' },
+    { path: './fonts/TW-Sung-Ext-B-98_1.ttf' },
+    { path: './fonts/TW-Sung-Plus-98_1.ttf' },
+  ],
+  variable: '--font-tw-sung',
+})
+
+const ming = localFont({
+  src: [
+    {
+      path: './fonts/GenWanMin2TW-EL.otf',
+      weight: '200',
+    },
+    {
+      path: './fonts/GenWanMin2TW-L.otf',
+      weight: '300',
+    },
+    {
+      path: './fonts/GenWanMin2TW-R.otf',
+      weight: '400',
+    },
+    {
+      path: './fonts/GenWanMin2TW-M.otf',
+      weight: '500',
+    },
+    {
+      path: './fonts/GenWanMin2TW-SB.otf',
+      weight: '600',
+    },
+  ],
+  variable: '--font-tw-ming',
 })
 
 export const metadata: Metadata = {
@@ -72,7 +101,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang={siteMetadata.language}
-      className={`${space_grotesk.variable} ${zen_old_mincho.variable} scroll-smooth`}
+      className={`${space_grotesk.variable} ${sung.variable} ${ming.variable} scroll-smooth`}
       suppressHydrationWarning
     >
       <link

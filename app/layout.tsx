@@ -19,7 +19,7 @@ const space_grotesk = Space_Grotesk({
   display: 'swap',
   variable: '--font-space-grotesk',
 })
-
+/*
 const sung = localFont({
   src: [
     { path: './fonts/TW-Sung-98_1.ttf' },
@@ -28,7 +28,7 @@ const sung = localFont({
   ],
   variable: '--font-tw-sung',
 })
-
+*/
 const ming = localFont({
   src: [
     {
@@ -101,7 +101,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang={siteMetadata.language}
-      className={`${space_grotesk.variable} ${sung.variable} ${ming.variable} scroll-smooth`}
+      className={`${space_grotesk.variable} ${ming.variable} scroll-smooth`}
       suppressHydrationWarning
     >
       <link

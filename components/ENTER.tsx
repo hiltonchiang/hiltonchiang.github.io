@@ -21,7 +21,10 @@ const ENTER = ({ lastmod }: Props) => {
       </span>
       <span className="text-stone-500 dark:text-amber-300">STX</span>
       {lastmod !== undefined && (
-        <span className="absolute right-0 top-0 text-stone-500 dark:text-amber-300"> 1<sup>st</sup> publish: {lastmod}</span>
+        <span className="absolute right-0 top-0 text-stone-500 dark:text-amber-300">
+          {' '}
+          1<sup>st</sup> publish: {lastmod}
+        </span>
       )}
     </div>
   )

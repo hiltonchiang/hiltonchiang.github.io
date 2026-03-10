@@ -35,9 +35,9 @@ interface LayoutProps {
 }
 
 export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
-  const { filePath, path, slug, date, title, tags, refs } = content
+  const { filePath, path, slug, date, title, tags, refs, lastmod } = content
   const basePath = path.split('/')[0]
-
+  const lastmodDate = lastmod.split('T')[0]
   return (
     <SectionContainer>
       <ScrollTopAndComment />
@@ -99,7 +99,7 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
             </dl>
             <div className="divide-y divide-gray-200 dark:divide-gray-700 xl:col-span-3 xl:row-span-2 xl:pb-0">
               <div className="prose-xl max-w-none pb-8 pt-10 dark:prose-invert">
-                <ENTER />
+                <ENTER lastmod={lastmodDate} />
                 {children}
                 <EOF />
               </div>

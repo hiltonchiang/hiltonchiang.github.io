@@ -21,7 +21,7 @@ const ENTER = ({ lastmod }: Props) => {
       </span>
       <span className="text-stone-500 dark:text-amber-300">STX</span>
       {lastmod !== undefined && (
-        <span className="absolute right-0 top-0 text-stone-500 dark:text-amber-300">
+        <span className="absolute right-0 top-0 hidden text-stone-500 dark:text-amber-300 md:block">
           {' '}
           1<sup>st</sup> publish: {lastmod}
         </span>

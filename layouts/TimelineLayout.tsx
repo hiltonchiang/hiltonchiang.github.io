@@ -162,12 +162,12 @@ export default function ListLayout({
             const { path, date, duration, title, summary, tags } = post
             return (
               <li key={path} className="py-4">
-                <article className="space-y-2 xl:grid xl:grid-cols-4 xl:items-baseline xl:space-y-0">
-                  <div className="absolute left-[170px] size-6 -translate-x-1/2 translate-y-[4px] transform rounded-full bg-slate-500"></div>
-                  <div className="absolute left-[170px] size-3 -translate-x-1/2 translate-y-[11px] transform rounded-full bg-red-500"></div>
+                <article className="space-y-2 md:grid md:grid-cols-4 md:items-baseline md:space-y-0">
+                  <div className="absolute left-[170px] hidden size-6 -translate-x-1/2 translate-y-[4px] transform rounded-full bg-slate-500 md:block"></div>
+                  <div className="absolute left-[170px] hidden size-3 -translate-x-1/2 translate-y-[11px] transform rounded-full bg-red-500 md:block"></div>
                   <dl>
                     <dt className="sr-only">Published on</dt>
-                    <dd className="pl-6 text-base font-medium leading-6 text-gray-500 dark:text-gray-400">
+                    <dd className="text-base font-medium leading-6 text-gray-500 dark:text-gray-400 md:pl-6">
                       <time dateTime={date}>{duration}</time>
                     </dd>
                   </dl>

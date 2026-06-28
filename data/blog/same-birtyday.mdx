@@ -1,0 +1,189 @@
+---
+title: '同天生日機率'
+date: '2026-06-28'
+lastmod: '2026-06-28'
+tags: ['prose']
+refs: []
+draft: false
+authors: ['hilton']
+summary: '一羣人中同天生日的機率'
+---
+
+import BlockQuotes from '@/components/BlockQuotes'
+import ImgVert from '@/components/ImgVert'
+import WVert from '@/components/WVert'
+
+那天看到了同學中恰恰好有兩對雙人同天生日。我一時好奇，用Python 算了一下各種組合的機率。以50人爲例，得到了較高機率的幾種組合如下：
+
+<table className="w-full table-fixed border-collapse border border-slate-500 ...">
+    <tbody>
+        <tr>
+            <td className="text-center border border-slate-700 ..."><span className="text-center text-slate-900 dark:text-primary-500">組合</span></td>
+            <td className="text-center border border-slate-700 ...">機率</td>
+        </tr>
+        <tr>
+            <td className="text-center border border-slate-700 ..."><span className="text-center text-slate-900 dark:text-primary-500">恰好3組（每組兩人）</span></td>
+            <td className="text-center border border-slate-700 ...">22.17%</td>
+        </tr>
+        <tr>
+            <td className="text-center border border-slate-700 ..."><span className="text-center text-slate-900 dark:text-primary-500">恰好2組（每組兩人）</span></td>
+            <td className="text-center border border-slate-700 ...">20.43%</td>
+        </tr>
+        <tr>
+            <td className="text-center border border-slate-700 ..."><span className="text-center text-slate-900 dark:text-primary-500">恰好4組（每組兩人）</span></td>
+            <td className="text-center border border-slate-700 ...">16.44%</td>
+        </tr>
+        <tr>
+            <td className="text-center border border-slate-700 ..."><span className="text-center text-slate-900 dark:text-primary-500">恰好1組（每組兩人）</span></td>
+            <td className="text-center border border-slate-700 ...">16.44%</td>
+        </tr>
+        <tr>
+            <td className="text-center border border-slate-700 ..."><span className="text-center text-slate-900 dark:text-primary-500">恰好5組（每組兩人）</span></td>
+            <td className="text-center border border-slate-700 ...">11.48%</td>
+        </tr>
+        <tr>
+            <td className="text-center border border-slate-700 ..."><span className="text-center text-slate-900 dark:text-primary-500">恰好6組（每組兩人）</span></td>
+            <td className="text-center border border-slate-700 ...">3.58%</td>
+        </tr>
+        <tr>
+            <td className="text-center border border-slate-700 ..."><span className="text-center text-slate-900 dark:text-primary-500">1組（每組三人）加2組（每組2人）</span></td>
+            <td className="text-center border border-slate-700 ...">3.06%</td>
+        </tr>
+        <tr>
+            <td className="text-center border border-slate-700 ..."><span className="text-center text-slate-900 dark:text-primary-500">無人同天</span></td>
+            <td className="text-center border border-slate-700 ...">2.96%</td>
+        </tr>
+    </tbody>
+</table>
+
+所以至少有兩人同天生日的機率高達97.04%。
+
+其算法簡單來說，先將50這整數做「無序分割」例如50=2+2+2+1+1…+1。再算其機率：<span className="diagonal-fractions ...">365/365 1/365 364/365 1/365 363/365 1/365 362/365 361/365 ... 319/365</span>
+。這機率再乘上這分割的所有組合數目238360500（可用Python 算出），就是其發生的總機率。
+
+---
+
+Python code
+
+<div className="scroll-mt-64 overflow-hidden rounded-xl border border-blue-gray-50 bg-white dark:bg-gray-950 dark:border-indigo-500">
+    ```python
+    def get_partitions(n, max_value=None):
+         """Generates all unique integer partitions of n in decreasing order."""
+         if n == 0:
+             yield []
+             return
+     
+         if max_value is None or max_value > n:
+             max_value = n
+     
+         for i in range(max_value, 0, -1):
+             for sub_partition in get_partitions(n - i, i):
+                 yield [i] + sub_partition
+     
+    import math
+    def count_partitions(n, group_sizes):
+         # Total items must match sum of group sizes
+         if sum(group_sizes) != n:
+             return 0
+     
+         # Standard formula for multinomial coefficient
+         num = math.factorial(n)
+         den = 1
+         for size in group_sizes:
+             den *= math.factorial(size)
+     
+         multinomial = num // den
+     
+         # Adjust for identical group sizes since groups are usually unlabeled
+         # Count frequencies of each group size
+         from collections import Counter
+         counts = Counter(group_sizes)
+     
+         for size, freq in counts.items():
+             den *= math.factorial(freq) # multiplying the denominator by freq!
+     
+         # Correct calculation: multinomial divided by the product of factorials of frequencies
+         freq_div = 1
+         for size, freq in counts.items():
+             freq_div *= math.factorial(freq)
+     
+         total_unlabeled = multinomial // freq_div
+         return multinomial, totali_unlabeled
+
+    def calculate_odds(partition, leng):
+         """calculate birth odds foreach partition"""
+         sel_day=365
+         odds = ''
+         p = 1.0
+         for idx in range(len(partition)):
+             if idx == 0:
+                 if partition[idx] == 1:
+                     odds += str(sel_day) + '/365'
+                     p = p * sel_day / 365
+                     sel_day = sel_day - 1
+                 else:
+                     for i in range(partition[idx]):
+                         if i == 0:
+                             odds += str(sel_day) + '/365'
+                             p = p * sel_day / 365
+                             sel_day = sel_day - 1
+                         else:
+                             odds +=  ' * ' + '1/365'
+                             p = p / 365
+             else:
+                 if partition[idx] == 1:
+                     odds += ' * ' + str(sel_day) + '/365'
+                     p = p * sel_day / 365
+                     sel_day = sel_day - 1
+                 else:
+                     for i in range(partition[idx]):
+                         if i == 0:
+                             odds += ' * ' + str(sel_day) + '/365'
+                             p = p * sel_day / 365
+                             sel_day = sel_day - 1
+                         else:
+                             odds +=  ' * ' + '1/365'
+                             p = p / 365
+         multinomial, unlabeled = count_partitions(leng, partition)
+         p = p * unlabeled
+         return odds, p, unlabeled
+
+    def cal_occurrance(partition, target, occurrance_times):
+         target = 3
+         occurrance = partition.count(no_to_occur)
+         if occurrance == occurrance_times:
+             print(odds)
+             multinomial, unlabeled = count_partitions(leng, partition)
+             print(f"Unlabeled groups (just splitting them): {unlabeled}")
+             p = p * unlabeled
+             print('odds = ', p)
+             print(f'{no_to_occur} in one group occurrance={occurrance}')
+             return p
+         else:
+             print(f'{no_to_occur} in one group occurrance={occurrance}')
+             return 0
+
+    target_number = 50
+    print(f"Partitions for {target_number}:")
+    cnt = 0
+    total_odds = 0.0
+    D = []
+    for partition in get_partitions(target_number):
+        print('----', cnt+1)
+        print(partition)
+        odds, p, unlabeled = calculate_odds(partition, target_number)
+        D.insert(0, {'partition': partition, 'cal_string': odds, 'odds': p, 'combinations': unlabeled})
+        total_odds += p
+        cnt = cnt + 1
+    print('----')
+    print(f"total number of partitions: {cnt}")
+    print(f"total odds:{total_odds}")
+    print('---')
+    sorted_D = sorted(D, key=lambda x: x['odds'])
+    cnt = 0
+    for d in sorted_D:
+        print('+++ by odds', cnt+1)
+        print(d)
+        cnt += 1
+    ```
+</div>

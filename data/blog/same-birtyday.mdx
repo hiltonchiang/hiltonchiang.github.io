@@ -148,21 +148,6 @@ Python code
          p = p * unlabeled
          return odds, p, unlabeled
 
-    def cal_occurrance(partition, target, occurrance_times):
-         target = 3
-         occurrance = partition.count(no_to_occur)
-         if occurrance == occurrance_times:
-             print(odds)
-             multinomial, unlabeled = count_partitions(leng, partition)
-             print(f"Unlabeled groups (just splitting them): {unlabeled}")
-             p = p * unlabeled
-             print('odds = ', p)
-             print(f'{no_to_occur} in one group occurrance={occurrance}')
-             return p
-         else:
-             print(f'{no_to_occur} in one group occurrance={occurrance}')
-             return 0
-
     target_number = 50
     print(f"Partitions for {target_number}:")
     cnt = 0

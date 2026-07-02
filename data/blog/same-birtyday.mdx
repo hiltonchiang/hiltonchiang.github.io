@@ -61,6 +61,8 @@ import WVert from '@/components/WVert'
 其算法簡單來說，先將50這整數做「無序分割」例如50=2+2+2+1+1…+1。再算其機率：<span className="diagonal-fractions ...">365/365 1/365 364/365 1/365 363/365 1/365 362/365 361/365 ... 319/365</span>
 。這機率再乘上這分割的所有組合數目238360500（可用Python 算出），就是其發生的總機率。
 
+也附上模擬的Python碼，其結果也與理論值相近。
+
 ---
 
 Python code
@@ -171,4 +173,90 @@ Python code
         print(d)
         cnt += 1
     ```
+</div>
+
+Python code using Simulating
+
+<div className="scroll-mt-64 overflow-x-auto rounded-xl border border-blue-gray-50 bg-white dark:bg-gray-950 dark:border-indigo-500">
+```python
+import random
+import sys
+import time
+
+def show_progress(current, total):
+
+    C=['\\','|','/','-']
+    # \r resets the cursor to the beginning of the line
+    cursor = C[current%4]
+    sys.stdout.write(f"\r{cursor} {current:,}/{total:,}")
+    sys.stdout.flush()
+
+def find_duplicates(arr):
+    seen = set()
+    duplicates = set()
+    for item in arr:
+        if item in seen:
+            duplicates.add(item)
+        else:
+            seen.add(item)
+    return list(duplicates)
+
+def simulate(target_number):
+    dd=[]
+    D=[]
+    for i in range(1,target_number + 1):
+        random_day = random.randint(1, 365)
+        D.insert(0, random_day)
+
+    DUP = find_duplicates(D)
+    if len(DUP) == 0:
+        #print("NO DUPLICATE ITEM")
+        dd.insert(0,0)
+        return dd
+    for d in DUP:
+        n = D.count(d)
+        #print(f"dupcliate item {d} occurrs {n}")
+        dd.insert(0,n)
+    return dd
+total_run = 1000000
+target_number = 50
+DUPS = []
+no_duplicate=0
+for i in range(0, total_run):
+    dd=simulate(target_number)
+    #time.sleep(0.05)
+    show_progress(i, total_run)
+
+    #print("+++", i)
+    #print(dd)
+    if dd[0] == 0:
+        no_duplicate += 1
+    else:
+        dd.sort()
+        #print('sorted_dd', dd)
+        hit = False
+        for d in DUPS:
+            if d['partitions'] == dd:
+                d['cnt'] += 1
+                hit = True
+                break
+        if hit == False:
+            DUPS.insert(0, {'partitions': dd, 'cnt': 1})
+
+print("\nTask complete!")  # Print newline at completion
+
+no_duplicate = no_duplicate / total_run * 100
+print(f'no duplicate: {no_duplicate:.2f}%')
+sorted_dups = sorted(DUPS, key=lambda x: x['cnt'])
+for d in sorted_dups:
+    odds = d['cnt'] / total_run * 100
+    p = d['partitions']
+    cnt = d['cnt']
+    print(f'partitions:{p} count:{cnt:,} odds:{odds:.2f}%')
+print(f'total run: {total_run:,}')
+duplicate = 100 - no_duplicate
+print(f"This is the result of simulating {target_number} people's birthday by randomaly selecting a number from 1 to 365 and group the same generated number.")
+print(f'We found the chance that at least two people with the same birthday is {duplicate:.2f}%')
+print("By chaning the variable 'target_number' in the Python code, you can see the significant change!")
+```
 </div>
